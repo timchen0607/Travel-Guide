@@ -8,3 +8,9 @@
     @content;
   }
 }
+@font-face {
+  font-family: NotoSans;
+  src: url(./assets/fonts/NotoSans.woff2);
+}
+
+$font: "NotoSans", Arial, sans-serif;

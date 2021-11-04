@@ -29,3 +29,5 @@ const getNearbyInfo = (mode, lat, lon, meters = 10000, skip = 0) => {
 };
 
 export { getTravelInfo, getNearbyInfo };
+
+// $count=true 查看 API 剩餘次數
