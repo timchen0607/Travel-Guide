@@ -9,7 +9,7 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import { getNearbyInfo } from "../modules.js";
+import { getNearbyInfo, dataFilter } from "../modules.js";
 
 export default {
   name: "NearbyInfo",
@@ -20,7 +20,9 @@ export default {
     const lon = 120.398561;
     const nearbyData = ref(null);
 
-    getNearbyInfo(mode, lat, lon).then((res) => (nearbyData.value = res));
+    getNearbyInfo(mode, lat, lon).then(
+      (res) => (nearbyData.value = dataFilter(res))
+    );
 
     return { nearbyData };
   },
