@@ -22,10 +22,10 @@ const getTravelInfo = (mode, skip = 0, city = "") => {
 
 // 抓取 景點/餐飲/旅宿/活動 鄰近相關資料
 // mode => ScenicSpot/Restaurant/Hotel/Activity
-const getNearbyTravelInfo = (mode, lat, lon, meters = 10000, skip = 0) => {
+const getNearbyInfo = (mode, lat, lon, meters = 10000, skip = 0) => {
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
   url += `${mode}?$top=20&$skip=${skip}&$spatialFilter=nearby(${lat}%2C${lon}%2C${meters})&$filter=Picture/PictureUrl1 ne null&$format=JSON`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
-export { getTravelInfo, getNearbyTravelInfo };
+export { getTravelInfo, getNearbyInfo };
