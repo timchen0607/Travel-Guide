@@ -20,10 +20,11 @@ const getTravelInfo = (mode, top, skip, city = "") => {
 };
 
 // 抓取 景點/餐飲/旅宿/活動 鄰近相關資料
-
+// mode => ScenicSpot/Restaurant/Hotel/Activity
 const getNearbyTravelInfo = (mode, top, skip, lat, lon, meters, city = "") => {
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
   url += `${mode}/${city}?$top=${top}&$skip=${skip}&$spatialFilter=nearby(${lat}%2C${lon}%2C${meters})&$format=JSON`;
+  console.log(url);
   return fetch(url, { headers: getAuthHeader }).then((res) => res.json());
 };
 
