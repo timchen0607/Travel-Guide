@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="item in scenicData" :key="item.ID">
+    <div v-for="item in nearbyData" :key="item.ID">
       {{ item }}
       <hr />
     </div>
@@ -12,21 +12,17 @@ import { ref } from "@vue/reactivity";
 import { getNearbyTravelInfo } from "../modules.js";
 
 export default {
-  name: "NearbyScenic",
+  name: "NearbyInfo",
   setup() {
+    // mode => ScenicSpot/Restaurant/Hotel/Activity
     const mode = "ScenicSpot";
-    const top = 30;
-    const skip = 0;
     const lat = 23.7083775;
     const lon = 120.398561;
-    const meters = 10000;
-    const scenicData = ref(null);
+    const nearbyData = ref(null);
 
-    getNearbyTravelInfo(mode, top, skip, lat, lon, meters).then(
-      (res) => (scenicData.value = res)
-    );
+    getNearbyTravelInfo(mode, lat, lon).then((res) => (nearbyData.value = res));
 
-    return { scenicData };
+    return { nearbyData };
   },
 };
 </script>

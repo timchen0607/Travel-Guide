@@ -1,22 +1,22 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <NearbyScenic></NearbyScenic>
+    <NearbyInfo></NearbyInfo>
   </div>
 </template>
 
 <script>
 import { getTravelInfo } from "../modules.js";
-import NearbyScenic from "../components/NearbyScenic.vue";
+import NearbyInfo from "../components/NearbyInfo.vue";
 
 export default {
   name: "About",
-  components: { NearbyScenic },
+  components: { NearbyInfo },
   setup() {
-    getTravelInfo("ScenicSpot", 10, 0).then((res) => console.log(res));
-    // getTravelInfo("Restaurant", 10, 0).then((res) => console.log(res));
-    // getTravelInfo("Hotel", 10, 0).then((res) => console.log(res));
-    // getTravelInfo("Activity", 10, 0).then((res) => console.log(res));
+    getTravelInfo("ScenicSpot").then((res) => console.log(res));
+    // getTravelInfo("Restaurant").then((res) => console.log(res));
+    // getTravelInfo("Hotel").then((res) => console.log(res));
+    // getTravelInfo("Activity").then((res) => console.log(res));
   },
 };
 </script>
