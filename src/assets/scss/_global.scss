@@ -2,5 +2,18 @@
 @import "./_variables.scss";
 
 body {
-  font-family: $font;
+  font: 16px $font;
+  color: $c_dark;
+  background-color: $c_secondary-light;
+}
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: min(1200px, 95vw);
+  margin: auto;
+  box-sizing: border-box;
+  @include pad {
+    flex-wrap: wrap;
+  }
 }
