@@ -28,6 +28,15 @@ const getNearbyInfo = (mode, lat, lon, meters = 5000, skip = 0) => {
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
+// 抓取單一資料
+// mode => ScenicSpot/Restaurant/Hotel/Activity
+const getDetail = (mode, ID) => {
+  console.log(ID);
+  let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
+  url += `${mode}/?$format=JSON`;
+  return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
+};
+
 // 資料篩選功能
 const dataFilter = (arr, count = 4) => {
   const result = [];
@@ -40,6 +49,6 @@ const dataFilter = (arr, count = 4) => {
   return result;
 };
 
-export { getTravelInfo, getNearbyInfo, dataFilter };
+export { getTravelInfo, getNearbyInfo, getDetail, dataFilter };
 
 // $count=true 查看 API 剩餘次數
