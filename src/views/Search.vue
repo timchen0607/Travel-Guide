@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div v-for="item in result" :key="item.ID">
-      {{ item }}
-      <hr />
-    </div>
+    <SearchResult :result="result"></SearchResult>
   </div>
 </template>
 
@@ -11,12 +8,14 @@
 import { computed, ref, watch } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { getTravelInfo, getNearbyInfo } from "../modules.js";
+import SearchResult from "../components/SearchResult.vue";
 
 export default {
   name: "Search",
   props: {
     mode: String,
   },
+  components: { SearchResult },
   setup(props) {
     const route = useRoute();
     const params = computed(() => route.params);
