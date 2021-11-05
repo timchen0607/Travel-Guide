@@ -18,6 +18,7 @@ export default {
     getDetail(ID.value).then((res) => (detail.value = res[0]));
 
     watch(ID, () => {
+      if (!ID.value) return;
       getDetail(ID.value).then((res) => (detail.value = res[0]));
     });
 
