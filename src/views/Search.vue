@@ -27,8 +27,8 @@ export default {
     });
     const getSearch = () => {
       if (type.value === "Search") {
-        const { city, page } = params.value;
-        getTravelInfo(props.mode, city, page).then(
+        const { city, page, keyword } = params.value;
+        getTravelInfo(props.mode, city, keyword, page).then(
           (res) => (result.value = res)
         );
       }
