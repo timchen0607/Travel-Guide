@@ -7,6 +7,4 @@
   <router-view />
 </template>
 
-<style lang="scss">
-@import "./assets/scss/_global.scss";
-</style>
+<style lang="scss"></style>
