@@ -11,6 +11,7 @@ const getAuthHeader = () => {
   const Authorization = `hmac username="${AppID}", algorithm="hmac-sha1", headers="x-date", signature="${HMAC}"`;
   return { Authorization: Authorization, "X-Date": GMTString };
 };
+// const perPage = 20; // 每頁顯示筆數
 
 // 抓取 景點/餐飲/旅宿/活動 相關資料
 // mode => ScenicSpot/Restaurant/Hotel/Activity
@@ -28,7 +29,7 @@ const getNearbyInfo = (mode, lat, lon, meters = 5000, skip = 0) => {
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
-// 抓取單一資料
+// 取得單筆資料
 const getDetail = (ID) => {
   const classID = ID.split("_")[0];
   let mode = null;
@@ -40,6 +41,16 @@ const getDetail = (ID) => {
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
   url += `${mode}/?$filter=ID eq '${ID}'&$format=JSON`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
+};
+
+// 取得搜尋資料
+const getSearch = (type) => {
+  if (type === "Search") {
+    console.log(type);
+  }
+  if (type === "Nearby") {
+    console.log(type);
+  }
 };
 
 // 資料篩選功能
@@ -54,6 +65,6 @@ const dataFilter = (arr, count = 4) => {
   return result;
 };
 
-export { getTravelInfo, getNearbyInfo, getDetail, dataFilter };
+export { getTravelInfo, getNearbyInfo, getDetail, getSearch, dataFilter };
 
 // $count=true 查看 API 剩餘次數
