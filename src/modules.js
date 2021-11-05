@@ -11,21 +11,32 @@ const getAuthHeader = () => {
   const Authorization = `hmac username="${AppID}", algorithm="hmac-sha1", headers="x-date", signature="${HMAC}"`;
   return { Authorization: Authorization, "X-Date": GMTString };
 };
-// const perPage = 20; // 每頁顯示筆數
+
+const perPage = 1; // 每頁顯示筆數
+// mode => ScenicSpot/Restaurant/Hotel/Activity
+// $count=true 查看 API 剩餘次數
 
 // 抓取 景點/餐飲/旅宿/活動 相關資料
-// mode => ScenicSpot/Restaurant/Hotel/Activity
-const getTravelInfo = (mode, skip = 0, city = "") => {
-  let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
-  url += `${mode}/${city}?$top=20&$skip=${skip}&$filter=Picture/PictureUrl1 ne null&$format=JSON`;
+const getTravelInfo = (mode, city, page = 1) => {
+  city = city === "Taiwan" ? "" : city;
+  let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`;
+  url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
+  url += `&$select=ID,Name,Description,Address,Picture`;
+  if (mode !== "ScenicSpot") url += ",Class";
+  if (mode === "Activity") url += "1,Class2";
+  url += `&$filter=Picture/PictureUrl1 ne null`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
 // 抓取 景點/餐飲/旅宿/活動 鄰近相關資料
-// mode => ScenicSpot/Restaurant/Hotel/Activity
-const getNearbyInfo = (mode, lat, lon, meters = 5000, skip = 0) => {
-  let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
-  url += `${mode}?$top=20&$skip=${skip}&$spatialFilter=nearby(${lat},${lon},${meters})&$filter=Picture/PictureUrl1 ne null&$format=JSON`;
+const getNearbyInfo = (mode, lat, lon, page = 1) => {
+  let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}?`;
+  url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
+  url += `&$select=ID,Name,Description,Address,Picture`;
+  if (mode !== "ScenicSpot") url += ",Class";
+  if (mode === "Activity") url += "1,Class2";
+  url += `&$spatialFilter=nearby(${lat},${lon},50000)`;
+  url += `&$filter=Picture/PictureUrl1 ne null`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
@@ -43,16 +54,6 @@ const getDetail = (ID) => {
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
-// 取得搜尋資料
-const getSearch = (type) => {
-  if (type === "Search") {
-    console.log(type);
-  }
-  if (type === "Nearby") {
-    console.log(type);
-  }
-};
-
 // 資料篩選功能
 const dataFilter = (arr, count = 4) => {
   const result = [];
@@ -65,6 +66,4 @@ const dataFilter = (arr, count = 4) => {
   return result;
 };
 
-export { getTravelInfo, getNearbyInfo, getDetail, getSearch, dataFilter };
-
-// $count=true 查看 API 剩餘次數
+export { getTravelInfo, getNearbyInfo, getDetail, dataFilter };

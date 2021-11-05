@@ -1,17 +1,23 @@
 <template>
   <div>
-    <div v-text="result"></div>
+    <div v-for="item in result" :key="item.ID">
+      {{ item }}
+      <hr />
+    </div>
   </div>
 </template>
 
 <script>
 import { computed, ref, watch } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
-import { getSearch } from "../modules.js";
+import { getTravelInfo, getNearbyInfo } from "../modules.js";
 
 export default {
   name: "Search",
-  setup() {
+  props: {
+    mode: String,
+  },
+  setup(props) {
     const route = useRoute();
     const params = computed(() => route.params);
     const result = ref(null);
@@ -19,11 +25,23 @@ export default {
       if (Object.keys(params.value).length === 0) return "Default";
       else return params.value.city ? "Search" : "Nearby";
     });
-    getSearch(type.value);
+    const getSearch = () => {
+      if (type.value === "Search") {
+        const { city, page } = params.value;
+        getTravelInfo(props.mode, city, page).then(
+          (res) => (result.value = res)
+        );
+      }
+      if (type.value === "Nearby") {
+        const { lat, lon, page } = params.value;
+        getNearbyInfo(props.mode, lat, lon, page).then(
+          (res) => (result.value = res)
+        );
+      }
+    };
+    getSearch();
 
-    watch(params, () => {
-      getSearch(type.value);
-    });
+    watch(params, () => getSearch());
 
     return { result };
   },
