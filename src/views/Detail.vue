@@ -3,9 +3,15 @@
 </template>
 
 <script>
+import { useRoute } from "vue-router";
+import { getDetail } from "../modules.js";
+
 export default {
   name: "Detail",
-  setup() {},
+  setup() {
+    const ID = useRoute().params.ID;
+    getDetail(ID).then((res) => console.log(res[0]));
+  },
 };
 </script>
 

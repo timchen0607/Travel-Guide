@@ -24,16 +24,21 @@ const getTravelInfo = (mode, skip = 0, city = "") => {
 // mode => ScenicSpot/Restaurant/Hotel/Activity
 const getNearbyInfo = (mode, lat, lon, meters = 5000, skip = 0) => {
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
-  url += `${mode}?$top=20&$skip=${skip}&$spatialFilter=nearby(${lat}%2C${lon}%2C${meters})&$filter=Picture/PictureUrl1 ne null&$format=JSON`;
+  url += `${mode}?$top=20&$skip=${skip}&$spatialFilter=nearby(${lat},${lon},${meters})&$filter=Picture/PictureUrl1 ne null&$format=JSON`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
 // 抓取單一資料
-// mode => ScenicSpot/Restaurant/Hotel/Activity
-const getDetail = (mode, ID) => {
-  console.log(ID);
+const getDetail = (ID) => {
+  const classID = ID.split("_")[0];
+  let mode = null;
+  if (classID === "C1") mode = "ScenicSpot";
+  else if (classID === "C2") mode = "Activity";
+  else if (classID === "C3") mode = "Restaurant";
+  else if (classID === "C4") mode = "Hotel";
+  else throw new Error("Wrong parameter.");
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
-  url += `${mode}/?$format=JSON`;
+  url += `${mode}/?$filter=ID eq '${ID}'&$format=JSON`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
