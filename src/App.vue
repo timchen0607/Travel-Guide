@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header :class="['head', { show: headerShow }]">
-      <Header :closeHeader="closeHeader"></Header>
+      <Header :closeHeader="closeHeader" />
       <div>
         <router-link to="/">Home</router-link> |
         <router-link to="/Taiwan/1/">Search1</router-link> |

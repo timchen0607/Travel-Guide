@@ -12,13 +12,8 @@
         <button class="detail-btn"><i class="ico-share"></i></button>
       </div>
     </div>
-    <div class="banner">
-      <img
-        :src="detail.Picture.PictureUrl1"
-        :alt="detail.Picture.PictureDescription1"
-        :title="detail.Picture.PictureDescription1"
-      />
-    </div>
+    <Banner :pic="detail.Picture" :name="detail.Name" />
+
     {{ detail }}
   </div>
 </template>
@@ -27,9 +22,11 @@
 import { computed, ref, watch } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { getDetail } from "../modules.js";
+import Banner from "../components/Banner.vue";
 
 export default {
   name: "Detail",
+  components: { Banner },
   setup() {
     const route = useRoute();
     const ID = computed(() => route.params.ID);
