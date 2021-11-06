@@ -17,6 +17,27 @@
     <h3 class="title-4 t-main"><i class="ico-info-square"></i> 景點資訊</h3>
     <div class="detail-info">
       <p v-text="detail.Address"></p>
+      <p v-text="detail.Phone"></p>
+      <p v-text="detail.OpenTime"></p>
+      <!-- <p v-text="detail.WebsiteUrl"></p> -->
+      <p v-text="detail.Class"></p>
+      <!-- <p v-text="detail.Position"></p> -->
+      <hr />
+      <p v-text="detail.TravelInfo"></p>
+      <p v-text="detail.OpenTime"></p>
+      <p v-text="detail.ParkingPosition"></p>
+      <p v-text="detail.TicketInfo"></p>
+      <p v-text="detail.Remarks"></p>
+      <hr />
+      <p v-text="detail.ParkingInfo"></p>
+      <hr />
+      <p v-text="detail.Location"></p>
+      <p v-text="detail.Organizer"></p>
+      <p v-text="detail.StartTime"></p>
+      <p v-text="detail.EndTime"></p>
+      <p v-text="detail.Cycle"></p>
+      <p v-text="detail.Class1"></p>
+      <p v-text="detail.Class2"></p>
     </div>
     <h3 class="title-4 t-main"><i class="ico-google-talk"></i> 景點介紹</h3>
     <h3 class="title-4 t-main"><i class="ico-bus"></i> 交通方式</h3>
@@ -24,8 +45,6 @@
     <h3 class="title-4 t-res"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h3>
     <h3 class="title-4 t-htl"><i class="ico-hotel"></i> 查看鄰近的旅宿</h3>
     <h3 class="title-4 t-act"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h3>
-    {{ mode }}
-    {{ detail }}
   </div>
 </template>
 
@@ -61,9 +80,9 @@ export default {
 @import "../assets/scss/_variables.scss";
 
 .detail {
-  padding: 1.5rem;
+  padding: min(1.5rem, 3vw);
   &-btn {
-    margin: 0 0.5rem;
+    margin: 0 min(0.5rem, 1vw);
     padding: 0.3rem 0.5rem;
     font-size: 1.5rem;
     color: $c_main;

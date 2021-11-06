@@ -144,6 +144,7 @@ export default {
     align-items: center;
     background-color: $c_light;
     box-shadow: 0px 1rem 1.5rem #00000011;
+    z-index: 5;
     @include pad {
       display: flex;
     }
@@ -178,11 +179,9 @@ export default {
     background-color: $c_main;
     @include mobile {
       & > * {
-        margin-bottom: 0.5rem;
-      }
-      &-logo {
-        text-align: center;
         width: 100%;
+        margin-bottom: 0.5rem;
+        text-align: center;
       }
     }
     .icoTW-main-island {
