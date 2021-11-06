@@ -1,0 +1,379 @@
+@font-face {
+  font-family: "IcoFont";
+  font-weight: normal;
+  font-style: "Regular";
+  src: url("./fonts/icofont.woff2") format("woff2"),
+    url("./fonts/icofont.woff") format("woff");
+}
+@font-face {
+  font-family: "twIcon";
+  font-weight: 400;
+  font-style: Regular;
+  src: url(./fonts/twicon.woff2) format("woff2"),
+    url(./fonts/twicon.woff) format("woff");
+}
+
+[class^="ico-"],
+[class*=" ico-"] {
+  font-family: "IcoFont" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+.ico {
+  &-circled-up:before {
+    content: "\ea6e";
+  }
+  &-search-1:before {
+    content: "\ed11";
+  }
+  &-print:before {
+    content: "\efc6";
+  }
+  &-clock-time:before {
+    content: "\eedc";
+  }
+  &-ui-touch-phone:before {
+    content: "\ec8a";
+  }
+  &-share:before {
+    content: "\efe5";
+  }
+  &-location-pin:before {
+    content: "\ef79";
+  }
+  &-rounded-left:before {
+    content: "\ea9d";
+  }
+  &-settings:before {
+    content: "\efe2";
+  }
+  &-heart:before {
+    content: "\ef45";
+  }
+}
+
+[class*=" icoTW-"],
+[class^="icoTW-"] {
+  font-family: twIcon !important;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  line-height: 1;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+.icoTW {
+  &-td-flag:before {
+    content: "\a000";
+  }
+  &-roc-flag:before {
+    content: "\a001";
+  }
+  &-main-island:before {
+    content: "\a002";
+  }
+  &-penghu-islands:before {
+    content: "\a003";
+  }
+  &-kinmen-island:before {
+    content: "\a004";
+  }
+  &-green-island:before {
+    content: "\a005";
+  }
+  &-lamay-island:before {
+    content: "\a006";
+  }
+  &-gueishan-island:before {
+    content: "\a007";
+  }
+  &-orchid-island:before {
+    content: "\a008";
+  }
+  &-grave-sense:before {
+    content: "\a009";
+  }
+  &-cks-hall:before {
+    content: "\a00a";
+  }
+  &-gate-cks:before {
+    content: "\a00b";
+  }
+  &-president-office:before {
+    content: "\a00c";
+  }
+  &-taipei101:before {
+    content: "\a00d";
+  }
+  &-np-mus:before {
+    content: "\a00e";
+  }
+  &-shrine-tp:before {
+    content: "\a00f";
+  }
+  &-longshan-tmp:before {
+    content: "\a010";
+  }
+  &-sys-hall:before {
+    content: "\a011";
+  }
+  &-confucius-tmp:before {
+    content: "\a012";
+  }
+  &-xingtian-tmp:before {
+    content: "\a013";
+  }
+  &-nt-mus:before {
+    content: "\a014";
+  }
+  &-grand-hotel:before {
+    content: "\a015";
+  }
+  &-228-park:before {
+    content: "\a016";
+  }
+  &-san-domingo:before {
+    content: "\a017";
+  }
+  &-raohe-nm:before {
+    content: "\a018";
+  }
+  &-red-house:before {
+    content: "\a019";
+  }
+  &-beimen:before {
+    content: "\a01a";
+  }
+  &-xiaonanmen:before {
+    content: "\a01b";
+  }
+  &-taipei-stn:before {
+    content: "\a01c";
+  }
+  &-zeelandia:before {
+    content: "\a01d";
+  }
+  &-eg-castle:before {
+    content: "\a01e";
+  }
+  &-provintia:before {
+    content: "\a01f";
+  }
+  &-hy-statue:before {
+    content: "\a020";
+  }
+  &-85tower:before {
+    content: "\a021";
+  }
+  &-fb-stn:before {
+    content: "\a022";
+  }
+  &-dt-pagoda:before {
+    content: "\a023";
+  }
+  &-rosary-church:before {
+    content: "\a024";
+  }
+  &-longteng-brg:before {
+    content: "\a025";
+  }
+  &-ly-mus:before {
+    content: "\a026";
+  }
+  &-lovers-brg:before {
+    content: "\a027";
+  }
+  &-hotspring-mus:before {
+    content: "\a028";
+  }
+  &-tunghai-uni:before {
+    content: "\a029";
+  }
+  &-taichung-park:before {
+    content: "\a02a";
+  }
+  &-queens-head:before {
+    content: "\a02b";
+  }
+  &-ntc-theater:before {
+    content: "\a02c";
+  }
+  &-bagua:before {
+    content: "\a02d";
+  }
+  &-foguangshan:before {
+    content: "\a02e";
+  }
+  &-vase-rock:before {
+    content: "\a02f";
+  }
+  &-tropic-cancer:before {
+    content: "\a030";
+  }
+  &-fuguijiao-lh:before {
+    content: "\a031";
+  }
+  &-yuweng-lh:before {
+    content: "\a032";
+  }
+  &-eluanbi-lh:before {
+    content: "\a033";
+  }
+  &-kano-staue:before {
+    content: "\a034";
+  }
+  &-ershawan:before {
+    content: "\a035";
+  }
+  &-dahu-park:before {
+    content: "\a036";
+  }
+  &-balloon:before {
+    content: "\a037";
+  }
+  &-taiwan-rw:before {
+    content: "\a038";
+  }
+  &-taipei-mrt:before {
+    content: "\a039";
+  }
+  &-alishan-rw:before {
+    content: "\a03a";
+  }
+  &-high-speed-rail:before {
+    content: "\a03b";
+  }
+  &-gondola:before {
+    content: "\a03c";
+  }
+  &-youbike:before {
+    content: "\a03d";
+  }
+  &-yami-boat:before {
+    content: "\a03e";
+  }
+  &-dragon-boat:before {
+    content: "\a03f";
+  }
+  &-lantern1:before {
+    content: "\a040";
+  }
+  &-lantern2:before {
+    content: "\a041";
+  }
+  &-sky-lantern:before {
+    content: "\a042";
+  }
+  &-taiwanese-bag:before {
+    content: "\a043";
+  }
+  &-postbox1:before {
+    content: "\a044";
+  }
+  &-postbox2:before {
+    content: "\a045";
+  }
+  &-jug:before {
+    content: "\a046";
+  }
+  &-tea-pot:before {
+    content: "\a047";
+  }
+  &-tapioca:before {
+    content: "\a048";
+  }
+  &-beer:before {
+    content: "\a049";
+  }
+  &-apple-cider:before {
+    content: "\a04a";
+  }
+  &-couplets:before {
+    content: "\a04b";
+  }
+  &-fortune:before {
+    content: "\a04c";
+  }
+  &-electric-pot:before {
+    content: "\a04d";
+  }
+  &-slipper:before {
+    content: "\a04e";
+  }
+  &-flying-fish:before {
+    content: "\a04f";
+  }
+  &-black-bear:before {
+    content: "\a050";
+  }
+  &-trash:before {
+    content: "\a052";
+  }
+  &-recycling:before {
+    content: "\a051";
+  }
+  &-queue-box:before {
+    content: "\a053";
+  }
+  &-bicycle-lane:before {
+    content: "\a054";
+  }
+  &-red-man:before {
+    content: "\a055";
+  }
+  &-green-man:before {
+    content: "\a056";
+  }
+  &-l-nh-insurance:before {
+    content: "\a057";
+  }
+  &-l-pixnet:before {
+    content: "\a058";
+  }
+  &-l-17live:before {
+    content: "\a059";
+  }
+  &-l-wemo:before {
+    content: "\a05a";
+  }
+  &-l-dcard:before {
+    content: "\a05b";
+  }
+  &-l-easy-card:before {
+    content: "\a05c";
+  }
+  &-l-ipass:before {
+    content: "\a05d";
+  }
+  &-l-youbike:before {
+    content: "\a05e";
+  }
+  &-l-luxgen:before {
+    content: "\a05f";
+  }
+  &-l-post:before {
+    content: "\a060";
+  }
+  &-l-taiwan-rw:before {
+    content: "\a061";
+  }
+  &-l-taipei-mrt:before {
+    content: "\a062";
+  }
+  &-l-kaoxiong-mrt:before {
+    content: "\a063";
+  }
+}
