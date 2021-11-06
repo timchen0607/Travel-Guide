@@ -15,7 +15,9 @@
     <Banner :pic="detail.Picture" :name="detail.Name" />
 
     <h3 class="title-4 t-main"><i class="ico-info-square"></i> 景點資訊</h3>
-    <div class="detail-info">ssss</div>
+    <div class="detail-info">
+      <p v-text="detail.Address"></p>
+    </div>
     <h3 class="title-4 t-main"><i class="ico-google-talk"></i> 景點介紹</h3>
     <h3 class="title-4 t-main"><i class="ico-bus"></i> 交通方式</h3>
     <h3 class="title-4 t-sce"><i class="ico-beach"></i> 查看鄰近的景點</h3>
@@ -77,7 +79,7 @@ export default {
   }
   &-info {
     padding: 1rem;
-    background: linear-gradient(to right, #ffffffcc, #ffffffcc), $c_main;
+    background: linear-gradient(to right, #ffffffdd, #ffffffdd), $c_main;
   }
 }
 .title-4 {

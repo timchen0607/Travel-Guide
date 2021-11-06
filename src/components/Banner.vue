@@ -34,7 +34,10 @@
         class="banner-ctl-item"
         v-for="i in count"
         :key="i"
-        @click="move = true"
+        @click="
+          move = true;
+          idx = i - 1;
+        "
       ></label>
     </div>
   </div>
@@ -65,18 +68,25 @@ export default {
         return;
       }
       idx.value = idx.value >= count.value - 1 ? 0 : idx.value + 1;
-      document.querySelectorAll(".banner-ctl-item")[idx.value].click();
+      const res = document.querySelectorAll(".banner-radio");
+      res.forEach((item, index) => {
+        item.checked = idx.value === index ? true : false;
+      });
     }, 5000);
 
     watch(
       () => props.pic,
       () => {
-        document.querySelectorAll(".banner-ctl-item")[0].click();
-        idx.value = -1;
+        const res = document.querySelectorAll(".banner-radio");
+        res.forEach((item, index) => {
+          item.checked = index === 0 ? true : false;
+        });
+        document.querySelectorAll(".banner-radio")[0].checked = true;
+        move.value = false;
       }
     );
 
-    return { count, move };
+    return { count, idx, move };
   },
 };
 </script>
