@@ -136,25 +136,25 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   &-item {
-    width: 40%;
+    width: 48%;
     margin-bottom: 0.8rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
+    box-sizing: border-box;
     cursor: pointer;
     &:hover {
       box-shadow: 0 0px 10px $c_secondary;
     }
     &.active {
-      color: $c_light;
-      background-color: $c_restaurant;
+      border: 1px solid $c_success;
     }
   }
   &-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 5rem;
-    height: 5rem;
+    width: 4.5rem;
+    height: 4.5rem;
     margin: 0 auto;
     font-size: 3rem;
     color: $c_light;

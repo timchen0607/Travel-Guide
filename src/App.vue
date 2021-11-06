@@ -28,7 +28,7 @@
         <button class="nav-btn show" @click="headerShow = true">
           <i class="ico-settings"></i>
         </button>
-        <h2><a href="/" class="nav-logo">TRAVEL</a></h2>
+        <p class="nav-logo">TRAVEL</p>
         <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
       <router-view :mode="mode" />
@@ -125,11 +125,14 @@ export default {
   .nav {
     position: sticky;
     top: 0;
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: center;
     background-color: $c_light;
     box-shadow: 0px 1rem 1.5rem #00000011;
+    @include pad {
+      display: flex;
+    }
     &-btn {
       margin: 0 1rem;
       font-size: 1.8rem;
@@ -139,10 +142,8 @@ export default {
       border-radius: 0.5rem;
       outline: none;
       opacity: 0;
-      @include pad {
-        &.show {
-          opacity: 1;
-        }
+      &.show {
+        opacity: 1;
       }
     }
     &-logo {
