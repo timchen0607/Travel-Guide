@@ -77,7 +77,7 @@ export default {
   }
   &-btn {
     font-size: 1.8rem;
-    color: $c_success;
+    color: $c_main;
     background-color: $c_secondary-light;
     border: none;
     border-radius: 0.5rem;
@@ -108,7 +108,7 @@ export default {
   }
   &-btn {
     font-size: 1.5rem;
-    color: $c_success;
+    color: $c_main;
     background: transparent;
     border: none;
     outline: none;
@@ -135,7 +135,7 @@ export default {
       box-shadow: 0 0px 10px $c_secondary;
     }
     &.active {
-      border: 1px solid $c_success;
+      border: 1px solid $c_main;
     }
   }
   &-icon {
@@ -147,7 +147,7 @@ export default {
     margin: 0 auto;
     font-size: 3rem;
     color: $c_light;
-    background-color: $c_restaurant;
+    background-color: $c_Activity;
     border-radius: 50%;
   }
   .title-5 {

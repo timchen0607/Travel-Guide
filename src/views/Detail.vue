@@ -62,7 +62,7 @@ export default {
     margin: 0 0.5rem;
     padding: 0.3rem 0.5rem;
     font-size: 1.5rem;
-    color: $c_success;
+    color: $c_main;
     background-color: transparent;
     border: none;
     border-radius: 0.5rem;
@@ -70,7 +70,7 @@ export default {
     cursor: pointer;
     &:hover {
       color: $c_light;
-      background-color: $c_success;
+      background-color: $c_main;
     }
   }
 }

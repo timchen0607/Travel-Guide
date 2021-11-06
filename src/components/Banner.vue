@@ -61,6 +61,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/_variables.scss";
+
 $colorList: (#fd5, #f50, #458);
 .slides {
   position: relative;
@@ -69,9 +71,9 @@ $colorList: (#fd5, #f50, #458);
   margin: 1.5rem 0;
   overflow: hidden;
   &-radio {
-    @for $i from 1 through length($colorList) {
+    @for $i from 1 through 3 {
       &:nth-of-type(#{$i}):checked ~ .slides-control label:nth-of-type(#{$i}) {
-        background-color: nth($colorList, $i);
+        background-color: $c_main;
       }
       &:nth-of-type(#{$i}):checked ~ .slides-content {
         transform: translateX(($i - 1) * -100%);
@@ -96,9 +98,8 @@ $colorList: (#fd5, #f50, #458);
     font-size: 100px;
     font-weight: bold;
 
-    @for $i from 1 through length($colorList) {
+    @for $i from 1 through 3 {
       &:nth-of-type(#{$i}) {
-        background-color: nth($colorList, $i);
         left: ($i - 1) * 100%;
       }
     }

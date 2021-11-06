@@ -18,6 +18,12 @@
         <i class="ico-location-pin"></i>
         <i class="ico-heart"></i>
       </div>
+      <div>
+        <input type="radio" value="ScenicSpot" v-model="mode" />ScenicSpot
+        <input type="radio" value="Restaurant" v-model="mode" />Restaurant
+        <input type="radio" value="Hotel" v-model="mode" />Hotel
+        <input type="radio" value="Activity" v-model="mode" />Activity
+      </div>
     </header>
     <div class="box">
       <nav class="nav">
@@ -68,15 +74,27 @@
 <script>
 import { ref } from "@vue/reactivity";
 import Header from "./components/Header.vue";
+import { watch } from "@vue/runtime-core";
 
 export default {
   name: "App",
   components: { Header },
   setup() {
     const headerShow = ref(false);
+    const closeHeader = () => (headerShow.value = false);
     const mode = ref("ScenicSpot");
 
-    const closeHeader = () => (headerShow.value = false);
+    watch(
+      () => mode.value,
+      () => {
+        const root = (val) =>
+          document.documentElement.style.setProperty("--c-main", val);
+        if (mode.value === "ScenicSpot") root("#3fb195");
+        if (mode.value === "Restaurant") root("#ff9999");
+        if (mode.value === "Hotel") root("#64c5e3");
+        if (mode.value === "Activity") root("#feb155");
+      }
+    );
 
     return { headerShow, mode, closeHeader };
   },
@@ -132,7 +150,7 @@ export default {
     &-btn {
       margin: 0 1rem;
       font-size: 1.8rem;
-      color: $c_success;
+      color: $c_main;
       background-color: $c_secondary-light;
       border: none;
       border-radius: 0.5rem;
@@ -157,7 +175,7 @@ export default {
     padding: 0.5rem;
     font-size: 1.1rem;
     color: $c_light;
-    background-color: $c_success;
+    background-color: $c_main;
     @include mobile {
       & > * {
         margin-bottom: 0.5rem;

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;700&display=swap");
 
 @mixin pad {
   @media screen and (max-width: 1024px) {
@@ -10,18 +10,17 @@
     @content;
   }
 }
-
+:root {
+  --c-main: #3fb195;
+}
 $font: "Noto Sans TC", Arial, sans-serif;
+$c_main: var(--c-main);
+$c_ScenicSpot: #3fb195;
+$c_Restaurant: #ff9999;
+$c_Hotel: #64c5e3;
+$c_Activity: #feb155;
 $c_dark: #2c2c2c;
 $c_light: #ffffff;
-$c_success: #3fb195;
-$c_danger: #b72323;
-$c_warning: #ffc61a;
-$c_info: #5d5fef;
-$c_scenic: #a4c9e8;
-$c_restaurant: #f79856;
-$c_hotel: #fe9fab;
-$c_activity: #803824;
 $c_secondary: #c8c8c8;
 $c_secondary-light: #fafafa;
 $c_secondary-dark: #707070;
