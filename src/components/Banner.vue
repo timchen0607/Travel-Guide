@@ -1,26 +1,26 @@
 <template>
-  <div class="slides">
+  <div class="banner">
     <input
       type="radio"
-      id="slides-radio-1"
-      class="slides-radio"
-      name="slides-radio"
+      id="banner-radio-1"
+      class="banner-radio"
+      name="banner-radio"
       checked
     />
     <input
       type="radio"
-      id="slides-radio-2"
-      class="slides-radio"
-      name="slides-radio"
+      id="banner-radio-2"
+      class="banner-radio"
+      name="banner-radio"
     />
     <input
       type="radio"
-      id="slides-radio-3"
-      class="slides-radio"
-      name="slides-radio"
+      id="banner-radio-3"
+      class="banner-radio"
+      name="banner-radio"
     />
-    <ul class="slides-content">
-      <li class="slides-content-item banner" v-for="i in count" :key="i">
+    <ul class="banner-content">
+      <li class="banner-content-item banner" v-for="i in count" :key="i">
         <img
           :src="pic['PictureUrl' + i]"
           :alt="pic['PictureDescription' + i] || name"
@@ -28,19 +28,21 @@
         />
       </li>
     </ul>
-    <div class="slides-control">
+    <div class="banner-ctl">
       <label
-        :for="'slides-radio-' + i"
-        class="slides-control-item"
+        :for="'banner-radio-' + i"
+        class="banner-ctl-item"
         v-for="i in count"
         :key="i"
+        @click="move = true"
       ></label>
     </div>
   </div>
 </template>
 
 <script>
-import { computed } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
+import { watch } from "@vue/runtime-core";
 
 export default {
   name: "Banner",
@@ -55,7 +57,26 @@ export default {
       if (props.pic.PictureUrl1) return 1;
     });
 
-    return { count };
+    const idx = ref(0);
+    const move = ref(false);
+    setInterval(() => {
+      if (move.value) {
+        move.value = false;
+        return;
+      }
+      idx.value = idx.value >= count.value - 1 ? 0 : idx.value + 1;
+      document.querySelectorAll(".banner-ctl-item")[idx.value].click();
+    }, 5000);
+
+    watch(
+      () => props.pic,
+      () => {
+        document.querySelectorAll(".banner-ctl-item")[0].click();
+        idx.value = -1;
+      }
+    );
+
+    return { count, move };
   },
 };
 </script>
@@ -63,8 +84,7 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_variables.scss";
 
-$colorList: (#fd5, #f50, #458);
-.slides {
+.banner {
   position: relative;
   width: 100%;
   height: min(300px, 40vw);
@@ -72,10 +92,10 @@ $colorList: (#fd5, #f50, #458);
   overflow: hidden;
   &-radio {
     @for $i from 1 through 3 {
-      &:nth-of-type(#{$i}):checked ~ .slides-control label:nth-of-type(#{$i}) {
+      &:nth-of-type(#{$i}):checked ~ .banner-ctl label:nth-of-type(#{$i}) {
         background-color: $c_main;
       }
-      &:nth-of-type(#{$i}):checked ~ .slides-content {
+      &:nth-of-type(#{$i}):checked ~ .banner-content {
         transform: translateX(($i - 1) * -100%);
       }
     }
@@ -91,20 +111,14 @@ $colorList: (#fd5, #f50, #458);
     position: absolute;
     width: inherit;
     height: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 100px;
-    font-weight: bold;
-
+    margin: 0;
     @for $i from 1 through 3 {
       &:nth-of-type(#{$i}) {
         left: ($i - 1) * 100%;
       }
     }
   }
-  &-control {
+  &-ctl {
     position: absolute;
     bottom: 10px;
     left: 0;
