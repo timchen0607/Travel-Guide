@@ -21,12 +21,15 @@
         <i class="ico-share"></i>
         <i class="ico-location-pin"></i>
         <i class="ico-rounded-left"></i>
-        <i class="ico-settings"></i>
         <i class="ico-heart"></i>
-        <i class="icoTW-main-island"></i>
       </div>
     </header>
     <div class="box">
+      <nav class="nav">
+        <button class="nav-btn"><i class="ico-settings"></i></button>
+        <h2><a href="/" class="nav-logo">TRAVEL</a></h2>
+        <button class="nav-btn hide"><i class="ico-settings"></i></button>
+      </nav>
       <router-view :mode="mode" />
       <footer class="foot">
         <h5><a href=""></a><i class="icoTW-main-island"></i>TAIWAN TRAVEL</h5>
@@ -82,32 +85,67 @@ export default {
   height: 100vh;
   padding: 1.5rem;
   background-color: $c_light;
-  box-shadow: 0px 14px 24px #00000011;
+  box-shadow: 0px 0px 1.5rem #00000011;
   box-sizing: border-box;
   overflow: auto;
 }
 .box {
   flex: 1;
-}
-.foot {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 0.5rem;
-  font-size: 1.1rem;
-  color: $c_light;
-  background-color: $c_success;
-  h5 i {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
+  .nav {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $c_light;
+    box-shadow: 0px 1rem 1.5rem #00000011;
+    &-btn {
+      margin: 0 1rem;
+      font-size: 1.8rem;
+      color: $c_success;
+      background-color: $c_secondary-light;
+      border: none;
+      border-radius: 0.5rem;
+      outline: none;
+      cursor: pointer;
+      &.hide {
+        opacity: 0;
+        cursor: default;
+      }
+    }
+    &-logo {
+      display: block;
+      width: 100px;
+      height: 70px;
+      color: transparent;
+      background: url(./assets/images/logo.png) no-repeat center center /
+        contain;
+      user-select: none;
+    }
   }
-  a {
+  .foot {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+    font-size: 1.1rem;
     color: $c_light;
-    text-decoration: none;
-  }
-  img {
-    width: 80px;
+    background-color: $c_success;
+    i {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+    }
+    a {
+      color: $c_light;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    img {
+      width: 80px;
+    }
   }
 }
 </style>
