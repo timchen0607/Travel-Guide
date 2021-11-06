@@ -2,8 +2,6 @@
   <div class="container">
     <header class="head">
       <Header></Header>
-    </header>
-    <div class="box">
       <div>
         <router-link to="/">Home</router-link> |
         <router-link to="/Taiwan/1/">Search1</router-link> |
@@ -27,7 +25,31 @@
         <i class="ico-heart"></i>
         <i class="icoTW-main-island"></i>
       </div>
+    </header>
+    <div class="box">
       <router-view :mode="mode" />
+      <footer class="foot">
+        <h5><a href=""></a><i class="icoTW-main-island"></i>TAIWAN TRAVEL</h5>
+        <div>
+          <p>
+            UI Design：
+            <a
+              href="https://www.figma.com/file/fnHynjl6HHHCcqay2C4KVn"
+              target="_blank"
+            >
+              jhen
+            </a>
+          </p>
+          <p>
+            Front-end：
+            <a href="https://github.com/timchen0607" target="_blank">
+              Tim Chen
+            </a>
+          </p>
+        </div>
+        <p>Source：交通部PTX服務平臺</p>
+        <img src="./assets/images/ptx_logo.png" alt="交通部PTX服務平臺" />
+      </footer>
     </div>
   </div>
 </template>
@@ -57,13 +79,35 @@ export default {
   position: sticky;
   top: 0;
   width: min(100vw, 354px);
-  min-height: 100vh;
+  height: 100vh;
   padding: 1.5rem;
   background-color: $c_light;
   box-shadow: 0px 14px 24px #00000011;
   box-sizing: border-box;
+  overflow: auto;
 }
 .box {
   flex: 1;
+}
+.foot {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  color: $c_light;
+  background-color: $c_success;
+  h5 i {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+  }
+  a {
+    color: $c_light;
+    text-decoration: none;
+  }
+  img {
+    width: 80px;
+  }
 }
 </style>
