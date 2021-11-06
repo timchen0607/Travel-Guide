@@ -1,22 +1,22 @@
 <template>
   <div class="header">
-    <div class="header-flex">
+    <div class="d-flex-between">
       <h1><a href="/" class="header-logo">TRAVEL</a></h1>
       <button class="header-btn" @click="closeHeader">
         <i class="ico-rounded-left"></i>
       </button>
     </div>
-    <div class="select">
+    <div class="select d-flex-center">
       <input type="text" class="select-input" placeholder="目的地" disabled />
       <button class="select-btn"><i class="ico-circled-up"></i></button>
     </div>
-    <div class="select">
+    <div class="select d-flex-center">
       <input type="text" class="select-input" placeholder="搜尋關鍵字" />
       <button class="select-btn"><i class="ico-search-1"></i></button>
     </div>
     <hr class="hr" />
     <h4 class="title-4">精選主題</h4>
-    <ul class="featured">
+    <ul class="featured d-flex-around">
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
         <h5 class="title-5">住宿推薦</h5>
@@ -67,11 +67,6 @@ export default {
 @import "../assets/scss/_variables.scss";
 
 .header {
-  &-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
   &-logo {
     display: block;
     width: 150px;
@@ -94,9 +89,6 @@ export default {
   }
 }
 .select {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin: 1.5rem 0;
   padding: 0.5rem 0.75rem;
   background-color: $c_secondary-light;
@@ -131,9 +123,6 @@ export default {
   margin: 1.5rem 0;
 }
 .featured {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   flex-wrap: wrap;
   &-item {
     width: 48%;

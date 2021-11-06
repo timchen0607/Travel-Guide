@@ -13,12 +13,8 @@
         <router-link to="/D/C2_315080000H_080485">Detail4</router-link>
       </div>
       <div>
-        <i class="ico-circled-up"></i>
-        <i class="ico-search-1"></i>
-        <i class="ico-print"></i>
         <i class="ico-clock-time"></i>
         <i class="ico-ui-touch-phone"></i>
-        <i class="ico-share"></i>
         <i class="ico-location-pin"></i>
         <i class="ico-heart"></i>
       </div>
@@ -32,7 +28,7 @@
         <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
       <router-view :mode="mode" />
-      <footer class="foot">
+      <footer class="foot d-flex-around">
         <h5 class="foot-logo">
           <i class="icoTW-main-island"></i>TAIWAN TRAVEL
         </h5>
@@ -157,9 +153,6 @@ export default {
     }
   }
   .foot {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     flex-wrap: wrap;
     padding: 0.5rem;
     font-size: 1.1rem;

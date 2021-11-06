@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="banner">
+      <img src="../assets/images/banner_home.png" alt="探索。福爾摩沙" />
       <h2 class="banner-text">探索。<br />福爾摩沙</h2>
     </div>
   </div>
@@ -20,18 +21,18 @@ export default {
   padding: min(1.5rem, 4vw);
 }
 .banner {
-  display: flex;
-  align-items: center;
-  height: min(300px, 40vw);
-  background: url("../assets/images/banner_home.png") no-repeat center right /
-      contain,
-    $c_light;
-  border-radius: 1rem;
-  box-shadow: 0px 0px 1.5rem #00000011;
+  position: relative;
+  img {
+    object-position: center right;
+    object-fit: contain;
+  }
   &-text {
+    position: absolute;
+    top: 60%;
+    left: 1em;
     font-size: min(4rem, 5vw);
-    margin-left: 1em;
     font-weight: bold;
+    transform: translateY(-50%);
   }
 }
 </style>
