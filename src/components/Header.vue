@@ -1,6 +1,11 @@
 <template>
   <div class="header">
-    <h1><a href="/" class="logo">TRAVEL</a></h1>
+    <div class="header-flex">
+      <h1><a href="/" class="header-logo">TRAVEL</a></h1>
+      <button class="header-btn" @click="closeHeader">
+        <i class="ico-rounded-left"></i>
+      </button>
+    </div>
     <div class="select">
       <input type="text" class="select-input" placeholder="目的地" disabled />
       <button class="select-btn"><i class="ico-circled-up"></i></button>
@@ -51,6 +56,9 @@
 <script>
 export default {
   name: "App",
+  props: {
+    closeHeader: Function,
+  },
   setup() {},
 };
 </script>
@@ -58,13 +66,32 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_variables.scss";
 
-.logo {
-  display: block;
-  width: 150px;
-  height: 70px;
-  color: transparent;
-  background: url(../assets/images/logo.png) no-repeat center center / contain;
-  user-select: none;
+.header {
+  &-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-logo {
+    display: block;
+    width: 150px;
+    height: 70px;
+    color: transparent;
+    background: url(../assets/images/logo.png) no-repeat center center / contain;
+    user-select: none;
+  }
+  &-btn {
+    font-size: 1.8rem;
+    color: $c_success;
+    background-color: $c_secondary-light;
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+    opacity: 0;
+    @include pad {
+      opacity: 1;
+    }
+  }
 }
 .select {
   display: flex;
@@ -76,7 +103,7 @@ export default {
   border: 1px solid $c_secondary;
   border-radius: 0.5rem;
   &-input {
-    flex: 1;
+    width: 100%;
     font: 1.25rem $font;
     color: $c_dark;
     background-color: transparent;

@@ -16,7 +16,7 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: min(1440px, 95vw);
+  max-width: min(1440px, 100vw);
   margin: auto;
   box-sizing: border-box;
   @include pad {

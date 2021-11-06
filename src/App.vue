@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <header class="head">
-      <Header></Header>
+    <header :class="['head', { show: headerShow }]">
+      <Header :closeHeader="closeHeader"></Header>
       <div>
         <router-link to="/">Home</router-link> |
         <router-link to="/Taiwan/1/">Search1</router-link> |
@@ -20,15 +20,16 @@
         <i class="ico-ui-touch-phone"></i>
         <i class="ico-share"></i>
         <i class="ico-location-pin"></i>
-        <i class="ico-rounded-left"></i>
         <i class="ico-heart"></i>
       </div>
     </header>
     <div class="box">
       <nav class="nav">
-        <button class="nav-btn"><i class="ico-settings"></i></button>
+        <button class="nav-btn show" @click="headerShow = true">
+          <i class="ico-settings"></i>
+        </button>
         <h2><a href="/" class="nav-logo">TRAVEL</a></h2>
-        <button class="nav-btn hide"><i class="ico-settings"></i></button>
+        <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
       <router-view :mode="mode" />
       <footer class="foot">
@@ -65,9 +66,12 @@ export default {
   name: "App",
   components: { Header },
   setup() {
+    const headerShow = ref(false);
     const mode = ref("ScenicSpot");
 
-    return { mode };
+    const closeHeader = () => (headerShow.value = false);
+
+    return { headerShow, mode, closeHeader };
   },
 };
 </script>
@@ -81,16 +85,32 @@ export default {
 .head {
   position: sticky;
   top: 0;
-  width: min(100vw, 354px);
+  width: 354px;
   height: 100vh;
   padding: 1.5rem;
   background-color: $c_light;
   box-shadow: 0px 0px 1.5rem #00000011;
   box-sizing: border-box;
   overflow: auto;
+  overscroll-behavior: contain;
+  @include pad {
+    position: fixed;
+    z-index: 10;
+    transform: translateX(-150%);
+    transition: transform 0.5s;
+  }
+  @include mobile {
+    width: 100vw;
+  }
+  &.show {
+    @include pad {
+      transform: translateX(0%);
+    }
+  }
 }
 .box {
   flex: 1;
+  box-sizing: border-box;
   .nav {
     position: sticky;
     top: 0;
@@ -107,10 +127,11 @@ export default {
       border: none;
       border-radius: 0.5rem;
       outline: none;
-      cursor: pointer;
-      &.hide {
-        opacity: 0;
-        cursor: default;
+      opacity: 0;
+      @include pad {
+        &.show {
+          opacity: 1;
+        }
       }
     }
     &-logo {
