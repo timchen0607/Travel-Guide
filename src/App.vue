@@ -33,26 +33,37 @@
       </nav>
       <router-view :mode="mode" />
       <footer class="foot">
-        <h5><a href=""></a><i class="icoTW-main-island"></i>TAIWAN TRAVEL</h5>
+        <h5 class="foot-logo">
+          <i class="icoTW-main-island"></i>TAIWAN TRAVEL
+        </h5>
         <div>
           <p>
             UI Design：
             <a
               href="https://www.figma.com/file/fnHynjl6HHHCcqay2C4KVn"
               target="_blank"
+              class="foot-creater"
             >
               jhen
             </a>
           </p>
           <p>
             Front-end：
-            <a href="https://github.com/timchen0607" target="_blank">
+            <a
+              href="https://github.com/timchen0607"
+              target="_blank"
+              class="foot-creater"
+            >
               Tim Chen
             </a>
           </p>
         </div>
         <p>Source：交通部PTX服務平臺</p>
-        <img src="./assets/images/ptx_logo.png" alt="交通部PTX服務平臺" />
+        <img
+          src="./assets/images/ptx_logo.png"
+          alt="交通部PTX服務平臺"
+          class="foot-ptx"
+        />
       </footer>
     </div>
   </div>
@@ -153,18 +164,27 @@ export default {
     font-size: 1.1rem;
     color: $c_light;
     background-color: $c_success;
-    i {
+    @include mobile {
+      & > * {
+        margin-bottom: 0.5rem;
+      }
+      &-logo {
+        text-align: center;
+        width: 100%;
+      }
+    }
+    .icoTW-main-island {
       font-size: 1.5rem;
       margin-right: 0.5rem;
     }
-    a {
+    &-creater {
       color: $c_light;
       text-decoration: none;
       &:hover {
         text-decoration: underline;
       }
     }
-    img {
+    &-ptx {
       width: 80px;
     }
   }
