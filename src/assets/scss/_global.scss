@@ -68,7 +68,25 @@ body {
     font-size: 1.3rem;
     font-weight: bold;
   }
-  &-4 {
+  &-5 {
     font-size: 1.1rem;
+  }
+}
+
+.t- {
+  &main {
+    color: $c_main;
+  }
+  &sce {
+    color: #3fb195;
+  }
+  &res {
+    color: #ff9999;
+  }
+  &htl {
+    color: #a79bfd;
+  }
+  &act {
+    color: #feb155;
   }
 }

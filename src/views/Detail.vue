@@ -13,13 +13,15 @@
       </div>
     </div>
     <Banner :pic="detail.Picture" :name="detail.Name" />
-    <h3 class="title-3">景點資訊</h3>
-    <h3 class="title-3">景點介紹</h3>
-    <h3 class="title-3">交通方式</h3>
-    <h3 class="title-3">查看鄰近的景點</h3>
-    <h3 class="title-3">查看鄰近的餐飲</h3>
-    <h3 class="title-3">查看鄰近的旅宿</h3>
-    <h3 class="title-3">查看鄰近的活動</h3>
+
+    <h3 class="title-4 t-main"><i class="ico-info-square"></i> 景點資訊</h3>
+    <div class="detail-info">ssss</div>
+    <h3 class="title-4 t-main"><i class="ico-google-talk"></i> 景點介紹</h3>
+    <h3 class="title-4 t-main"><i class="ico-bus"></i> 交通方式</h3>
+    <h3 class="title-4 t-sce"><i class="ico-beach"></i> 查看鄰近的景點</h3>
+    <h3 class="title-4 t-res"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h3>
+    <h3 class="title-4 t-htl"><i class="ico-hotel"></i> 查看鄰近的旅宿</h3>
+    <h3 class="title-4 t-act"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h3>
     {{ mode }}
     {{ detail }}
   </div>
@@ -73,5 +75,12 @@ export default {
       background-color: $c_main;
     }
   }
+  &-info {
+    padding: 1rem;
+    background: linear-gradient(to right, #ffffffcc, #ffffffcc), $c_main;
+  }
+}
+.title-4 {
+  margin: 1.5rem 0;
 }
 </style>

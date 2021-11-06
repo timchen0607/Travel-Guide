@@ -91,7 +91,7 @@ export default {
           document.documentElement.style.setProperty("--c-main", val);
         if (mode.value === "ScenicSpot") root("#3fb195");
         if (mode.value === "Restaurant") root("#ff9999");
-        if (mode.value === "Hotel") root("#64c5e3");
+        if (mode.value === "Hotel") root("#A79BFD");
         if (mode.value === "Activity") root("#feb155");
       }
     );

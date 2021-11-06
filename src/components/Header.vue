@@ -130,6 +130,7 @@ export default {
     padding: 0.5rem;
     border-radius: 0.5rem;
     box-sizing: border-box;
+    transition: box-shadow 0.5s;
     cursor: pointer;
     &:hover {
       box-shadow: 0 0px 10px $c_secondary;
@@ -152,7 +153,6 @@ export default {
   }
   .title-5 {
     text-align: center;
-    font-weight: bold;
   }
 }
 </style>
