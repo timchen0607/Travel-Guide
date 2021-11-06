@@ -2,6 +2,8 @@
   <div class="container">
     <header class="head">
       <Header></Header>
+    </header>
+    <div class="box">
       <div>
         <router-link to="/">Home</router-link> |
         <router-link to="/Taiwan/1/">Search1</router-link> |
@@ -25,8 +27,6 @@
         <i class="ico-heart"></i>
         <i class="icoTW-main-island"></i>
       </div>
-    </header>
-    <div class="box">
       <router-view :mode="mode" />
     </div>
   </div>
@@ -61,6 +61,7 @@ export default {
   padding: 1.5rem;
   background-color: $c_light;
   box-shadow: 0px 14px 24px #00000011;
+  box-sizing: border-box;
 }
 .box {
   flex: 1;

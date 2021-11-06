@@ -1,5 +1,12 @@
 @import "./_variables.scss";
 
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 0.25rem;
+  background: $c_secondary;
+}
 body {
   font: 16px $font;
   color: $c_dark;
@@ -14,5 +21,19 @@ body {
   box-sizing: border-box;
   @include pad {
     flex-wrap: wrap;
+  }
+}
+
+.title {
+  &-2 {
+  }
+  &-3 {
+  }
+  &-4 {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  &-4 {
+    font-size: 1.1rem;
   }
 }
