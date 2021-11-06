@@ -20,9 +20,9 @@ export default {
     const route = useRoute();
     const params = computed(() => route.params);
     const result = ref(null);
-    if (!params.value.page) return;
     const type = computed(() => (params.value.city ? "Search" : "Nearby"));
     const getSearch = () => {
+      if (!params.value.page) return;
       if (type.value === "Search") {
         const { city, page, keyword } = params.value;
         getTravelInfo(props.mode, city, keyword, page).then(
