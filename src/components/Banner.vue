@@ -62,16 +62,11 @@ export default {
 
 <style lang="scss" scoped>
 $colorList: (#fd5, #f50, #458);
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .slides {
   position: relative;
   width: 100%;
   height: min(300px, 40vw);
+  margin: 1.5rem 0;
   overflow: hidden;
   &-radio {
     @for $i from 1 through length($colorList) {

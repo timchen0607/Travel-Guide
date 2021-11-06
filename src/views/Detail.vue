@@ -13,7 +13,14 @@
       </div>
     </div>
     <Banner :pic="detail.Picture" :name="detail.Name" />
-
+    <h3 class="title-3">景點資訊</h3>
+    <h3 class="title-3">景點介紹</h3>
+    <h3 class="title-3">交通方式</h3>
+    <h3 class="title-3">查看鄰近的景點</h3>
+    <h3 class="title-3">查看鄰近的餐飲</h3>
+    <h3 class="title-3">查看鄰近的旅宿</h3>
+    <h3 class="title-3">查看鄰近的活動</h3>
+    {{ mode }}
     {{ detail }}
   </div>
 </template>
@@ -26,6 +33,9 @@ import Banner from "../components/Banner.vue";
 
 export default {
   name: "Detail",
+  props: {
+    mode: String,
+  },
   components: { Banner },
   setup() {
     const route = useRoute();
