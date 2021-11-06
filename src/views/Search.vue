@@ -20,10 +20,8 @@ export default {
     const route = useRoute();
     const params = computed(() => route.params);
     const result = ref(null);
-    const type = computed(() => {
-      if (Object.keys(params.value).length === 0) return "Default";
-      else return params.value.city ? "Search" : "Nearby";
-    });
+    if (!params.value.page) return;
+    const type = computed(() => (params.value.city ? "Search" : "Nearby"));
     const getSearch = () => {
       if (type.value === "Search") {
         const { city, page, keyword } = params.value;
