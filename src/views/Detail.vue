@@ -232,6 +232,7 @@ export default {
     line-height: 3rem;
     color: $c_dark;
     background-color: $c_main;
+    white-space: nowrap;
     text-decoration: none;
     transition: color 0.5s;
     &:hover {
