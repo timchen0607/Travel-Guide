@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="banner">
+    <div class="banner shadow">
       <img
         class="banner-img"
         src="../assets/images/banner_home.png"
@@ -33,7 +33,6 @@ export default {
   height: min(300px, 40vw);
   background-color: $c_light;
   border-radius: 1rem;
-  box-shadow: 0px 0px 1.5rem #00000011;
   overflow: hidden;
   &-img {
     width: 100%;

@@ -1,26 +1,15 @@
 <template>
-  <div class="banner">
+  <div class="banner shadow">
     <input
       type="radio"
-      id="banner-radio-1"
       class="banner-radio"
       name="banner-radio"
-      checked
+      v-for="i in count"
+      :key="i"
+      :id="`banner-radio-${i}`"
     />
-    <input
-      type="radio"
-      id="banner-radio-2"
-      class="banner-radio"
-      name="banner-radio"
-    />
-    <input
-      type="radio"
-      id="banner-radio-3"
-      class="banner-radio"
-      name="banner-radio"
-    />
-    <ul class="banner-content">
-      <li class="banner-content-item banner" v-for="i in count" :key="i">
+    <ul class="banner-box">
+      <li class="banner-item shadow bdrs-xl" v-for="i in count" :key="i">
         <img
           :src="pic['PictureUrl' + i]"
           :alt="pic['PictureDescription' + i] || name"
@@ -45,7 +34,7 @@
 
 <script>
 import { computed, ref } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
+import { onMounted, watch } from "@vue/runtime-core";
 
 export default {
   name: "Banner",
@@ -59,20 +48,23 @@ export default {
       if (props.pic.PictureUrl2) return 2;
       if (props.pic.PictureUrl1) return 1;
     });
-
     const idx = ref(0);
     const move = ref(false);
-    setInterval(() => {
-      if (move.value) {
-        move.value = false;
-        return;
-      }
-      idx.value = idx.value >= count.value - 1 ? 0 : idx.value + 1;
-      const res = document.querySelectorAll(".banner-radio");
-      res.forEach((item, index) => {
-        item.checked = idx.value === index ? true : false;
-      });
-    }, 5000);
+
+    onMounted(() => {
+      document.querySelectorAll(".banner-radio")[0].checked = true;
+      setInterval(() => {
+        if (move.value) {
+          move.value = false;
+          return;
+        }
+        idx.value = idx.value >= count.value - 1 ? 0 : idx.value + 1;
+        const res = document.querySelectorAll(".banner-radio");
+        res.forEach((item, index) => {
+          item.checked = idx.value === index ? true : false;
+        });
+      }, 5000);
+    });
 
     watch(
       () => props.pic,
@@ -82,6 +74,7 @@ export default {
           item.checked = index === 0 ? true : false;
         });
         document.querySelectorAll(".banner-radio")[0].checked = true;
+        idx.value = 0;
         move.value = false;
       }
     );
@@ -105,19 +98,19 @@ export default {
       &:nth-of-type(#{$i}):checked ~ .banner-ctl label:nth-of-type(#{$i}) {
         background-color: $c_main;
       }
-      &:nth-of-type(#{$i}):checked ~ .banner-content {
+      &:nth-of-type(#{$i}):checked ~ .banner-box {
         transform: translateX(($i - 1) * -100%);
       }
     }
   }
-  &-content {
+  &-box {
     position: absolute;
     top: 0;
     width: inherit;
     height: inherit;
     transition: 0.5s transform;
   }
-  &-content-item {
+  &-item {
     position: absolute;
     width: inherit;
     height: inherit;
@@ -126,6 +119,12 @@ export default {
       &:nth-of-type(#{$i}) {
         left: ($i - 1) * 100%;
       }
+    }
+    &-img {
+      width: 100%;
+      height: 100%;
+      object-position: center center;
+      object-fit: cover;
     }
   }
   &-ctl {

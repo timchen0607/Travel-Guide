@@ -49,7 +49,7 @@
       </p>
       <p v-if="dtl.Phone">
         <i class="ico-ui-touch-phone"></i>
-        <span> 連絡電話：</span>
+        <span> 聯絡電話：</span>
         <a :href="`tel:${dtl.Phone}`" v-text="dtl.Phone"></a>
       </p>
       <p v-if="dtl.WebsiteUrl">
@@ -59,7 +59,7 @@
       </p>
       <p v-if="dtl.Organizer">
         <i class="ico-people"></i>
-        <span> 舉辦單位：</span>
+        <span> 主辦單位：</span>
         <span v-text="dtl.Organizer"></span>
       </p>
       <p v-if="dtl.Cycle">
@@ -188,7 +188,6 @@ export default {
 .detail {
   padding: min(2rem, 4vw);
   &-title {
-    flex-wrap: wrap;
     justify-content: flex-end;
     > *:nth-child(1) {
       margin-right: auto;
@@ -214,6 +213,7 @@ export default {
     background: linear-gradient(to right, #ffffffdd, #ffffffdd), $c_main;
     > p {
       margin-left: 6.2em;
+      padding-bottom: 0.5rem;
       text-indent: -6.2em;
     }
   }

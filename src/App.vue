@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <header :class="['head', { show: headerShow }]">
-      <Header :closeHeader="closeHeader" />
+    <header :class="['head', 'shadow', { show: headerShow }]">
+      <Header :closeHeader="closeHeader" :city="city" :setCity="setCity" />
       <div>
         <router-link to="/">Home</router-link> |
         <router-link to="/Taiwan/1/">Search1</router-link> |
@@ -14,7 +14,7 @@
       </div>
     </header>
     <div class="box">
-      <nav class="nav">
+      <nav class="nav shadow">
         <button class="nav-btn show" @click="headerShow = true">
           <i class="ico-settings"></i>
         </button>
@@ -101,7 +101,6 @@ export default {
   height: 100vh;
   padding: 1.5rem;
   background-color: $c_light;
-  box-shadow: 0px 0px 1.5rem #00000011;
   box-sizing: border-box;
   overflow: auto;
   overscroll-behavior: contain;
@@ -130,7 +129,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     background-color: $c_light;
-    box-shadow: 0px 1rem 1.5rem #00000011;
     z-index: 5;
     @include pad {
       display: flex;
@@ -157,7 +155,6 @@ export default {
     }
   }
   .foot {
-    flex-wrap: wrap;
     padding: 0.5rem;
     font-size: 1.1rem;
     color: $c_light;
