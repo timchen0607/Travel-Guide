@@ -116,6 +116,7 @@ export default {
     width: inherit;
     height: inherit;
     margin: 0;
+    background-color: $c_light;
     @for $i from 1 through 3 {
       &:nth-of-type(#{$i}) {
         left: ($i - 1) * 100%;

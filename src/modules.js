@@ -12,7 +12,7 @@ const getAuthHeader = () => {
   return { Authorization: Authorization, "X-Date": GMTString };
 };
 
-const perPage = 20; // 每頁顯示筆數
+const perPage = 18; // 每頁顯示筆數
 // mode => ScenicSpot/Restaurant/Hotel/Activity
 // $count=true 查看 API 剩餘次數
 
@@ -21,7 +21,7 @@ const getTravelInfo = (mode, city, page = 1, keyword = null) => {
   city = city === "Taiwan" ? "" : city;
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
-  url += `&$select=ID,Name,Description,Address,Picture`;
+  url += `&$select=ID,Name,Address,Picture`;
   if (mode === "ScenicSpot") url += ",Class1,Class2,Class3";
   if (mode === "Activity") url += ",Class1,Class2";
   if (mode === "Restaurant" || mode === "Hotel") url += ",Class";

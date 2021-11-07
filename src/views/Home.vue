@@ -13,10 +13,11 @@
 </template>
 
 <script>
+import { onMounted } from "@vue/runtime-core";
 export default {
   name: "Home",
   setup() {
-    document.title = "Travel Guide";
+    onMounted(() => (document.title = "Travel Guide"));
   },
 };
 </script>

@@ -226,7 +226,7 @@ export default {
     const router = useRouter();
     const goSearch = (mode, key) => {
       if (mode) props.setMode(mode);
-      router.push({
+      router.replace({
         name: "Search",
         params: { city: props.city, page: 1, keyword: key },
       });
@@ -378,7 +378,7 @@ export default {
     height: 6rem;
     margin-bottom: 0.5rem;
     text-decoration: none;
-
+    user-select: none;
     cursor: pointer;
     &:hover .theme-text {
       background-color: #00000066;

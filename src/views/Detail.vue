@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import { computed, ref, watch } from "@vue/runtime-core";
+import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { getDetail, getMode } from "../modules.js";
 import Banner from "../components/Banner.vue";
@@ -174,7 +174,7 @@ export default {
       });
     };
 
-    loadData();
+    onMounted(() => loadData());
     watch(ID, () => loadData());
 
     return { dtl, getMode };
