@@ -43,26 +43,32 @@
       </p>
       <p v-text="`舉辦單位：${dtl.Organizer}`" v-if="dtl.Organizer"></p>
       <p v-text="`備註說明：${dtl.Cycle}`" v-if="dtl.Cycle"></p>
-      <p v-if="dtl.Class || dtl.Class1 || dtl.Class2">
+      <p v-if="dtl.Class || dtl.Class1 || dtl.Class2 || dtl.Class3">
         <span v-text="`${dtl.modeName}標籤：`"></span>
-        <a
-          href="#"
+        <router-link
+          :to="`/${city}/1/${dtl.Class}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class"
           v-if="dtl.Class"
-        ></a>
-        <a
-          href="#"
+        ></router-link>
+        <router-link
+          :to="`/${city}/1/${dtl.Class1}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class1"
           v-if="dtl.Class1"
-        ></a>
-        <a
-          href="#"
+        ></router-link>
+        <router-link
+          :to="`/${city}/1/${dtl.Class2}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class2"
           v-if="dtl.Class2"
-        ></a>
+        ></router-link>
+        <router-link
+          :to="`/${city}/1/${dtl.Class3}/`"
+          class="detail-tag bdrs-sm"
+          v-text="dtl.Class3"
+          v-if="dtl.Class3"
+        ></router-link>
       </p>
     </div>
     <h2 class="fz-md c-main">
@@ -100,6 +106,7 @@
     <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h2>
     <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 查看鄰近的旅宿</h2>
     <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h2>
+    {{ dtl }}
   </div>
 </template>
 
@@ -114,6 +121,7 @@ export default {
   props: {
     mode: String,
     setMode: Function,
+    city: String,
   },
   components: { Banner },
   setup(props) {

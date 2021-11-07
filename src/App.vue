@@ -26,7 +26,7 @@
         <p class="nav-logo"></p>
         <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
-      <router-view :mode="mode" :setMode="setMode" />
+      <router-view :mode="mode" :setMode="setMode" :city="city" />
       <footer class="foot df-around">
         <p><i class="icoTW-main-island"></i>TAIWAN TRAVEL</p>
         <div>
@@ -70,6 +70,8 @@ export default {
     const closeHeader = () => (headerShow.value = false);
     const mode = ref("ScenicSpot");
     const setMode = (m) => (mode.value = m);
+    const city = ref("Taiwan");
+    const setCity = (c) => (city.value = c);
     watch(
       () => mode.value,
       () => {
@@ -86,7 +88,7 @@ export default {
       }
     );
 
-    return { headerShow, closeHeader, mode, setMode };
+    return { headerShow, closeHeader, mode, setMode, city, setCity };
   },
 };
 </script>

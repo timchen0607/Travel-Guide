@@ -17,17 +17,26 @@ const perPage = 20; // 每頁顯示筆數
 // $count=true 查看 API 剩餘次數
 
 // 抓取 景點/餐飲/旅宿/活動 相關資料
-const getTravelInfo = (mode, city, keyword, page = 1) => {
+const getTravelInfo = (mode, city, page = 1, keyword = null) => {
   city = city === "Taiwan" ? "" : city;
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
   url += `&$select=ID,Name,Description,Address,Picture`;
-  if (mode !== "ScenicSpot") url += ",Class";
-  if (mode === "Activity") url += "1,Class2";
+  if (mode === "ScenicSpot") url += ",Class1,Class2,Class3";
+  if (mode === "Activity") url += ",Class1,Class2";
+  if (mode === "Restaurant" || mode === "Hotel") url += ",Class";
   url += `&$filter=Picture/PictureUrl1 ne null`;
-  if (keyword)
-    url += ` and (contains(Name,'${keyword}') or contains(Description,'${keyword}') or contains(Address,'${keyword}'))`;
-  console.log(url);
+  if (keyword) {
+    let filter = `contains(Name,'${keyword}')`;
+    filter += ` or contains(Description,'${keyword}')`;
+    filter += ` or contains(Address,'${keyword}')`;
+    if (mode === "Restaurant" || mode === "Hotel")
+      filter += ` or contains(Class,'${keyword}')`;
+    if (mode === "ScenicSpot" || mode === "Activity")
+      filter += ` or contains(Class1,'${keyword}') or contains(Class2,'${keyword}')`;
+    if (mode === "ScenicSpot") filter += ` or contains(Class3,'${keyword}')`;
+    url += ` and (${filter})`;
+  }
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
