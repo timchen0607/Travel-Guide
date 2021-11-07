@@ -12,11 +12,6 @@
         <router-link to="/D/C4_315080000H_000539">Detail3</router-link> |
         <router-link to="/D/C2_315080000H_080485">Detail4</router-link>
       </div>
-      <div>
-        <i class="ico-clock-time"></i>
-        <i class="ico-ui-touch-phone"></i>
-        <i class="ico-location-pin"></i>
-      </div>
     </header>
     <div class="box">
       <nav class="nav">

@@ -20,31 +20,56 @@
       <span v-text="' ' + dtl.modeName + '資訊'"></span>
     </h2>
     <div class="detail-info bdrs-sm">
-      <p v-text="`活動日期：${dtl.Date}`" v-if="dtl.Date"></p>
+      <p v-if="dtl.Date">
+        <i class="ico-calendar"></i>
+        <span> 活動日期：</span>
+        <span v-text="dtl.Date"></span>
+      </p>
       <p v-if="!dtl.Date && dtl.StartTime">
-        <span>活動期間：</span>
+        <i class="ico-calendar"></i>
+        <span> 活動期間：</span>
         <span v-text="dtl.StartTime + ' ~ '"></span>
         <span v-text="dtl.EndTime"></span>
       </p>
-      <p v-text="`開放時段：${dtl.OpenTime}`" v-if="dtl.OpenTime"></p>
-      <p v-text="`門票費用：${dtl.TicketInfo}`" v-if="dtl.TicketInfo"></p>
+      <p v-if="dtl.OpenTime">
+        <i class="ico-clock-time"></i>
+        <span> 開放時段：</span>
+        <span v-text="dtl.OpenTime"></span>
+      </p>
+      <p v-if="dtl.TicketInfo">
+        <i class="ico-ticket"></i>
+        <span> 門票費用：</span>
+        <span v-text="dtl.TicketInfo"></span>
+      </p>
       <p v-if="dtl.Address">
-        <span v-text="`${dtl.modeName}地點：`"></span>
+        <i class="ico-location-pin"></i>
+        <span v-text="` ${dtl.modeName}地點：`"></span>
         <span v-text="`${dtl.Location} `" v-if="dtl.Location"></span>
         <span v-text="dtl.Address"></span>
       </p>
       <p v-if="dtl.Phone">
-        <span>連絡電話：</span>
+        <i class="ico-ui-touch-phone"></i>
+        <span> 連絡電話：</span>
         <a :href="`tel:${dtl.Phone}`" v-text="dtl.Phone"></a>
       </p>
       <p v-if="dtl.WebsiteUrl">
-        <span>官方網站：</span>
+        <i class="ico-earth"></i>
+        <span> 官方網站：</span>
         <a :href="dtl.WebsiteUrl" target="_blank">點我前往</a>
       </p>
-      <p v-text="`舉辦單位：${dtl.Organizer}`" v-if="dtl.Organizer"></p>
-      <p v-text="`備註說明：${dtl.Cycle}`" v-if="dtl.Cycle"></p>
+      <p v-if="dtl.Organizer">
+        <i class="ico-people"></i>
+        <span> 舉辦單位：</span>
+        <span v-text="dtl.Organizer"></span>
+      </p>
+      <p v-if="dtl.Cycle">
+        <i class="ico-ui-text-chat"></i>
+        <span> 備註說明：</span>
+        <span v-text="dtl.Cycle"></span>
+      </p>
       <p v-if="dtl.Class || dtl.Class1 || dtl.Class2 || dtl.Class3">
-        <span v-text="`${dtl.modeName}標籤：`"></span>
+        <i class="ico-tags"></i>
+        <span v-text="` ${dtl.modeName}標籤：`"></span>
         <router-link
           :to="`/${city}/1/${dtl.Class}/`"
           class="detail-tag bdrs-sm"
@@ -106,7 +131,6 @@
     <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h2>
     <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 查看鄰近的旅宿</h2>
     <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h2>
-    {{ dtl }}
   </div>
 </template>
 
@@ -186,15 +210,15 @@ export default {
     }
   }
   &-info {
-    padding: 1rem;
+    padding: min(1rem, 3vw);
     background: linear-gradient(to right, #ffffffdd, #ffffffdd), $c_main;
     > p {
-      margin-left: 5em;
-      text-indent: -5em;
+      margin-left: 6.2em;
+      text-indent: -6.2em;
     }
   }
   &-pre {
-    padding: 0 1rem;
+    padding: 0 min(1rem, 3vw);
     text-align: justify;
     white-space: pre-line;
   }

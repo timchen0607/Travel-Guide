@@ -80,6 +80,24 @@
   &-google-talk:before {
     content: "\ed44";
   }
+  &-tags:before {
+    content: "\f005";
+  }
+  &-people:before {
+    content: "\ecf9";
+  }
+  &-ui-text-chat:before {
+    content: "\ec86";
+  }
+  &-earth:before {
+    content: "\ef0e";
+  }
+  &-ticket:before {
+    content: "\f00f";
+  }
+  &-calendar:before {
+    content: "\eecd";
+  }
 }
 
 [class*=" icoTW-"],
