@@ -1,14 +1,12 @@
 <template>
   <div class="home">
     <div class="banner shadow">
-      <img
-        class="banner-img"
-        src="../assets/images/banner_Home.png"
-        alt="探索。福爾摩沙"
-        title="探索。福爾摩沙"
-      />
       <h1 class="banner-text">探索。<br />福爾摩沙</h1>
     </div>
+    <h2 class="fz-md c-sce"><i class="ico-beach"></i> 熱門景點</h2>
+    <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 品嚐美食</h2>
+    <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 住宿推薦</h2>
+    <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 觀光活動</h2>
   </div>
 </template>
 
@@ -32,15 +30,12 @@ export default {
   position: relative;
   width: 100%;
   height: min(300px, 40vw);
-  background-color: $c_light;
+  background: url(../assets/images/banner_Home.png) no-repeat bottom right /
+      contain,
+    $c_light;
   border-radius: 1rem;
   overflow: hidden;
-  &-img {
-    width: 100%;
-    height: 100%;
-    object-position: center right;
-    object-fit: contain;
-  }
+  user-select: none;
   &-text {
     position: absolute;
     top: 60%;

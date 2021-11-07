@@ -14,7 +14,6 @@
       </div>
     </div>
     <Banner :pic="dtl.Picture" :name="dtl.Name" />
-
     <h2 class="fz-md c-main">
       <i class="ico-info-square"></i>
       <span v-text="' ' + dtl.modeName + '資訊'"></span>
