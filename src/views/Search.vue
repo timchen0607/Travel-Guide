@@ -1,27 +1,49 @@
 <template>
   <div class="search">
-    <h1 class="fz-xxl" v-text="params.keyword.split(',').join()"></h1>
+    <h1 class="fz-xxl" v-text="params.keyword.split(',').join(' ')"></h1>
 
-    <div class="search-list df-around">
+    <div class="df-around">
       <router-link
         :to="`/D/${item.ID}/`"
-        class="search-card df-center bdrs-xl"
+        class="card df-center bdrs-xl"
         v-for="item in result"
         :key="item.ID"
       >
-        <div class="search-img">
+        <div class="card-box">
           <img
+            class="card-img"
             :src="item.Picture.PictureUrl1"
             :alt="item.Picture.PictureDescription1 || item.Name"
           />
         </div>
-        <div class="search-content">
-          {{ item.Name }}
-          {{ item.Address }}
-          {{ Class }}
+        <div class="card-content">
+          <h2 class="fz-md" v-text="item.Name"></h2>
+          <p class="card-text" v-if="item.Date">
+            <i class="ico-calendar"></i>
+            <span v-text="' ' + item.Date"></span>
+          </p>
+          <p class="card-text" v-if="!item.Date && item.StartTime">
+            <i class="ico-calendar"></i>
+            <span v-text="' ' + item.StartTime + ' ~ '"></span>
+            <span v-text="item.EndTime"></span>
+          </p>
+          <p class="card-text" v-if="item.OpenTime">
+            <i class="ico-clock-time"></i>
+            <span v-text="' ' + item.OpenTime.split('；')[0]"></span>
+          </p>
+          <p class="card-text" v-if="item.TicketInfo">
+            <i class="ico-ticket"></i>
+            <span v-text="' ' + item.TicketInfo"></span>
+          </p>
+          <p class="card-text" v-if="item.Address">
+            <i class="ico-location-pin"></i>
+            <span v-text="' ' + item.Location" v-if="item.Location"></span>
+            <span v-text="' ' + item.Address"></span>
+          </p>
+          <!-- {{ Class }}
           {{ Class1 }}
           {{ Class2 }}
-          {{ Class3 }}
+          {{ Class3 }} -->
         </div>
       </router-link>
     </div>
@@ -47,9 +69,15 @@ export default {
       if (!params.value.page) return;
       if (type.value === "Search") {
         const { city, page, keyword } = params.value;
-        getTravelInfo(props.mode, city, page, keyword).then(
-          (res) => (result.value = res)
-        );
+        getTravelInfo(props.mode, city, page, keyword).then((res) => {
+          res.forEach((item) => {
+            if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
+            if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
+            if (item.StartTime === item.EndTime) item.Date = item.EndTime;
+          });
+
+          result.value = res;
+        });
       }
       if (type.value === "Nearby") {
         const { lat, lon, page } = params.value;
@@ -72,35 +100,54 @@ export default {
 
 .search {
   padding: min(2rem, 4vw);
-  &-list {
-    align-items: stretch;
+}
+.card {
+  flex-direction: column;
+  align-items: stretch;
+  width: 30%;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  transition: box-shadow 0.5s;
+  @include pad {
+    width: 32%;
   }
-  &-card {
-    flex-direction: column;
-    width: 30%;
-    margin-bottom: 1rem;
-    text-decoration: none;
-    @include pad {
-      width: 32%;
+  @include mobile {
+    width: 100%;
+  }
+  &:hover {
+    box-shadow: 0px 0px 1.5rem #00000019;
+    .card-img {
+      transform: scale(1.2);
     }
-    @include mobile {
-      width: 100%;
-    }
+  }
+  &-box {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
   }
   &-img {
     width: 100%;
-    height: 200px;
-    > img {
-      width: 100%;
-      height: 100%;
-      object-position: center center;
-      object-fit: cover;
-    }
+    height: 100%;
+    object-position: center center;
+    object-fit: cover;
+    transition: transform 0.5s;
   }
   &-content {
     flex: 1;
     padding: min(1rem, 3vw);
     background-color: $c_light;
   }
+  &-text {
+    margin-left: 1.2em;
+    text-indent: -1.2em;
+  }
+}
+
+.df-around {
+  align-items: stretch;
+}
+.fz-md {
+  margin: 0;
+  margin-bottom: 0.5rem;
 }
 </style>

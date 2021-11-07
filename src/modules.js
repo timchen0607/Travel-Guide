@@ -22,9 +22,10 @@ const getTravelInfo = (mode, city, page = 1, keyword = null) => {
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
   url += `&$select=ID,Name,Address,Picture`;
-  if (mode === "ScenicSpot") url += ",Class1,Class2,Class3";
+  if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
   if (mode === "Activity") url += ",Class1,Class2";
-  if (mode === "Restaurant" || mode === "Hotel") url += ",Class";
+  if (mode === "Restaurant") url += ",Class,OpenTime";
+  if (mode === "Hotel") url += ",Class";
   url += `&$filter=Picture/PictureUrl1 ne null`;
   if (keyword) {
     let filter = "";
