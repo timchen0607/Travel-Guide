@@ -11,6 +11,7 @@
     <ul class="banner-box">
       <li class="banner-item shadow bdrs-xl" v-for="i in count" :key="i">
         <img
+          class="banner-item-img"
           :src="pic['PictureUrl' + i]"
           :alt="pic['PictureDescription' + i] || name"
           :title="pic['PictureDescription' + i] || name"

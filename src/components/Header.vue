@@ -67,56 +67,115 @@
         @click="setCity(key)"
       ></span>
     </div>
-
     <div class="textbox df-center">
-      <input type="text" class="textbox-input" placeholder="搜尋關鍵字" />
-      <button class="textbox-btn"><i class="ico-search-1"></i></button>
+      <input
+        type="text"
+        class="textbox-input"
+        placeholder="多筆關鍵字用 空格 格開"
+        v-model="keyword"
+        @keypress.enter="goSearch('', keyword.split(' ').join())"
+      />
+      <button
+        class="textbox-btn"
+        @click="goSearch('', keyword.split(' ').join())"
+      >
+        <i class="ico-search-1"></i>
+      </button>
     </div>
     <hr class="hr" />
-    <h2 class="fz-md">精選主題</h2>
-    <ul class="featured df-around">
-      <li class="featured-item">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
-      <li class="featured-item active">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
-      <li class="featured-item">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
-      <li class="featured-item">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
-      <li class="featured-item">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
-      <li class="featured-item">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
-      <li class="featured-item">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
-      <li class="featured-item">
-        <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="fz-sm">住宿推薦</h5>
-      </li>
+    <h3 class="fz-md">精選主題</h3>
+    <ul class="theme df-around">
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('ScenicSpot', '文化,古蹟')"
+      >
+        <img
+          src="../assets/images/theme_1.png"
+          alt="文化古蹟"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">文化古蹟</h4>
+      </div>
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('ScenicSpot', '自然,生態')"
+      >
+        <img
+          src="../assets/images/theme_2.png"
+          alt="自然生態"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">自然生態</h4>
+      </div>
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('Restaurant', '夜市小吃')"
+      >
+        <img
+          src="../assets/images/theme_3.png"
+          alt="夜市小吃"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">夜市小吃</h4>
+      </div>
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('Restaurant', '異國料理')"
+      >
+        <img
+          src="../assets/images/theme_4.png"
+          alt="異國料理"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">異國料理</h4>
+      </div>
+      <div class="theme-item bdrs-sm" @click="goSearch('Hotel', '度假,民宿')">
+        <img
+          src="../assets/images/theme_5.png"
+          alt="度假民宿"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">度假民宿</h4>
+      </div>
+      <div class="theme-item bdrs-sm" @click="goSearch('Hotel', '國際,旅館')">
+        <img
+          src="../assets/images/theme_6.png"
+          alt="國際旅館"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">國際旅館</h4>
+      </div>
+      <div class="theme-item bdrs-sm" @click="goSearch('Activity', '節慶活動')">
+        <img
+          src="../assets/images/theme_7.png"
+          alt="節慶活動"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">節慶活動</h4>
+      </div>
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('Activity', '藝文,遊憩')"
+      >
+        <img
+          src="../assets/images/theme_8.png"
+          alt="藝文遊憩"
+          class="theme-img"
+        />
+        <h4 class="theme-text df-center fz-sm">藝文遊憩</h4>
+      </div>
     </ul>
   </div>
 </template>
 
 <script>
 import { computed, ref } from "@vue/reactivity";
+import { useRouter } from "vue-router";
 export default {
   name: "App",
   props: {
     closeHeader: Function,
+    setMode: Function,
     city: String,
     setCity: Function,
   },
@@ -163,8 +222,27 @@ export default {
     };
     const cityName = computed(() => cityMap[props.city]);
     const openCity = ref(false);
+    const keyword = ref("");
+    const router = useRouter();
+    const goSearch = (mode, key) => {
+      if (mode) props.setMode(mode);
+      router.push({
+        name: "Search",
+        params: { city: props.city, page: 1, keyword: key },
+      });
+    };
 
-    return { cityN, cityC, cityS, cityE, cityO, cityName, openCity };
+    return {
+      cityN,
+      cityC,
+      cityS,
+      cityE,
+      cityO,
+      cityName,
+      openCity,
+      keyword,
+      goSearch,
+    };
   },
 };
 </script>
@@ -230,6 +308,7 @@ export default {
     font-size: 1.5rem;
     color: $c_main;
     background: transparent;
+    text-decoration: none;
     border: none;
     outline: none;
     transform: rotate(360deg);
@@ -291,36 +370,34 @@ export default {
   margin: 0;
   border: 1px solid $c_secondary;
 }
-.featured {
+.theme {
   &-item {
-    width: 48%;
-    margin-bottom: 0.8rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-    transition: box-shadow 0.5s;
+    position: relative;
+    width: 45%;
+    height: 6rem;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+
     cursor: pointer;
-    &:hover {
-      box-shadow: 0 0px 10px $c_secondary;
-    }
-    &.active {
-      border: 1px solid $c_main;
+    &:hover .theme-text {
+      background-color: #00000066;
     }
   }
-  &-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 4.5rem;
-    height: 4.5rem;
-    margin: 0 auto;
-    font-size: 3rem;
+  &-img {
+    width: 100%;
+    height: 100%;
+    object-position: center center;
+    object-fit: cover;
+  }
+  &-text {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     color: $c_light;
-    background-color: $c_Activity;
-    border-radius: 50%;
-  }
-  .fz-sm {
-    text-align: center;
+    background-color: #00000019;
+    transition: background-color 0.5s;
   }
 }
 </style>

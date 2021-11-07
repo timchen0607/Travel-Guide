@@ -27,14 +27,18 @@ const getTravelInfo = (mode, city, page = 1, keyword = null) => {
   if (mode === "Restaurant" || mode === "Hotel") url += ",Class";
   url += `&$filter=Picture/PictureUrl1 ne null`;
   if (keyword) {
-    let filter = `contains(Name,'${keyword}')`;
-    filter += ` or contains(Description,'${keyword}')`;
-    filter += ` or contains(Address,'${keyword}')`;
-    if (mode === "Restaurant" || mode === "Hotel")
-      filter += ` or contains(Class,'${keyword}')`;
-    if (mode === "ScenicSpot" || mode === "Activity")
-      filter += ` or contains(Class1,'${keyword}') or contains(Class2,'${keyword}')`;
-    if (mode === "ScenicSpot") filter += ` or contains(Class3,'${keyword}')`;
+    let filter = "";
+    keyword.split(",").forEach((k) => {
+      filter += ` or contains(Name,'${k}')`;
+      filter += ` or contains(Description,'${k}')`;
+      filter += ` or contains(Address,'${k}')`;
+      if (mode === "Restaurant" || mode === "Hotel")
+        filter += ` or contains(Class,'${k}')`;
+      if (mode === "ScenicSpot" || mode === "Activity")
+        filter += ` or contains(Class1,'${k}') or contains(Class2,'${k}')`;
+      if (mode === "ScenicSpot") filter += ` or contains(Class3,'${k}')`;
+    });
+    filter = filter.replace(" or ", "");
     url += ` and (${filter})`;
   }
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
