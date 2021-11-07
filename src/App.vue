@@ -30,14 +30,12 @@
         <button class="nav-btn show" @click="headerShow = true">
           <i class="ico-settings"></i>
         </button>
-        <p class="nav-logo">TRAVEL</p>
+        <p class="nav-logo"></p>
         <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
       <router-view :mode="mode" />
-      <footer class="foot d-flex-around">
-        <h5 class="foot-logo">
-          <i class="icoTW-main-island"></i>TAIWAN TRAVEL
-        </h5>
+      <footer class="foot df-around">
+        <p><i class="icoTW-main-island"></i>TAIWAN TRAVEL</p>
         <div>
           <p>
             UI Design：
@@ -87,8 +85,12 @@ export default {
     watch(
       () => mode.value,
       () => {
-        const root = (val) =>
+        const root = (val) => {
           document.documentElement.style.setProperty("--c-main", val);
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute("content", val);
+        };
         if (mode.value === "ScenicSpot") root("#3fb195");
         if (mode.value === "Restaurant") root("#ff9999");
         if (mode.value === "Hotel") root("#A79BFD");
@@ -165,10 +167,8 @@ export default {
       display: block;
       width: 100px;
       height: 70px;
-      color: transparent;
       background: url(./assets/images/logo.png) no-repeat center center /
         contain;
-      user-select: none;
     }
   }
   .foot {

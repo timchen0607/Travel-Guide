@@ -23,22 +23,76 @@ body {
     flex-wrap: wrap;
   }
 }
-.d-flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+// display-flex
+.df {
+  &-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
-.d-flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+// font-size
+.fz {
+  &-xxl {
+    font-size: min(2rem, 5vw);
+    font-weight: bold;
+    padding-bottom: 0.2rem;
+  }
+  &-xl {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  &-md {
+    margin: 1.5rem 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  &-sm {
+    font-size: 1.1rem;
+  }
 }
-.d-flex-around {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+// color
+.c {
+  &-main {
+    color: $c_main;
+  }
+  &-sce {
+    color: #3fb195;
+  }
+  &-res {
+    color: #ff9999;
+  }
+  &-htl {
+    color: #a79bfd;
+  }
+  &-act {
+    color: #feb155;
+  }
+}
+// border-radius
+.bdrs {
+  &-xl {
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  &-sm {
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
 }
 
+// 待處理
 .banner {
   width: 100%;
   height: min(300px, 40vw);
@@ -51,42 +105,5 @@ body {
     height: 100%;
     object-position: center center;
     object-fit: cover;
-  }
-}
-
-.title {
-  &-2 {
-    font-size: min(2rem, 5vw);
-    font-weight: bold;
-    padding-bottom: 0.2rem;
-  }
-  &-3 {
-    font-size: 1.6rem;
-    font-weight: bold;
-  }
-  &-4 {
-    font-size: 1.3rem;
-    font-weight: bold;
-  }
-  &-5 {
-    font-size: 1.1rem;
-  }
-}
-
-.t- {
-  &main {
-    color: $c_main;
-  }
-  &sce {
-    color: #3fb195;
-  }
-  &res {
-    color: #ff9999;
-  }
-  &htl {
-    color: #a79bfd;
-  }
-  &act {
-    color: #feb155;
   }
 }

@@ -1,8 +1,13 @@
 <template>
   <div class="home">
     <div class="banner">
-      <img src="../assets/images/banner_home.png" alt="探索。福爾摩沙" />
-      <h2 class="banner-text">探索。<br />福爾摩沙</h2>
+      <img
+        class="banner-img"
+        src="../assets/images/banner_home.png"
+        alt="探索。福爾摩沙"
+        title="探索。福爾摩沙"
+      />
+      <h1 class="banner-text">探索。<br />福爾摩沙</h1>
     </div>
   </div>
 </template>
@@ -10,7 +15,9 @@
 <script>
 export default {
   name: "Home",
-  setup() {},
+  setup() {
+    document.title = "Travel Guide";
+  },
 };
 </script>
 
@@ -18,11 +25,19 @@ export default {
 @import "../assets/scss/_variables.scss";
 
 .home {
-  padding: min(1.5rem, 4vw);
+  padding: min(2rem, 4vw);
 }
 .banner {
   position: relative;
-  img {
+  width: 100%;
+  height: min(300px, 40vw);
+  background-color: $c_light;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 1.5rem #00000011;
+  overflow: hidden;
+  &-img {
+    width: 100%;
+    height: 100%;
     object-position: center right;
     object-fit: contain;
   }

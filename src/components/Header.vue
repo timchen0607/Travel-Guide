@@ -1,53 +1,53 @@
 <template>
   <div class="header">
-    <div class="d-flex-between">
-      <h1><a href="/" class="header-logo">TRAVEL</a></h1>
+    <div class="df-between">
+      <a href="/" class="header-logo"></a>
       <button class="header-btn" @click="closeHeader">
         <i class="ico-rounded-left"></i>
       </button>
     </div>
-    <div class="select d-flex-center">
+    <div class="select df-center">
       <input type="text" class="select-input" placeholder="目的地" disabled />
       <button class="select-btn"><i class="ico-circled-up"></i></button>
     </div>
-    <div class="select d-flex-center">
+    <div class="select df-center">
       <input type="text" class="select-input" placeholder="搜尋關鍵字" />
       <button class="select-btn"><i class="ico-search-1"></i></button>
     </div>
     <hr class="hr" />
-    <h4 class="title-4">精選主題</h4>
-    <ul class="featured d-flex-around">
+    <h2 class="fz-md">精選主題</h2>
+    <ul class="featured df-around">
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
       <li class="featured-item active">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
       <li class="featured-item">
         <div class="featured-icon"><i class="icoTW-main-island"></i></div>
-        <h5 class="title-5">住宿推薦</h5>
+        <h5 class="fz-sm">住宿推薦</h5>
       </li>
     </ul>
   </div>
@@ -71,9 +71,7 @@ export default {
     display: block;
     width: 150px;
     height: 70px;
-    color: transparent;
     background: url(../assets/images/logo.png) no-repeat center center / contain;
-    user-select: none;
   }
   &-btn {
     font-size: 1.8rem;
@@ -119,9 +117,6 @@ export default {
   margin: 0;
   border: 1px solid $c_secondary;
 }
-.title-4 {
-  margin: 1.5rem 0;
-}
 .featured {
   flex-wrap: wrap;
   &-item {
@@ -151,7 +146,7 @@ export default {
     background-color: $c_Activity;
     border-radius: 50%;
   }
-  .title-5 {
+  .fz-sm {
     text-align: center;
   }
 }
