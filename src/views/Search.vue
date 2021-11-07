@@ -2,7 +2,7 @@
   <div>
     <div v-for="item in result" :key="item.ID">
       <p>{{ item.ID }}</p>
-      <a :href="`http://localhost:8080/D/${item.ID}`">{{ item.Name }}</a>
+      <router-link :to="`/D/${item.ID}/`" v-text="item.Name"></router-link>
     </div>
   </div>
 </template>

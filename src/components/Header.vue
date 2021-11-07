@@ -230,6 +230,7 @@ export default {
         name: "Search",
         params: { city: props.city, page: 1, keyword: key },
       });
+      props.closeHeader();
     };
 
     return {
