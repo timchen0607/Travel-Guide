@@ -16,13 +16,6 @@
         <i class="ico-clock-time"></i>
         <i class="ico-ui-touch-phone"></i>
         <i class="ico-location-pin"></i>
-        <i class="ico-heart"></i>
-      </div>
-      <div>
-        <input type="radio" value="ScenicSpot" v-model="mode" />ScenicSpot
-        <input type="radio" value="Restaurant" v-model="mode" />Restaurant
-        <input type="radio" value="Hotel" v-model="mode" />Hotel
-        <input type="radio" value="Activity" v-model="mode" />Activity
       </div>
     </header>
     <div class="box">
@@ -42,18 +35,13 @@
             <a
               href="https://www.figma.com/file/fnHynjl6HHHCcqay2C4KVn"
               target="_blank"
-              class="foot-creater"
             >
               jhen
             </a>
           </p>
           <p>
             Front-end：
-            <a
-              href="https://github.com/timchen0607"
-              target="_blank"
-              class="foot-creater"
-            >
+            <a href="https://github.com/timchen0607" target="_blank">
               Tim Chen
             </a>
           </p>
@@ -187,13 +175,6 @@ export default {
     .icoTW-main-island {
       font-size: 1.5rem;
       margin-right: 0.5rem;
-    }
-    &-creater {
-      color: $c_light;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
     }
     &-ptx {
       width: 80px;

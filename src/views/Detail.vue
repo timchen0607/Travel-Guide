@@ -1,63 +1,88 @@
 <template>
-  <div class="detail" v-if="detail">
+  <div class="detail" v-if="dtl">
     <div class="detail-title df-between">
       <div class="df-between">
         <button class="detail-btn">
           <i class="ico-rounded-left"></i>
         </button>
-        <h1 class="fz-xxl" v-text="detail.Name"></h1>
+        <h1 class="fz-xxl" v-text="dtl.Name"></h1>
       </div>
       <div>
+        <button class="detail-btn"><i class="ico-heart"></i></button>
         <button class="detail-btn"><i class="ico-print"></i></button>
         <button class="detail-btn"><i class="ico-share"></i></button>
       </div>
     </div>
-    <Banner :pic="detail.Picture" :name="detail.Name" />
+    <Banner :pic="dtl.Picture" :name="dtl.Name" />
 
     <h2 class="fz-md c-main">
       <i class="ico-info-square"></i>
-      <span v-text="' ' + detail.modeName + '資訊'"></span>
+      <span v-text="' ' + dtl.modeName + '資訊'"></span>
     </h2>
     <div class="detail-info bdrs-sm">
-      <p v-text="detail.Address"></p>
-      <p v-text="detail.Phone"></p>
-      <p v-text="detail.OpenTime"></p>
-      <!-- <p v-text="detail.WebsiteUrl"></p> -->
-      <p v-text="detail.Class"></p>
-      <p v-text="detail.Position"></p>
-      <hr />
-      <p v-text="detail.TravelInfo"></p>
-      <p v-text="detail.OpenTime"></p>
-      <p v-text="detail.ParkingPosition"></p>
-      <p v-text="detail.TicketInfo"></p>
-      <p v-text="detail.Remarks"></p>
-      <hr />
-      <p v-text="detail.ParkingInfo"></p>
-      <hr />
-      <p v-text="detail.Location"></p>
-      <p v-text="detail.Organizer"></p>
-      <p v-text="detail.StartTime"></p>
-      <p v-text="detail.EndTime"></p>
-      <p v-text="detail.Cycle"></p>
-      <p v-text="detail.Class1"></p>
-      <p v-text="detail.Class2"></p>
+      <p v-text="`活動日期：${dtl.Date}`" v-if="dtl.Date"></p>
+      <p v-if="!dtl.Date && dtl.StartTime">
+        <span>活動期間：</span>
+        <span v-text="dtl.StartTime + ' ~ '"></span>
+        <span v-text="dtl.EndTime"></span>
+      </p>
+      <p v-text="`開放時段：${dtl.OpenTime}`" v-if="dtl.OpenTime"></p>
+      <p v-text="`門票費用：${dtl.TicketInfo}`" v-if="dtl.TicketInfo"></p>
+      <p v-if="dtl.Address">
+        <span v-text="`${dtl.modeName}地點：`"></span>
+        <span v-text="`${dtl.Location} `" v-if="dtl.Location"></span>
+        <span v-text="dtl.Address"></span>
+      </p>
+      <p v-if="dtl.Phone">
+        <span>連絡電話：</span>
+        <a :href="`tel:${dtl.Phone}`" v-text="dtl.Phone"></a>
+      </p>
+      <p v-if="dtl.WebsiteUrl">
+        <span>官方網站：</span>
+        <a :href="dtl.WebsiteUrl" target="_blank">點我前往</a>
+      </p>
+      <p v-text="`舉辦單位：${dtl.Organizer}`" v-if="dtl.Organizer"></p>
+      <p v-text="`備註說明：${dtl.Cycle}`" v-if="dtl.Cycle"></p>
+      <p v-if="dtl.Class || dtl.Class1 || dtl.Class2">
+        <span v-text="`${dtl.modeName}標籤：`"></span>
+        <a
+          href="#"
+          class="detail-tag bdrs-sm"
+          v-text="dtl.Class"
+          v-if="dtl.Class"
+        ></a>
+        <a
+          href="#"
+          class="detail-tag bdrs-sm"
+          v-text="dtl.Class1"
+          v-if="dtl.Class1"
+        ></a>
+        <a
+          href="#"
+          class="detail-tag bdrs-sm"
+          v-text="dtl.Class2"
+          v-if="dtl.Class2"
+        ></a>
+      </p>
     </div>
     <h2 class="fz-md c-main">
       <i class="ico-google-talk"></i>
-      <span v-text="' ' + detail.modeName + '介紹'"></span>
+      <span v-text="' ' + dtl.modeName + '介紹'"></span>
     </h2>
     <pre
-      class="detail-desc"
-      v-text="detail.DescriptionDetail || detail.Description"
+      class="detail-pre"
+      v-text="dtl.DescriptionDetail || dtl.Description"
     ></pre>
     <h2 class="fz-md c-main"><i class="ico-bus"></i> 交通方式</h2>
+    <pre class="detail-pre" v-text="dtl.TravelInfo"></pre>
+    <pre class="detail-pre" v-text="dtl.ParkingInfo"></pre>
     <div class="bdrs-sm">
       <iframe
         width="100%"
         height="250"
         loading="lazy"
         v-if="mode === 'Activity'"
-        :src="`https://maps.google.com/maps?q=${detail.Position.PositionLat},${detail.Position.PositionLon}&hl=zh-TW&z=16&amp;output=embed`"
+        :src="`https://maps.google.com/maps?q=${dtl.Position.PositionLat},${dtl.Position.PositionLon}&hl=zh-TW&z=16&amp;output=embed`"
       >
       </iframe>
       <iframe
@@ -65,7 +90,7 @@
         height="250"
         loading="lazy"
         v-else
-        :src="`https://maps.google.com/maps?q=${detail.Name.split('').join(
+        :src="`https://maps.google.com/maps?q=${dtl.Name.split('').join(
           '+'
         )}&hl=zh-TW&z=16&amp;output=embed`"
       >
@@ -94,25 +119,33 @@ export default {
   setup(props) {
     const route = useRoute();
     const ID = computed(() => route.params.ID);
-    const detail = ref(null);
+    const dtl = ref(null);
     const loadData = () => {
       if (!ID.value) return;
       getDetail(ID.value).then((res) => {
         res[0].modeName = ref(getMode(res[0].ID));
-        res[0].Description = res[0].Description.split("。").join("。\n\n");
+        if (res[0].Description)
+          res[0].Description = res[0].Description.split("。").join("。\n\n");
         if (res[0].DescriptionDetail)
           res[0].DescriptionDetail =
             res[0].DescriptionDetail.split("。").join("。\n\n");
-        detail.value = res[0];
-        props.setMode(getMode(detail.value.ID, true));
-        document.title = detail.value.Name + " - Travel Guide";
+        if (res[0].TravelInfo)
+          res[0].TravelInfo = res[0].TravelInfo.split("。").join("。\n\n");
+        if (res[0].ParkingInfo)
+          res[0].ParkingInfo = res[0].ParkingInfo + "\n\n";
+        if (res[0].StartTime) res[0].StartTime = res[0].StartTime.split("T")[0];
+        if (res[0].EndTime) res[0].EndTime = res[0].EndTime.split("T")[0];
+        if (res[0].StartTime === res[0].EndTime) res[0].Date = res[0].EndTime;
+        dtl.value = res[0];
+        props.setMode(getMode(dtl.value.ID, true));
+        document.title = dtl.value.Name + " - Travel Guide";
       });
     };
 
     loadData();
     watch(ID, () => loadData());
 
-    return { detail, getMode };
+    return { dtl, getMode };
   },
 };
 </script>
@@ -147,10 +180,27 @@ export default {
   &-info {
     padding: 1rem;
     background: linear-gradient(to right, #ffffffdd, #ffffffdd), $c_main;
+    > p {
+      margin-left: 5em;
+      text-indent: -5em;
+    }
   }
-  &-desc {
+  &-pre {
+    padding: 0 1rem;
     text-align: justify;
     white-space: pre-line;
+  }
+  &-tag {
+    margin: 0 0.3rem;
+    padding: 0.2rem 0.5rem 0.3rem;
+    line-height: 3rem;
+    color: $c_dark;
+    background-color: $c_main;
+    text-decoration: none;
+    transition: color 0.5s;
+    &:hover {
+      color: $c_light;
+    }
   }
 }
 </style>
