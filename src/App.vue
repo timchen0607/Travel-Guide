@@ -1,12 +1,7 @@
 <template>
   <div class="container">
     <header :class="['head', 'shadow', { show: headerShow }]">
-      <Header
-        :closeHeader="closeHeader"
-        :setMode="setMode"
-        :city="city"
-        :setCity="setCity"
-      />
+      <Header :closeHeader="closeHeader" :city="city" :setCity="setCity" />
     </header>
     <div class="box">
       <nav class="nav shadow">

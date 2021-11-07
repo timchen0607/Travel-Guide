@@ -23,9 +23,9 @@ const getTravelInfo = (mode, city, page = 1, keyword = null) => {
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
   url += `&$select=ID,Name,Address,Picture`;
   if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
-  if (mode === "Activity") url += ",Class1,Class2";
   if (mode === "Restaurant") url += ",Class,OpenTime";
   if (mode === "Hotel") url += ",Class";
+  if (mode === "Activity") url += ",Class1,Class2";
   url += `&$filter=Picture/PictureUrl1 ne null`;
   if (keyword) {
     let filter = "";
@@ -49,7 +49,11 @@ const getTravelInfo = (mode, city, page = 1, keyword = null) => {
 const getNearbyInfo = (mode, lat, lon, page = 1) => {
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
-  url += `&$select=ID,Name,Description,Address,Picture`;
+  url += `&$select=ID,Name,Address,Picture`;
+  if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
+  if (mode === "Restaurant") url += ",Class,OpenTime";
+  if (mode === "Hotel") url += ",Class";
+  if (mode === "Activity") url += ",Class1,Class2";
   if (mode !== "ScenicSpot") url += ",Class";
   if (mode === "Activity") url += "1,Class2";
   url += `&$spatialFilter=nearby(${lat},${lon},50000)`;

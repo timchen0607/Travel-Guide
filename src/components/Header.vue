@@ -29,7 +29,7 @@
       <h3 class="fz-md drowdown-title">北部地區</h3>
       <span
         :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityN"
+        v-for="(item, key) in cityGroup.cityN"
         :key="key"
         v-text="item"
         @click="setCity(key)"
@@ -37,7 +37,7 @@
       <h3 class="fz-md drowdown-title">中部地區</h3>
       <span
         :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityC"
+        v-for="(item, key) in cityGroup.cityC"
         :key="key"
         v-text="item"
         @click="setCity(key)"
@@ -45,7 +45,7 @@
       <h3 class="fz-md drowdown-title">南部地區</h3>
       <span
         :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityS"
+        v-for="(item, key) in cityGroup.cityS"
         :key="key"
         v-text="item"
         @click="setCity(key)"
@@ -53,7 +53,7 @@
       <h3 class="fz-md drowdown-title">東部地區</h3>
       <span
         :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityE"
+        v-for="(item, key) in cityGroup.cityE"
         :key="key"
         v-text="item"
         @click="setCity(key)"
@@ -61,7 +61,7 @@
       <h3 class="fz-md drowdown-title">離島地區</h3>
       <span
         :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityO"
+        v-for="(item, key) in cityGroup.cityO"
         :key="key"
         v-text="item"
         @click="setCity(key)"
@@ -71,7 +71,7 @@
       <input
         type="text"
         class="textbox-input"
-        placeholder="多筆關鍵字用 空格 格開"
+        placeholder="多筆資料用空格格開(選填)"
         v-model="keyword"
         @keypress.enter="goSearch('', keyword.split(' ').join())"
       />
@@ -82,6 +82,39 @@
         <i class="ico-search-1"></i>
       </button>
     </div>
+    <div class="df-around">
+      <span
+        :class="['searchMode bdrs-sm', { active: searchMode === 'ScenicSpot' }]"
+        @click="searchMode = 'ScenicSpot'"
+      >
+        景點
+      </span>
+      <span
+        :class="['searchMode bdrs-sm', { active: searchMode === 'Restaurant' }]"
+        @click="searchMode = 'Restaurant'"
+      >
+        餐飲
+      </span>
+      <span
+        :class="['searchMode bdrs-sm', { active: searchMode === 'Hotel' }]"
+        @click="searchMode = 'Hotel'"
+      >
+        旅宿
+      </span>
+      <span
+        :class="['searchMode bdrs-sm', { active: searchMode === 'Activity' }]"
+        @click="searchMode = 'Activity'"
+      >
+        活動
+      </span>
+    </div>
+    <button
+      class="searchBtn fz-md bdrs-sm"
+      @click="goSearch('', keyword.split(' ').join())"
+    >
+      <i class="ico-search-1"></i>
+      <span> 開始搜尋</span>
+    </button>
     <hr class="hr" />
     <h3 class="fz-md">精選主題</h3>
     <ul class="theme df-around">
@@ -175,7 +208,6 @@ export default {
   name: "App",
   props: {
     closeHeader: Function,
-    setMode: Function,
     city: String,
     setCity: Function,
   },
@@ -212,6 +244,13 @@ export default {
       KinmenCounty: "金門",
       LienchiangCounty: "連江",
     };
+    const cityGroup = {
+      cityN,
+      cityC,
+      cityS,
+      cityE,
+      cityO,
+    };
     const cityMap = {
       Taiwan: "臺灣",
       ...cityN,
@@ -223,25 +262,23 @@ export default {
     const cityName = computed(() => cityMap[props.city]);
     const openCity = ref(false);
     const keyword = ref("");
+    const searchMode = ref("ScenicSpot");
     const router = useRouter();
     const goSearch = (mode, key) => {
-      if (mode) props.setMode(mode);
+      mode = mode || searchMode.value;
       router.replace({
         name: "Search",
-        params: { city: props.city, page: 1, keyword: key },
+        params: { mode: mode, city: props.city, page: 1, keyword: key },
       });
       props.closeHeader();
     };
 
     return {
-      cityN,
-      cityC,
-      cityS,
-      cityE,
-      cityO,
+      cityGroup,
       cityName,
       openCity,
       keyword,
+      searchMode,
       goSearch,
     };
   },
@@ -288,7 +325,7 @@ export default {
 .select,
 .textbox {
   flex-wrap: nowrap;
-  margin: 1.5rem 0;
+  margin-top: 1.5rem;
   padding: 0.5rem 0.75rem;
   background-color: $c_secondary-light;
   border: 1px solid $c_secondary;
@@ -365,6 +402,32 @@ export default {
       color: $c_light;
       background-color: $c_main;
     }
+  }
+}
+.searchMode {
+  margin: 1rem 0;
+  padding: 0.1rem 0.5rem;
+  color: $c_main;
+  border: 1px solid $c_main;
+  cursor: pointer;
+  &:hover,
+  &.active {
+    color: $c_light;
+    background-color: $c_main;
+  }
+}
+.searchBtn {
+  display: none;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  color: $c_light;
+  background-color: $c_main;
+  border: none;
+  outline: none;
+  @include pad {
+    display: block;
   }
 }
 .hr {

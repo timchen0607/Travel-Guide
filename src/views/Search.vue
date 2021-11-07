@@ -10,26 +10,34 @@
       <h1 class="banner-text" v-text="params.keyword.split(',').join(' ')"></h1>
     </div>
     <div class="mode">
-      <span
+      <router-link
+        :to="`/ScenicSpot/${params.city}/${params.page}/${params.keyword}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
-        @click="setMode('ScenicSpot')"
-        >景點</span
+        replace
       >
-      <span
+        景點
+      </router-link>
+      <router-link
+        :to="`/Restaurant/${params.city}/${params.page}/${params.keyword}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
-        @click="setMode('Restaurant')"
-        >餐飲</span
+        replace
       >
-      <span
+        餐飲
+      </router-link>
+      <router-link
+        :to="`/Hotel/${params.city}/${params.page}/${params.keyword}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
-        @click="setMode('Hotel')"
-        >旅宿</span
+        replace
       >
-      <span
+        旅宿
+      </router-link>
+      <router-link
+        :to="`/Activity/${params.city}/${params.page}/${params.keyword}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
-        @click="setMode('Activity')"
-        >活動</span
+        replace
       >
+        活動
+      </router-link>
     </div>
     <div class="df-around">
       <router-link
@@ -99,22 +107,21 @@ export default {
     const getSearch = () => {
       if (!params.value.page) return;
       if (type.value === "Search") {
-        const { city, page, keyword } = params.value;
-        getTravelInfo(props.mode, city, page, keyword).then((res) => {
+        const { mode, city, page, keyword } = params.value;
+        props.setMode(mode);
+        getTravelInfo(mode, city, page, keyword).then((res) => {
           res.forEach((item) => {
             if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
             if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
             if (item.StartTime === item.EndTime) item.Date = item.EndTime;
           });
-
           result.value = res;
         });
       }
       if (type.value === "Nearby") {
-        const { lat, lon, page } = params.value;
-        getNearbyInfo(props.mode, lat, lon, page).then(
-          (res) => (result.value = res)
-        );
+        const { mode, lat, lon, page } = params.value;
+        props.setMode(mode);
+        getNearbyInfo(mode, lat, lon, page).then((res) => (result.value = res));
       }
     };
 
@@ -165,6 +172,7 @@ export default {
     padding: 0.3rem 0.8rem;
     color: $c_main;
     border: 1px solid $c_main;
+    text-decoration: none;
     cursor: pointer;
     &.active {
       color: $c_light;
