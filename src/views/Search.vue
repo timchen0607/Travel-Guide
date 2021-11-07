@@ -9,7 +9,11 @@
         alt="探索。福爾摩沙"
         title="探索。福爾摩沙"
       />
-      <h1 class="banner-text" v-text="params.keyword.split(',').join(' ')"></h1>
+      <h1
+        class="banner-text"
+        v-if="params.keyword"
+        v-text="params.keyword.split(',').join(' ')"
+      ></h1>
     </div>
     <div class="mode">
       <router-link
@@ -130,7 +134,10 @@ export default {
     };
 
     onMounted(() => getSearch());
-    watch(params, () => getSearch());
+    watch(
+      () => params.value,
+      () => getSearch()
+    );
 
     return { getImgUrl, params, result };
   },
