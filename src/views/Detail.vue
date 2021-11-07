@@ -14,14 +14,17 @@
     </div>
     <Banner :pic="detail.Picture" :name="detail.Name" />
 
-    <h2 class="fz-md c-main"><i class="ico-info-square"></i> 景點資訊</h2>
+    <h2 class="fz-md c-main">
+      <i class="ico-info-square"></i>
+      <span v-text="' ' + detail.modeName + '資訊'"></span>
+    </h2>
     <div class="detail-info bdrs-sm">
       <p v-text="detail.Address"></p>
       <p v-text="detail.Phone"></p>
       <p v-text="detail.OpenTime"></p>
       <!-- <p v-text="detail.WebsiteUrl"></p> -->
       <p v-text="detail.Class"></p>
-      <!-- <p v-text="detail.Position"></p> -->
+      <p v-text="detail.Position"></p>
       <hr />
       <p v-text="detail.TravelInfo"></p>
       <p v-text="detail.OpenTime"></p>
@@ -39,19 +42,34 @@
       <p v-text="detail.Class1"></p>
       <p v-text="detail.Class2"></p>
     </div>
-    <h2 class="fz-md c-main"><i class="ico-google-talk"></i> 景點介紹</h2>
+    <h2 class="fz-md c-main">
+      <i class="ico-google-talk"></i>
+      <span v-text="' ' + detail.modeName + '介紹'"></span>
+    </h2>
     <pre
       class="detail-desc"
-      v-text="breakLine(detail.DescriptionDetail || detail.Description)"
+      v-text="detail.DescriptionDetail || detail.Description"
     ></pre>
     <h2 class="fz-md c-main"><i class="ico-bus"></i> 交通方式</h2>
     <div class="bdrs-sm">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115631.41940957474!2d121.49146123632156!3d25.085545136346695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ac6b61dbbd8b%3A0xbcd1baad5c06a482!2z5Y-w5YyX5biC!5e0!3m2!1szh-TW!2stw!4v1636258425859!5m2!1szh-TW!2stw"
         width="100%"
-        height="300"
+        height="250"
         loading="lazy"
-      ></iframe>
+        v-if="mode === 'Activity'"
+        :src="`https://maps.google.com/maps?q=${detail.Position.PositionLat},${detail.Position.PositionLon}&hl=zh-TW&z=16&amp;output=embed`"
+      >
+      </iframe>
+      <iframe
+        width="100%"
+        height="250"
+        loading="lazy"
+        v-else
+        :src="`https://maps.google.com/maps?q=${detail.Name.split('').join(
+          '+'
+        )}&hl=zh-TW&z=16&amp;output=embed`"
+      >
+      </iframe>
     </div>
     <h2 class="fz-md c-sce"><i class="ico-beach"></i> 查看鄰近的景點</h2>
     <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h2>
@@ -63,34 +81,38 @@
 <script>
 import { computed, ref, watch } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
-import { getDetail } from "../modules.js";
+import { getDetail, getMode } from "../modules.js";
 import Banner from "../components/Banner.vue";
 
 export default {
   name: "Detail",
   props: {
     mode: String,
+    setMode: Function,
   },
   components: { Banner },
-  setup() {
+  setup(props) {
     const route = useRoute();
     const ID = computed(() => route.params.ID);
     const detail = ref(null);
-    const breakLine = (str) => str.split("。").join("。\n\n");
-
-    getDetail(ID.value).then((res) => {
-      detail.value = res[0];
-      document.title = detail.value.Name + " - Travel Guide";
-    });
-    watch(ID, () => {
+    const loadData = () => {
       if (!ID.value) return;
       getDetail(ID.value).then((res) => {
+        res[0].modeName = ref(getMode(res[0].ID));
+        res[0].Description = res[0].Description.split("。").join("。\n\n");
+        if (res[0].DescriptionDetail)
+          res[0].DescriptionDetail =
+            res[0].DescriptionDetail.split("。").join("。\n\n");
         detail.value = res[0];
+        props.setMode(getMode(detail.value.ID, true));
         document.title = detail.value.Name + " - Travel Guide";
       });
-    });
+    };
 
-    return { ID, detail, breakLine };
+    loadData();
+    watch(ID, () => loadData());
+
+    return { detail, getMode };
   },
 };
 </script>

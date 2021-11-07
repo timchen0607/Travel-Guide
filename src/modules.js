@@ -45,16 +45,17 @@ const getNearbyInfo = (mode, lat, lon, page = 1) => {
 
 // 取得單筆資料
 const getDetail = (ID) => {
-  const classID = ID.split("_")[0];
-  let mode = null;
-  if (classID === "C1") mode = "ScenicSpot";
-  else if (classID === "C2") mode = "Activity";
-  else if (classID === "C3") mode = "Restaurant";
-  else if (classID === "C4") mode = "Hotel";
-  else throw new Error("Wrong parameter.");
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
-  url += `${mode}/?$filter=ID eq '${ID}'&$format=JSON`;
+  url += `${getMode(ID, true)}/?$filter=ID eq '${ID}'&$format=JSON`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
+};
+
+const getMode = (ID, en) => {
+  const tag = ID.split("_")[0];
+  if (tag === "C1") return en ? "ScenicSpot" : "景點";
+  if (tag === "C2") return en ? "Activity" : "活動";
+  if (tag === "C3") return en ? "Restaurant" : "餐飲";
+  if (tag === "C4") return en ? "Hotel" : "旅宿";
 };
 
 // 資料篩選功能
@@ -69,4 +70,4 @@ const dataFilter = (arr, count = 4) => {
   return result;
 };
 
-export { getTravelInfo, getNearbyInfo, getDetail, dataFilter };
+export { getTravelInfo, getNearbyInfo, getDetail, getMode, dataFilter };

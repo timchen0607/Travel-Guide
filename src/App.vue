@@ -7,8 +7,8 @@
         <router-link to="/Taiwan/1/">Search1</router-link> |
         <router-link to="/Taiwan/1/游泳/">Search2</router-link> |
         <router-link to="/23.7083775/120.398561/1/"> Search3 </router-link> |
-        <router-link to="/D/C3_315081000H_020111">Detail1</router-link> |
-        <router-link to="/D/C1_315080500H_000068">Detail2</router-link> |
+        <router-link to="/D/C1_315080500H_000068">Detail1</router-link> |
+        <router-link to="/D/C3_315081000H_020111">Detail2</router-link> |
         <router-link to="/D/C4_315080000H_000539">Detail3</router-link> |
         <router-link to="/D/C2_315080000H_080485">Detail4</router-link>
       </div>
@@ -33,7 +33,7 @@
         <p class="nav-logo"></p>
         <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
-      <router-view :mode="mode" />
+      <router-view :mode="mode" :setMode="setMode" />
       <footer class="foot df-around">
         <p><i class="icoTW-main-island"></i>TAIWAN TRAVEL</p>
         <div>
@@ -71,8 +71,8 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import Header from "./components/Header.vue";
 import { watch } from "@vue/runtime-core";
+import Header from "./components/Header.vue";
 
 export default {
   name: "App",
@@ -81,7 +81,7 @@ export default {
     const headerShow = ref(false);
     const closeHeader = () => (headerShow.value = false);
     const mode = ref("ScenicSpot");
-
+    const setMode = (m) => (mode.value = m);
     watch(
       () => mode.value,
       () => {
@@ -98,7 +98,7 @@ export default {
       }
     );
 
-    return { headerShow, mode, closeHeader };
+    return { headerShow, closeHeader, mode, setMode };
   },
 };
 </script>
