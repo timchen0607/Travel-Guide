@@ -15,6 +15,7 @@
           :src="pic['PictureUrl' + i]"
           :alt="pic['PictureDescription' + i] || name"
           :title="pic['PictureDescription' + i] || name"
+          onerror="this.style.display='none'"
         />
       </li>
     </ul>
@@ -116,7 +117,8 @@ export default {
     width: inherit;
     height: inherit;
     margin: 0;
-    background-color: $c_light;
+    background: url(../assets/images/logo.png) no-repeat center center / 30%,
+      $c_light;
     @for $i from 1 through 3 {
       &:nth-of-type(#{$i}) {
         left: ($i - 1) * 100%;

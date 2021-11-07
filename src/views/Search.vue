@@ -14,6 +14,7 @@
             class="card-img"
             :src="item.Picture.PictureUrl1"
             :alt="item.Picture.PictureDescription1 || item.Name"
+            onerror="this.style.display='none'"
           />
         </div>
         <div class="card-content">
@@ -123,6 +124,8 @@ export default {
   &-box {
     width: 100%;
     height: 200px;
+    background: url(../assets/images/logo.png) no-repeat center center / 50%,
+      $c_light;
     overflow: hidden;
   }
   &-img {
