@@ -3,7 +3,7 @@
     <div class="banner shadow">
       <img
         class="banner-img"
-        src="../assets/images/banner_home.png"
+        src="../assets/images/banner_Home.png"
         alt="探索。福爾摩沙"
         title="探索。福爾摩沙"
       />

@@ -1,9 +1,11 @@
 <template>
   <div class="search">
+    {{}}
+
     <div class="banner shadow">
       <img
         class="banner-img"
-        src="../assets/images/banner_hotel.png"
+        :src="getImgUrl(mode)"
         alt="探索。福爾摩沙"
         title="探索。福爾摩沙"
       />
@@ -100,6 +102,8 @@ export default {
     setMode: Function,
   },
   setup(props) {
+    const getImgUrl = (pic) =>
+      require("../assets/images/banner_" + pic + ".png");
     const route = useRoute();
     const params = computed(() => route.params);
     const result = ref(null);
@@ -128,7 +132,7 @@ export default {
     onMounted(() => getSearch());
     watch(params, () => getSearch());
 
-    return { params, result };
+    return { getImgUrl, params, result };
   },
 };
 </script>
@@ -149,15 +153,17 @@ export default {
   &-img {
     width: 100%;
     height: 100%;
-    object-position: center center;
+    object-position: center left;
     object-fit: cover;
   }
   &-text {
     position: absolute;
     top: 70%;
     left: 1em;
+    color: $c_light;
     font-size: min(4rem, 5vw);
     font-weight: bold;
+    text-shadow: 0 0 1rem #00000099;
     transform: translateY(-50%);
   }
 }
