@@ -1,7 +1,36 @@
 <template>
   <div class="search">
-    <h1 class="fz-xxl" v-text="params.keyword.split(',').join(' ')"></h1>
-
+    <div class="banner shadow">
+      <img
+        class="banner-img"
+        src="../assets/images/banner_hotel.png"
+        alt="探索。福爾摩沙"
+        title="探索。福爾摩沙"
+      />
+      <h1 class="banner-text" v-text="params.keyword.split(',').join(' ')"></h1>
+    </div>
+    <div class="mode">
+      <span
+        :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
+        @click="setMode('ScenicSpot')"
+        >景點</span
+      >
+      <span
+        :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
+        @click="setMode('Restaurant')"
+        >餐飲</span
+      >
+      <span
+        :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
+        @click="setMode('Hotel')"
+        >旅宿</span
+      >
+      <span
+        :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
+        @click="setMode('Activity')"
+        >活動</span
+      >
+    </div>
     <div class="df-around">
       <router-link
         :to="`/D/${item.ID}/`"
@@ -60,6 +89,7 @@ export default {
   name: "Search",
   props: {
     mode: String,
+    setMode: Function,
   },
   setup(props) {
     const route = useRoute();
@@ -101,6 +131,46 @@ export default {
 
 .search {
   padding: min(2rem, 4vw);
+}
+.banner {
+  position: relative;
+  width: 100%;
+  height: min(300px, 40vw);
+  background-color: $c_light;
+  border-radius: 1rem;
+  overflow: hidden;
+  &-img {
+    width: 100%;
+    height: 100%;
+    object-position: center center;
+    object-fit: cover;
+  }
+  &-text {
+    position: absolute;
+    top: 70%;
+    left: 1em;
+    font-size: min(4rem, 5vw);
+    font-weight: bold;
+    transform: translateY(-50%);
+  }
+}
+.mode {
+  margin: 1.5rem 0;
+  @include pad {
+    text-align: center;
+  }
+  &-btn {
+    display: inline-block;
+    margin: 0 min(0.5rem, 1.5vw);
+    padding: 0.3rem 0.8rem;
+    color: $c_main;
+    border: 1px solid $c_main;
+    cursor: pointer;
+    &.active {
+      color: $c_light;
+      background-color: $c_main;
+    }
+  }
 }
 .card {
   flex-direction: column;
