@@ -12,7 +12,10 @@
           v-if="params.keyword"
           v-text="params.keyword.split(',').join(' ')"
         ></span>
-        <span v-else v-text="params.city.replace(/[A-Z]/g, '\ $&')"></span>
+        <span
+          v-if="params.city"
+          v-text="params.city.replace(/[A-Z]/g, '\ $&')"
+        ></span>
       </h1>
     </div>
     <div class="mode">
@@ -156,9 +159,15 @@ export default {
       if (type.value === "Nearby") {
         const { mode, lat, lon } = params.value;
         props.setMode(mode);
-        getNearbyInfo(mode, lat, lon, pageIdx.value).then(
-          (res) => (result.value = { ...result.value, ...res })
-        );
+        getNearbyInfo(mode, lat, lon, pageIdx.value).then((res) => {
+          if (res.length < 18) loadBtn.value = false;
+          res.forEach((item) => {
+            if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
+            if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
+            if (item.StartTime === item.EndTime) item.Date = item.EndTime;
+          });
+          result.value.push(...res);
+        });
       }
       pageIdx.value += 1;
     };

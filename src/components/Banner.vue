@@ -55,7 +55,7 @@ export default {
 
     onMounted(() => {
       document.querySelectorAll(".banner-radio")[0].checked = true;
-      setInterval(() => {
+      const switchFun = () => {
         if (move.value) {
           move.value = false;
           return;
@@ -65,7 +65,10 @@ export default {
         res.forEach((item, index) => {
           item.checked = idx.value === index ? true : false;
         });
-      }, 5000);
+      };
+      let autoSwitch = setInterval(switchFun, 5000);
+      clearInterval(autoSwitch);
+      autoSwitch = setInterval(switchFun, 5000);
     });
 
     watch(
@@ -77,7 +80,7 @@ export default {
         });
         document.querySelectorAll(".banner-radio")[0].checked = true;
         idx.value = 0;
-        move.value = false;
+        move.value = true;
       }
     );
 
