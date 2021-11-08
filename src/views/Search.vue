@@ -18,7 +18,7 @@
         ></span>
       </h1>
     </div>
-    <div class="mode">
+    <div class="mode" v-if="type === 'Search'">
       <router-link
         :to="`/ScenicSpot/${params.city}/${params.keyword || ''}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
@@ -42,6 +42,36 @@
       </router-link>
       <router-link
         :to="`/Activity/${params.city}/${params.keyword || ''}`"
+        :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
+        replace
+      >
+        活動
+      </router-link>
+    </div>
+    <div class="mode" v-else>
+      <router-link
+        :to="`/ScenicSpot/${params.lat}/${params.lon}`"
+        :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
+        replace
+      >
+        景點
+      </router-link>
+      <router-link
+        :to="`/Restaurant/${params.lat}/${params.lon}`"
+        :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
+        replace
+      >
+        餐飲
+      </router-link>
+      <router-link
+        :to="`/Hotel/${params.lat}/${params.lon}`"
+        :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
+        replace
+      >
+        旅宿
+      </router-link>
+      <router-link
+        :to="`/Activity/${params.lat}/${params.lon}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
         replace
       >
@@ -138,8 +168,8 @@ export default {
       require("../assets/images/banner_" + pic + ".png");
     const route = useRoute();
     const params = computed(() => route.params);
-    const result = ref([]);
     const type = computed(() => (params.value.city ? "Search" : "Nearby"));
+    const result = ref([]);
     const pageIdx = ref(1);
     const loadData = () => {
       if (!params.value.mode) return;
@@ -175,7 +205,7 @@ export default {
 
     onMounted(() => loadData());
 
-    return { getImgUrl, params, result, loadData, loadBtn };
+    return { getImgUrl, params, type, result, loadData, loadBtn };
   },
 };
 </script>

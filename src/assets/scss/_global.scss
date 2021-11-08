@@ -190,7 +190,7 @@ a {
   }
   &-content {
     flex: 1;
-    padding: min(0.8rem, 1.5vw);
+    padding: min(1rem, 2vw);
     background-color: $c_light;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -198,7 +198,7 @@ a {
   }
   &-title {
     margin-bottom: min(1rem, 3vw);
-    font-size: min(1.3rem, 3vw);
+    font-size: min(1.3rem, 6vw);
     font-weight: bold;
   }
   &-text {
