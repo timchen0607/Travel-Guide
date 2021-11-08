@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="df-between header-main">
-      <a href="/" class="header-logo"></a>
+      <router-link to="/" class="header-logo"></router-link>
       <button class="header-btn" @click="closeHeader">
         <i class="ico-rounded-left"></i>
       </button>

@@ -4,14 +4,16 @@
       <img
         class="banner-img"
         :src="getImgUrl(mode)"
-        alt="探索。福爾摩沙"
-        title="探索。福爾摩沙"
+        alt="Travel Guide"
+        title="Travel Guide"
       />
-      <h1
-        class="banner-text"
-        v-if="params.keyword"
-        v-text="params.keyword.split(',').join(' ')"
-      ></h1>
+      <h1 class="banner-text">
+        <span
+          v-if="params.keyword"
+          v-text="params.keyword.split(',').join(' ')"
+        ></span>
+        <span v-else v-text="params.city.replace(/[A-Z]/g, '\ $&')"></span>
+      </h1>
     </div>
     <div class="mode">
       <router-link

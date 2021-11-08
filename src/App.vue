@@ -8,7 +8,7 @@
         <button class="nav-btn show" @click="headerShow = true">
           <i class="ico-settings"></i>
         </button>
-        <p class="nav-logo"></p>
+        <router-link to="/" class="nav-logo"></router-link>
         <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
       <router-view :mode="mode" :setMode="setMode" :city="city" />
