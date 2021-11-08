@@ -113,6 +113,9 @@
         </div>
       </router-link>
     </div>
+    <button class="loadBtn fz-md bdrs-sm" @click="loadData" v-if="loadBtn">
+      載入更多
+    </button>
   </div>
 </template>
 
@@ -132,36 +135,46 @@ export default {
       require("../assets/images/banner_" + pic + ".png");
     const route = useRoute();
     const params = computed(() => route.params);
-    const result = ref(null);
+    const result = ref([]);
     const type = computed(() => (params.value.city ? "Search" : "Nearby"));
-    const getSearch = () => {
+    const pageIdx = ref(1);
+    const loadData = () => {
       if (!params.value.mode) return;
       if (type.value === "Search") {
-        const { mode, city, page, keyword } = params.value;
+        const { mode, city, keyword } = params.value;
         props.setMode(mode);
-        getTravelInfo(mode, city, page, keyword).then((res) => {
+        getTravelInfo(mode, city, pageIdx.value, keyword).then((res) => {
+          if (res.length === 0) loadBtn.value = false;
           res.forEach((item) => {
             if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
             if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
             if (item.StartTime === item.EndTime) item.Date = item.EndTime;
           });
-          result.value = res;
+          result.value.push(...res);
         });
       }
       if (type.value === "Nearby") {
-        const { mode, lat, lon, page } = params.value;
+        const { mode, lat, lon } = params.value;
         props.setMode(mode);
-        getNearbyInfo(mode, lat, lon, page).then((res) => (result.value = res));
+        getNearbyInfo(mode, lat, lon, pageIdx.value).then(
+          (res) => (result.value = { ...result.value, ...res })
+        );
       }
+      pageIdx.value += 1;
     };
+    const loadBtn = ref(true);
 
-    onMounted(() => getSearch());
+    onMounted(() => loadData());
     watch(
       () => params.value,
-      () => getSearch()
+      () => {
+        pageIdx.value = 1;
+        result.value = [];
+        loadData();
+      }
     );
 
-    return { getImgUrl, params, result };
+    return { getImgUrl, params, result, loadData, loadBtn };
   },
 };
 </script>
@@ -213,6 +226,20 @@ export default {
       color: $c_light;
       background-color: $c_main;
     }
+  }
+}
+.loadBtn {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 4rem;
+  color: $c_main;
+  border: none;
+  outline: none;
+  transition: color 0.5s, background-color 0.5s;
+  cursor: pointer;
+  &:hover {
+    color: $c_light;
+    background-color: $c_main;
   }
 }
 </style>
