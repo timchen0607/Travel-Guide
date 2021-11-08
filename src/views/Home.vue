@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <div class="banner shadow">
-      <h1 class="banner-text">探索。<br />福爾摩沙</h1>
+      <h1 class="banner-text">
+        <span v-text="slogan[0]"></span><br />
+        <span v-text="slogan[1]"></span>
+      </h1>
     </div>
     <h2 class="fz-md c-sce"><i class="ico-beach"></i> 熱門景點</h2>
     <div class="hot">
@@ -37,7 +40,15 @@ export default {
   name: "Home",
   components: { Recommend },
   setup() {
-    const ranCity = ref([]);
+    const sloganLib = [
+      ["探索。", "福爾摩沙"],
+      ["尋找。", "山林秘境"],
+      ["體驗。", "節慶活動"],
+      ["發現。", "異國美食"],
+      ["徜徉。", "蔚藍大海"],
+      ["尋覓。", "文化古蹟"],
+    ];
+    const slogan = ref([]);
     const cityLib = [
       { key: "Taipei", name: "台北", icon: "postbox2" },
       { key: "NewTaipei", name: "新北", icon: "queens-head" },
@@ -62,6 +73,7 @@ export default {
       { key: "KinmenCounty", name: "金門", icon: "kinmen-island" },
       { key: "LienchiangCounty", name: "連江", icon: "jug" },
     ];
+    const ranCity = ref([]);
     const getImgUrl = (pic) => require("../assets/images/city_" + pic + ".jpg");
     const router = useRouter();
     const goSearch = (mode, city) =>
@@ -72,10 +84,11 @@ export default {
 
     onMounted(() => {
       document.title = "Travel Guide";
+      dataFilter(sloganLib, 1).then((res) => (slogan.value = res[0]));
       dataFilter(cityLib, 7).then((res) => (ranCity.value = res));
     });
 
-    return { ranCity, getImgUrl, goSearch };
+    return { slogan, ranCity, getImgUrl, goSearch };
   },
 };
 </script>
