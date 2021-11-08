@@ -62,14 +62,46 @@ a {
   flex-wrap: wrap;
   .card {
     width: 100%;
+    &:hover .card-content {
+      &::before {
+        right: 2rem;
+        bottom: 50%;
+        transform: rotate(330deg) translateY(3px);
+      }
+      &::after {
+        right: 2rem;
+        top: 50%;
+        transform: rotate(-330deg) translateY(-3px);
+      }
+    }
     &-box {
       width: 40%;
-      height: calc(160px - min(2rem, 5vw));
-      margin: min(1rem, 2.5vw);
+      height: calc(160px - min(1.6rem, 3vw));
+      margin: min(0.8rem, 1.5vw);
       border-radius: 0.5rem;
     }
     &-content {
+      position: relative;
       height: 160px;
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 3px;
+        height: 30px;
+        background-color: $c_Activity;
+        transition: right 0.5s, transform 0.5s;
+        @include mobile {
+          opacity: 0;
+        }
+      }
+      &::before {
+        bottom: 50%;
+      }
+      &::after {
+        top: 50%;
+      }
     }
     &-tag {
       background-color: $c_Activity;
@@ -105,20 +137,24 @@ a {
   }
   &-content {
     flex: 1;
-    padding: min(1rem, 1.5vw);
+    padding: min(0.8rem, 1.5vw);
     background-color: $c_light;
     box-sizing: border-box;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   &-title {
     margin-bottom: min(1rem, 3vw);
-    font-size: min(1.3rem, 2.5vw);
+    font-size: min(1.3rem, 3vw);
     font-weight: bold;
   }
   &-text {
     margin-left: 1.2em;
-    font-size: min(1rem, 2vw);
+    font-size: 1rem;
     text-indent: -1.2em;
+    @include mobile {
+      font-size: 0.8rem;
+    }
   }
   &-tag {
     margin: 0 0.2rem;
