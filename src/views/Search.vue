@@ -13,7 +13,7 @@
           v-text="params.keyword.split(',').join(' ')"
         ></span>
         <span
-          v-if="params.city"
+          v-if="params.city && !params.keyword"
           v-text="params.city.replace(/[A-Z]/g, '\ $&')"
         ></span>
       </h1>
