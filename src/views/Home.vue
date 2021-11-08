@@ -20,7 +20,9 @@
     </div>
     <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 品嚐美食</h2>
     <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 住宿推薦</h2>
+    <Recommend recMode="Hotel" amount="4" />
     <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 觀光活動</h2>
+    <Recommend recMode="Activity" amount="8" />
   </div>
 </template>
 
@@ -28,9 +30,11 @@
 import { onMounted, ref } from "@vue/runtime-core";
 import { dataFilter } from "../modules.js";
 import { useRouter } from "vue-router";
+import Recommend from "../components/Recommend.vue";
 
 export default {
   name: "Home",
+  components: { Recommend },
   setup() {
     const ranCity = ref([]);
     const cityLib = [
@@ -67,7 +71,7 @@ export default {
 
     onMounted(() => {
       document.title = "Travel Guide";
-      ranCity.value = dataFilter(cityLib, 7);
+      dataFilter(cityLib, 7).then((res) => (ranCity.value = res));
     });
 
     return { ranCity, getImgUrl, goSearch };

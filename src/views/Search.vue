@@ -1,7 +1,5 @@
 <template>
   <div class="search">
-    {{}}
-
     <div class="banner shadow">
       <img
         class="banner-img"
@@ -52,7 +50,7 @@
     <div class="df-around">
       <router-link
         :to="`/D/${item.ID}/`"
-        class="card df-center bdrs-xl"
+        class="card df-center bdrs-sm"
         v-for="item in result"
         :key="item.ID"
       >
@@ -122,7 +120,6 @@ export default {
         const { mode, city, page, keyword } = params.value;
         props.setMode(mode);
         getTravelInfo(mode, city, page, keyword).then((res) => {
-          console.log(res);
           res.forEach((item) => {
             if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
             if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];

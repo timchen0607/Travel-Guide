@@ -79,14 +79,16 @@ const getMode = (ID, en) => {
 
 // 資料篩選功能
 const dataFilter = (arr, count = 4) => {
-  const result = [];
-  for (let i = 0; i < count; i++) {
-    if (!arr.length) return;
-    const idx = Math.floor(Math.random() * arr.length);
-    result.push(arr[idx]);
-    arr.splice(idx, 1);
-  }
-  return result;
+  return new Promise((resolve) => {
+    const result = [];
+    for (let i = 0; i < count; i++) {
+      if (!arr.length) return;
+      const idx = Math.floor(Math.random() * arr.length);
+      result.push(arr[idx]);
+      arr.splice(idx, 1);
+    }
+    resolve(result);
+  });
 };
 
 export { getTravelInfo, getNearbyInfo, getDetail, getMode, dataFilter };
