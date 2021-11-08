@@ -1,7 +1,10 @@
 <template>
   <div class="detail" v-if="dtl">
     <div class="detail-title df-between">
-      <div class="df-between">
+      <div
+        class="df-between"
+        @click="hasHistory() ? $router.go(-1) : $router.push('/')"
+      >
         <button class="detail-btn">
           <i class="ico-rounded-left"></i>
         </button>
@@ -194,7 +197,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, watch } from "@vue/runtime-core";
+import { computed, onMounted, ref } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { getDetail, getMode } from "../modules.js";
 import Banner from "../components/Banner.vue";
@@ -209,6 +212,7 @@ export default {
   },
   components: { Banner, Recommend },
   setup(props) {
+    const hasHistory = () => window.history.length > 2;
     const route = useRoute();
     const ID = computed(() => route.params.ID);
     const dtl = ref(null);
@@ -236,9 +240,8 @@ export default {
     };
 
     onMounted(() => loadData());
-    watch(ID, () => loadData());
 
-    return { dtl, getMode };
+    return { hasHistory, dtl, getMode };
   },
 };
 </script>

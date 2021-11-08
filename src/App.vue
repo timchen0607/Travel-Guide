@@ -11,7 +11,12 @@
         <router-link to="/" class="nav-logo"></router-link>
         <button class="nav-btn"><i class="ico-settings"></i></button>
       </nav>
-      <router-view :mode="mode" :setMode="setMode" :city="city" />
+      <router-view
+        :mode="mode"
+        :setMode="setMode"
+        :city="city"
+        :key="$route.fullPath"
+      />
       <footer class="foot df-around">
         <p><i class="icoTW-main-island"></i>TAIWAN TRAVEL</p>
         <div>

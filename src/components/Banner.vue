@@ -36,7 +36,8 @@
 
 <script>
 import { computed, ref } from "@vue/reactivity";
-import { onMounted, watch } from "@vue/runtime-core";
+import { onMounted } from "@vue/runtime-core";
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
 
 export default {
   name: "Banner",
@@ -52,37 +53,30 @@ export default {
     });
     const idx = ref(0);
     const move = ref(false);
-
-    onMounted(() => {
-      document.querySelectorAll(".banner-radio")[0].checked = true;
-      const switchFun = () => {
-        if (move.value) {
-          move.value = false;
-          return;
-        }
-        idx.value = idx.value >= count.value - 1 ? 0 : idx.value + 1;
-        const res = document.querySelectorAll(".banner-radio");
-        res.forEach((item, index) => {
-          item.checked = idx.value === index ? true : false;
-        });
-      };
-      let autoSwitch = setInterval(switchFun, 5000);
-      clearInterval(autoSwitch);
-      autoSwitch = setInterval(switchFun, 5000);
-    });
-
-    watch(
-      () => props.pic,
-      () => {
-        const res = document.querySelectorAll(".banner-radio");
-        res.forEach((item, index) => {
-          item.checked = index === 0 ? true : false;
-        });
-        document.querySelectorAll(".banner-radio")[0].checked = true;
-        idx.value = 0;
-        move.value = true;
+    let seconds = 0;
+    let frame;
+    const animation = () => {
+      if (move.value) {
+        move.value = false;
+        seconds = 0;
       }
-    );
+      if (seconds > 300) {
+        idx.value++;
+        idx.value %= count.value;
+        const radio = document.querySelectorAll(".banner-radio");
+        radio.forEach((item, index) => (item.checked = idx.value === index));
+        seconds = 0;
+      }
+      seconds++;
+      frame = requestAnimationFrame(animation);
+    };
+    onMounted(() => {
+      seconds = 0;
+      document.querySelectorAll(".banner-radio")[0].checked = true;
+      frame = requestAnimationFrame(animation);
+    });
+    onBeforeRouteUpdate(() => cancelAnimationFrame(frame));
+    onBeforeRouteLeave(() => cancelAnimationFrame(frame));
 
     return { count, idx, move };
   },

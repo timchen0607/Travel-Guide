@@ -123,7 +123,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, watch } from "@vue/runtime-core";
+import { computed, onMounted, ref } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { getTravelInfo, getNearbyInfo } from "../modules.js";
 
@@ -174,14 +174,6 @@ export default {
     const loadBtn = ref(true);
 
     onMounted(() => loadData());
-    watch(
-      () => params.value,
-      () => {
-        pageIdx.value = 1;
-        result.value = [];
-        loadData();
-      }
-    );
 
     return { getImgUrl, params, result, loadData, loadBtn };
   },

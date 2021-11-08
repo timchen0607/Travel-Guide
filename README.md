@@ -17,7 +17,7 @@
 
 - banner 顯示氣溫天氣 API
 - header 模糊搜尋 精準搜尋
-- detail 回搜尋頁/列印/分享
+- detail 列印/分享
 
 ### 心得
 
