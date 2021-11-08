@@ -13,12 +13,6 @@
 - 設計稿提供：jhen
 - 設計稿網址：[Figma](https://www.figma.com/file/fnHynjl6HHHCcqay2C4KVn)
 
-### 等待最佳化
-
-- banner 顯示氣溫天氣 API
-- header 模糊搜尋 精準搜尋
-- detail 列印/分享
-
 ### 心得
 
 - 趁畢業前夕參與此次活動，累積作品與練習。
