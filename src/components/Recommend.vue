@@ -71,24 +71,43 @@
 
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
-import { getTravelInfo, dataFilter } from "../modules.js";
+import { getTravelInfo, getNearbyInfo, dataFilter } from "../modules.js";
 
 export default {
   name: "Recommend",
-  props: { recMode: String, amount: String },
+  props: {
+    recMode: String,
+    lat: Number,
+    lon: Number,
+    page: Number,
+    amount: String,
+  },
   setup(props) {
     const result = ref(null);
     const loadData = () => {
-      getTravelInfo(props.recMode, "Taiwan", Math.floor(Math.random() * 10) + 1)
-        .then((res) => dataFilter(res, props.amount))
-        .then((data) => {
-          data.forEach((item) => {
-            if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
-            if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
-            if (item.StartTime === item.EndTime) item.Date = item.EndTime;
+      if (props.lat) {
+        getNearbyInfo(props.recMode, props.lat, props.lon, props.page)
+          .then((res) => dataFilter(res, props.amount))
+          .then((data) => {
+            data.forEach((item) => {
+              if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
+              if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
+              if (item.StartTime === item.EndTime) item.Date = item.EndTime;
+            });
+            result.value = data;
           });
-          result.value = data;
-        });
+      } else {
+        getTravelInfo(props.recMode, "Taiwan", props.page)
+          .then((res) => dataFilter(res, props.amount))
+          .then((data) => {
+            data.forEach((item) => {
+              if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
+              if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
+              if (item.StartTime === item.EndTime) item.Date = item.EndTime;
+            });
+            result.value = data;
+          });
+      }
     };
     onMounted(() => loadData());
 
@@ -96,5 +115,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

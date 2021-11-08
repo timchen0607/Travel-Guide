@@ -22,16 +22,16 @@
       </div>
     </div>
     <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 打卡美食</h2>
-    <Recommend recMode="Restaurant" amount="3" />
+    <Recommend recMode="Restaurant" :page="ranPage" amount="3" />
     <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 住宿推薦</h2>
-    <Recommend recMode="Hotel" amount="4" />
+    <Recommend recMode="Hotel" :page="ranPage" amount="4" />
     <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 觀光活動</h2>
-    <Recommend recMode="Activity" amount="8" />
+    <Recommend recMode="Activity" :page="ranPage" amount="8" />
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from "@vue/runtime-core";
+import { computed, onMounted, ref } from "@vue/runtime-core";
 import { dataFilter } from "../modules.js";
 import { useRouter } from "vue-router";
 import Recommend from "../components/Recommend.vue";
@@ -74,6 +74,7 @@ export default {
       { key: "LienchiangCounty", name: "連江", icon: "jug" },
     ];
     const ranCity = ref([]);
+    const ranPage = computed(() => Math.floor(Math.random() * 10) + 1);
     const getImgUrl = (pic) => require("../assets/images/city_" + pic + ".jpg");
     const router = useRouter();
     const goSearch = (mode, city) =>
@@ -88,7 +89,7 @@ export default {
       dataFilter(cityLib, 7).then((res) => (ranCity.value = res));
     });
 
-    return { slogan, ranCity, getImgUrl, goSearch };
+    return { slogan, ranCity, ranPage, getImgUrl, goSearch };
   },
 };
 </script>

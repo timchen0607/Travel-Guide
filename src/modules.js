@@ -54,8 +54,6 @@ const getNearbyInfo = (mode, lat, lon, page = 1) => {
   if (mode === "Restaurant") url += ",Class,OpenTime";
   if (mode === "Hotel") url += ",Class";
   if (mode === "Activity") url += ",Class1,Class2";
-  if (mode !== "ScenicSpot") url += ",Class";
-  if (mode === "Activity") url += "1,Class2";
   url += `&$spatialFilter=nearby(${lat},${lon},50000)`;
   url += `&$filter=Picture/PictureUrl1 ne null`;
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());

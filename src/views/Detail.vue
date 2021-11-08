@@ -8,7 +8,6 @@
         <h1 class="fz-xxl" v-text="dtl.Name"></h1>
       </div>
       <div>
-        <button class="detail-btn"><i class="ico-heart"></i></button>
         <button class="detail-btn"><i class="ico-print"></i></button>
         <button class="detail-btn"><i class="ico-share"></i></button>
       </div>
@@ -130,10 +129,48 @@
       >
       </iframe>
     </div>
-    <h2 class="fz-md c-sce"><i class="ico-beach"></i> 查看鄰近的景點</h2>
+    <div class="space"></div>
+    <div class="df-between">
+      <h2 class="fz-md c-sce"><i class="ico-beach"></i> 查看鄰近的景點</h2>
+      <!-- <router-link
+          :to="`/${mode}/${city}/${dtl.Class}/`"
+          class="detail-tag bdrs-sm"
+          v-text="dtl.Class"
+          v-if="dtl.Class"
+          replace
+        ></router-link> -->
+    </div>
+    <Recommend
+      recMode="ScenicSpot"
+      :lat="dtl.Position.PositionLat"
+      :lon="dtl.Position.PositionLon"
+      :page="parseInt(1)"
+      amount="3"
+    />
     <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h2>
+    <Recommend
+      recMode="Restaurant"
+      :lat="dtl.Position.PositionLat"
+      :lon="dtl.Position.PositionLon"
+      :page="parseInt(1)"
+      amount="3"
+    />
     <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 查看鄰近的旅宿</h2>
+    <Recommend
+      recMode="Hotel"
+      :lat="dtl.Position.PositionLat"
+      :lon="dtl.Position.PositionLon"
+      :page="parseInt(1)"
+      amount="2"
+    />
     <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h2>
+    <Recommend
+      recMode="Activity"
+      :lat="dtl.Position.PositionLat"
+      :lon="dtl.Position.PositionLon"
+      :page="parseInt(1)"
+      amount="4"
+    />
   </div>
 </template>
 
@@ -142,6 +179,7 @@ import { computed, onMounted, ref, watch } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { getDetail, getMode } from "../modules.js";
 import Banner from "../components/Banner.vue";
+import Recommend from "../components/Recommend.vue";
 
 export default {
   name: "Detail",
@@ -150,7 +188,7 @@ export default {
     setMode: Function,
     city: String,
   },
-  components: { Banner },
+  components: { Banner, Recommend },
   setup(props) {
     const route = useRoute();
     const ID = computed(() => route.params.ID);
@@ -178,7 +216,10 @@ export default {
     };
 
     onMounted(() => loadData());
-    watch(ID, () => loadData());
+    watch(ID, () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      loadData();
+    });
 
     return { dtl, getMode };
   },
@@ -237,6 +278,27 @@ export default {
     &:hover {
       color: $c_light;
     }
+  }
+}
+.space {
+  position: relative;
+  margin: 3rem auto;
+  width: 15px;
+  height: 15px;
+  background-color: $c_main;
+  transform: rotate(45deg);
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    background-color: $c_main;
+    transform: translate(-50px, 50px);
+  }
+  &::after {
+    transform: translate(50px, -50px);
   }
 }
 </style>
