@@ -1,0 +1,8 @@
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+  }
+  .head {
+    display: none;
+  }
+}

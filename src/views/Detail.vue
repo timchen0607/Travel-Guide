@@ -1,132 +1,135 @@
 <template>
   <div class="detail" v-if="dtl">
-    <div class="detail-title df-between">
-      <div
-        class="df-between"
-        @click="hasHistory() ? $router.go(-1) : $router.push('/')"
-      >
-        <button class="detail-btn">
-          <i class="ico-rounded-left"></i>
-        </button>
-        <h1 class="fz-xxl" v-text="dtl.Name"></h1>
+    <div id="printDom">
+      <div class="detail-title df-between">
+        <div
+          class="df-between"
+          @click="hasHistory() ? $router.go(-1) : $router.push('/')"
+        >
+          <button class="detail-btn">
+            <i class="ico-rounded-left"></i>
+          </button>
+          <h1 class="fz-xxl" v-text="dtl.Name"></h1>
+        </div>
+        <div>
+          <button class="detail-btn" onclick="window.print()">
+            <i class="ico-print"></i>
+          </button>
+        </div>
       </div>
-      <div>
-        <button class="detail-btn"><i class="ico-print"></i></button>
-        <button class="detail-btn"><i class="ico-share"></i></button>
+      <Banner :pic="dtl.Picture" :name="dtl.Name" />
+      <h2 class="fz-md c-main">
+        <i class="ico-info-square"></i>
+        <span v-text="' ' + dtl.modeName + '資訊'"></span>
+      </h2>
+      <div class="detail-info bdrs-sm">
+        <p v-if="dtl.Date">
+          <i class="ico-calendar"></i>
+          <span> 活動日期：</span>
+          <span v-text="dtl.Date"></span>
+        </p>
+        <p v-if="!dtl.Date && dtl.StartTime">
+          <i class="ico-calendar"></i>
+          <span> 活動期間：</span>
+          <span v-text="dtl.StartTime + ' ~ '"></span>
+          <span v-text="dtl.EndTime"></span>
+        </p>
+        <p v-if="dtl.OpenTime">
+          <i class="ico-clock-time"></i>
+          <span> 開放時段：</span>
+          <span v-text="dtl.OpenTime"></span>
+        </p>
+        <p v-if="dtl.TicketInfo">
+          <i class="ico-ticket"></i>
+          <span> 門票費用：</span>
+          <span v-text="dtl.TicketInfo"></span>
+        </p>
+        <p v-if="dtl.Address">
+          <i class="ico-location-pin"></i>
+          <span v-text="` ${dtl.modeName}地點：`"></span>
+          <span v-text="`${dtl.Location} `" v-if="dtl.Location"></span>
+          <span v-text="dtl.Address"></span>
+        </p>
+        <p v-if="dtl.Phone">
+          <i class="ico-ui-touch-phone"></i>
+          <span> 聯絡電話：</span>
+          <a :href="`tel:${dtl.Phone}`" v-text="dtl.Phone"></a>
+        </p>
+        <p v-if="dtl.WebsiteUrl">
+          <i class="ico-earth"></i>
+          <span> 官方網站：</span>
+          <a :href="dtl.WebsiteUrl" target="_blank">點我前往</a>
+        </p>
+        <p v-if="dtl.Organizer">
+          <i class="ico-people"></i>
+          <span> 主辦單位：</span>
+          <span v-text="dtl.Organizer"></span>
+        </p>
+        <p v-if="dtl.Cycle">
+          <i class="ico-ui-text-chat"></i>
+          <span> 備註說明：</span>
+          <span v-text="dtl.Cycle"></span>
+        </p>
+        <p v-if="dtl.Class || dtl.Class1 || dtl.Class2 || dtl.Class3">
+          <i class="ico-tags"></i>
+          <span v-text="` ${dtl.modeName}標籤：`"></span>
+          <router-link
+            :to="`/${mode}/${city}/${dtl.Class}/`"
+            class="detail-tag bdrs-sm"
+            v-text="dtl.Class"
+            v-if="dtl.Class"
+          ></router-link>
+          <router-link
+            :to="`/${mode}/${city}/${dtl.Class1}/`"
+            class="detail-tag bdrs-sm"
+            v-text="dtl.Class1"
+            v-if="dtl.Class1"
+          ></router-link>
+          <router-link
+            :to="`/${mode}/${city}/${dtl.Class2}/`"
+            class="detail-tag bdrs-sm"
+            v-text="dtl.Class2"
+            v-if="dtl.Class2"
+          ></router-link>
+          <router-link
+            :to="`/${mode}/${city}/${dtl.Class3}/`"
+            class="detail-tag bdrs-sm"
+            v-text="dtl.Class3"
+            v-if="dtl.Class3"
+          ></router-link>
+        </p>
       </div>
-    </div>
-    <Banner :pic="dtl.Picture" :name="dtl.Name" />
-    <h2 class="fz-md c-main">
-      <i class="ico-info-square"></i>
-      <span v-text="' ' + dtl.modeName + '資訊'"></span>
-    </h2>
-    <div class="detail-info bdrs-sm">
-      <p v-if="dtl.Date">
-        <i class="ico-calendar"></i>
-        <span> 活動日期：</span>
-        <span v-text="dtl.Date"></span>
-      </p>
-      <p v-if="!dtl.Date && dtl.StartTime">
-        <i class="ico-calendar"></i>
-        <span> 活動期間：</span>
-        <span v-text="dtl.StartTime + ' ~ '"></span>
-        <span v-text="dtl.EndTime"></span>
-      </p>
-      <p v-if="dtl.OpenTime">
-        <i class="ico-clock-time"></i>
-        <span> 開放時段：</span>
-        <span v-text="dtl.OpenTime"></span>
-      </p>
-      <p v-if="dtl.TicketInfo">
-        <i class="ico-ticket"></i>
-        <span> 門票費用：</span>
-        <span v-text="dtl.TicketInfo"></span>
-      </p>
-      <p v-if="dtl.Address">
-        <i class="ico-location-pin"></i>
-        <span v-text="` ${dtl.modeName}地點：`"></span>
-        <span v-text="`${dtl.Location} `" v-if="dtl.Location"></span>
-        <span v-text="dtl.Address"></span>
-      </p>
-      <p v-if="dtl.Phone">
-        <i class="ico-ui-touch-phone"></i>
-        <span> 聯絡電話：</span>
-        <a :href="`tel:${dtl.Phone}`" v-text="dtl.Phone"></a>
-      </p>
-      <p v-if="dtl.WebsiteUrl">
-        <i class="ico-earth"></i>
-        <span> 官方網站：</span>
-        <a :href="dtl.WebsiteUrl" target="_blank">點我前往</a>
-      </p>
-      <p v-if="dtl.Organizer">
-        <i class="ico-people"></i>
-        <span> 主辦單位：</span>
-        <span v-text="dtl.Organizer"></span>
-      </p>
-      <p v-if="dtl.Cycle">
-        <i class="ico-ui-text-chat"></i>
-        <span> 備註說明：</span>
-        <span v-text="dtl.Cycle"></span>
-      </p>
-      <p v-if="dtl.Class || dtl.Class1 || dtl.Class2 || dtl.Class3">
-        <i class="ico-tags"></i>
-        <span v-text="` ${dtl.modeName}標籤：`"></span>
-        <router-link
-          :to="`/${mode}/${city}/${dtl.Class}/`"
-          class="detail-tag bdrs-sm"
-          v-text="dtl.Class"
-          v-if="dtl.Class"
-        ></router-link>
-        <router-link
-          :to="`/${mode}/${city}/${dtl.Class1}/`"
-          class="detail-tag bdrs-sm"
-          v-text="dtl.Class1"
-          v-if="dtl.Class1"
-        ></router-link>
-        <router-link
-          :to="`/${mode}/${city}/${dtl.Class2}/`"
-          class="detail-tag bdrs-sm"
-          v-text="dtl.Class2"
-          v-if="dtl.Class2"
-        ></router-link>
-        <router-link
-          :to="`/${mode}/${city}/${dtl.Class3}/`"
-          class="detail-tag bdrs-sm"
-          v-text="dtl.Class3"
-          v-if="dtl.Class3"
-        ></router-link>
-      </p>
-    </div>
-    <h2 class="fz-md c-main">
-      <i class="ico-google-talk"></i>
-      <span v-text="' ' + dtl.modeName + '介紹'"></span>
-    </h2>
-    <pre
-      class="detail-pre"
-      v-text="dtl.DescriptionDetail || dtl.Description"
-    ></pre>
-    <h2 class="fz-md c-main"><i class="ico-bus"></i> 交通方式</h2>
-    <pre class="detail-pre" v-text="dtl.TravelInfo"></pre>
-    <pre class="detail-pre" v-text="dtl.ParkingInfo"></pre>
-    <div class="bdrs-sm">
-      <iframe
-        width="100%"
-        height="250"
-        loading="lazy"
-        v-if="mode === 'Activity'"
-        :src="`https://maps.google.com/maps?q=${dtl.Position.PositionLat},${dtl.Position.PositionLon}&hl=zh-TW&z=16&amp;output=embed`"
-      >
-      </iframe>
-      <iframe
-        width="100%"
-        height="250"
-        loading="lazy"
-        v-else
-        :src="`https://maps.google.com/maps?q=${dtl.Name.split('').join(
-          '+'
-        )}&hl=zh-TW&z=16&amp;output=embed`"
-      >
-      </iframe>
+      <h2 class="fz-md c-main">
+        <i class="ico-google-talk"></i>
+        <span v-text="' ' + dtl.modeName + '介紹'"></span>
+      </h2>
+      <pre
+        class="detail-pre"
+        v-text="dtl.DescriptionDetail || dtl.Description"
+      ></pre>
+      <h2 class="fz-md c-main"><i class="ico-bus"></i> 交通方式</h2>
+      <pre class="detail-pre" v-text="dtl.TravelInfo"></pre>
+      <pre class="detail-pre" v-text="dtl.ParkingInfo"></pre>
+      <div class="bdrs-sm">
+        <iframe
+          width="100%"
+          height="250"
+          loading="lazy"
+          v-if="mode === 'Activity'"
+          :src="`https://maps.google.com/maps?q=${dtl.Position.PositionLat},${dtl.Position.PositionLon}&hl=zh-TW&z=16&amp;output=embed`"
+        >
+        </iframe>
+        <iframe
+          width="100%"
+          height="250"
+          loading="lazy"
+          v-else
+          :src="`https://maps.google.com/maps?q=${dtl.Name.split('').join(
+            '+'
+          )}&hl=zh-TW&z=16&amp;output=embed`"
+        >
+        </iframe>
+      </div>
     </div>
     <div class="space"></div>
     <div class="df-between c-sce">
@@ -238,7 +241,6 @@ export default {
         document.title = dtl.value.Name + " - Travel Guide";
       });
     };
-
     onMounted(() => loadData());
 
     return { hasHistory, dtl, getMode };
