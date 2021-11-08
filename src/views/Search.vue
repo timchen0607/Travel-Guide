@@ -144,7 +144,7 @@ export default {
         const { mode, city, keyword } = params.value;
         props.setMode(mode);
         getTravelInfo(mode, city, pageIdx.value, keyword).then((res) => {
-          if (res.length === 0) loadBtn.value = false;
+          if (res.length < 18) loadBtn.value = false;
           res.forEach((item) => {
             if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
             if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
