@@ -1,8 +1,8 @@
 @import "./_variables.scss";
 
 ::-webkit-scrollbar {
-  width: min(0.5rem, 1vw);
-  height: min(0.5rem, 1vw);
+  width: min(0.4rem, 1vw);
+  height: min(0.4rem, 1vw);
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 0.25rem;
@@ -31,6 +31,26 @@ a {
 .card-ScenicSpot {
 }
 .card-Restaurant {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  flex-wrap: wrap;
+  .card {
+    flex-direction: column;
+    width: 32%;
+    @include pad {
+      width: 47%;
+    }
+    @include mobile {
+      width: 100%;
+    }
+    &-box {
+      height: 250px;
+    }
+    &-tag {
+      background-color: $c_Restaurant;
+    }
+  }
 }
 .card-Hotel {
   display: flex;
@@ -76,13 +96,13 @@ a {
     }
     &-box {
       width: 40%;
-      height: calc(160px - min(1.6rem, 3vw));
+      height: calc(200px - min(1.6rem, 3vw));
       margin: min(0.8rem, 1.5vw);
       border-radius: 0.5rem;
     }
     &-content {
       position: relative;
-      height: 160px;
+      height: 200px;
       &::before,
       &::after {
         content: "";

@@ -18,7 +18,8 @@
         </div>
       </div>
     </div>
-    <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 品嚐美食</h2>
+    <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 打卡美食</h2>
+    <Recommend recMode="Restaurant" amount="3" />
     <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 住宿推薦</h2>
     <Recommend recMode="Hotel" amount="4" />
     <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 觀光活動</h2>
@@ -40,7 +41,7 @@ export default {
     const cityLib = [
       { key: "Taipei", name: "台北", icon: "postbox2" },
       { key: "NewTaipei", name: "新北", icon: "queens-head" },
-      { key: "Keelung", name: "基隆", icon: "green-man" },
+      { key: "Keelung", name: "基隆", icon: "ershawan" },
       { key: "Taoyuan", name: "桃園", icon: "slipper" },
       { key: "Hsinchu", name: "竹市", icon: "green-man" },
       { key: "HsinchuCounty", name: "竹縣", icon: "red-man" },
@@ -51,7 +52,7 @@ export default {
       { key: "NantouCounty", name: "南投", icon: "black-bear" },
       { key: "YunlinCounty", name: "雲林", icon: "fortune" },
       { key: "Chiayi", name: "嘉市", icon: "taiwanese-bag" },
-      { key: "ChiayiCounty", name: "嘉縣", icon: "tea-pot" },
+      { key: "ChiayiCounty", name: "嘉縣", icon: "alishan-rw" },
       { key: "Tainan", name: "台南", icon: "provintia" },
       { key: "Kaohsiung", name: "高雄", icon: "dt-pagoda" },
       { key: "PingtungCounty", name: "屏東", icon: "vase-rock" },
