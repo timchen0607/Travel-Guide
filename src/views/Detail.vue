@@ -73,28 +73,24 @@
           class="detail-tag bdrs-sm"
           v-text="dtl.Class"
           v-if="dtl.Class"
-          replace
         ></router-link>
         <router-link
           :to="`/${mode}/${city}/${dtl.Class1}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class1"
           v-if="dtl.Class1"
-          replace
         ></router-link>
         <router-link
           :to="`/${mode}/${city}/${dtl.Class2}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class2"
           v-if="dtl.Class2"
-          replace
         ></router-link>
         <router-link
           :to="`/${mode}/${city}/${dtl.Class3}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class3"
           v-if="dtl.Class3"
-          replace
         ></router-link>
       </p>
     </div>
@@ -130,15 +126,14 @@
       </iframe>
     </div>
     <div class="space"></div>
-    <div class="df-between">
-      <h2 class="fz-md c-sce"><i class="ico-beach"></i> 查看鄰近的景點</h2>
-      <!-- <router-link
-          :to="`/${mode}/${city}/${dtl.Class}/`"
-          class="detail-tag bdrs-sm"
-          v-text="dtl.Class"
-          v-if="dtl.Class"
-          replace
-        ></router-link> -->
+    <div class="df-between c-sce">
+      <h2 class="fz-md"><i class="ico-beach"></i> 查看鄰近的景點</h2>
+      <router-link
+        :to="`/ScenicSpot/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        class="detail-more"
+      >
+        More
+      </router-link>
     </div>
     <Recommend
       recMode="ScenicSpot"
@@ -147,7 +142,15 @@
       :page="parseInt(1)"
       amount="3"
     />
-    <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h2>
+    <div class="df-between c-res">
+      <h2 class="fz-md"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h2>
+      <router-link
+        :to="`/Restaurant/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        class="detail-more"
+      >
+        More
+      </router-link>
+    </div>
     <Recommend
       recMode="Restaurant"
       :lat="dtl.Position.PositionLat"
@@ -155,7 +158,15 @@
       :page="parseInt(1)"
       amount="3"
     />
-    <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 查看鄰近的旅宿</h2>
+    <div class="df-between c-htl">
+      <h2 class="fz-md"><i class="ico-hotel"></i> 查看鄰近的旅宿</h2>
+      <router-link
+        :to="`/Hotel/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        class="detail-more"
+      >
+        More
+      </router-link>
+    </div>
     <Recommend
       recMode="Hotel"
       :lat="dtl.Position.PositionLat"
@@ -163,7 +174,15 @@
       :page="parseInt(1)"
       amount="2"
     />
-    <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h2>
+    <div class="df-between c-act">
+      <h2 class="fz-md"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h2>
+      <router-link
+        :to="`/Activity/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        class="detail-more"
+      >
+        More
+      </router-link>
+    </div>
     <Recommend
       recMode="Activity"
       :lat="dtl.Position.PositionLat"
@@ -195,6 +214,7 @@ export default {
     const dtl = ref(null);
     const loadData = () => {
       if (!ID.value) return;
+      window.scrollTo({ top: 0, behavior: "smooth" });
       getDetail(ID.value).then((res) => {
         res[0].modeName = ref(getMode(res[0].ID));
         if (res[0].Description)
@@ -216,10 +236,7 @@ export default {
     };
 
     onMounted(() => loadData());
-    watch(ID, () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      loadData();
-    });
+    watch(ID, () => loadData());
 
     return { dtl, getMode };
   },
@@ -277,6 +294,12 @@ export default {
     transition: color 0.5s;
     &:hover {
       color: $c_light;
+    }
+  }
+  &-more {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

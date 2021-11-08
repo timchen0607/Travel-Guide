@@ -13,11 +13,11 @@
 - 設計稿提供：jhen
 - 設計稿網址：[Figma](https://www.figma.com/file/fnHynjl6HHHCcqay2C4KVn)
 
-### 待完成
+### 等待最佳化
 
 - banner 顯示氣溫天氣 API
 - header 模糊搜尋 精準搜尋
-- detail 回搜尋頁/我的最愛/列印/分享
+- detail 回搜尋頁/列印/分享
 
 ### 心得
 
