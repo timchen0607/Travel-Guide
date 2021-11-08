@@ -15,32 +15,28 @@
     </div>
     <div class="mode">
       <router-link
-        :to="`/ScenicSpot/${params.city}/${params.page}/${
-          params.keyword || ''
-        }`"
+        :to="`/ScenicSpot/${params.city}/${params.keyword || ''}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
         replace
       >
         景點
       </router-link>
       <router-link
-        :to="`/Restaurant/${params.city}/${params.page}/${
-          params.keyword || ''
-        }`"
+        :to="`/Restaurant/${params.city}/${params.keyword || ''}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
         replace
       >
         餐飲
       </router-link>
       <router-link
-        :to="`/Hotel/${params.city}/${params.page}/${params.keyword || ''}`"
+        :to="`/Hotel/${params.city}/${params.keyword || ''}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
         replace
       >
         旅宿
       </router-link>
       <router-link
-        :to="`/Activity/${params.city}/${params.page}/${params.keyword || ''}`"
+        :to="`/Activity/${params.city}/${params.keyword || ''}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
         replace
       >
@@ -115,7 +111,7 @@ export default {
     const result = ref(null);
     const type = computed(() => (params.value.city ? "Search" : "Nearby"));
     const getSearch = () => {
-      if (!params.value.page) return;
+      if (!params.value.mode) return;
       if (type.value === "Search") {
         const { mode, city, page, keyword } = params.value;
         props.setMode(mode);

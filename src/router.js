@@ -6,11 +6,15 @@ import Detail from "./views/Detail.vue";
 const routes = [
   { path: "/", name: "Home", component: Home },
   {
-    path: "/:mode/:city/:page(\\d+)/:keyword?",
+    path: "/:mode/:city/:keyword?",
     name: "Search",
     component: Search,
   },
-  { path: "/:mode/:lat/:lon/:page(\\d+)", name: "Nearby", component: Search },
+  {
+    path: "/:mode/:lat(\\d+\\.\\d+)/:lon(\\d+\\.\\d+)",
+    name: "Nearby",
+    component: Search,
+  },
   { path: "/D/:ID", name: "Detail", component: Detail },
   { path: "/:pathMatch(.*)*", name: "error", redirect: "/" },
 ];

@@ -70,28 +70,28 @@
         <i class="ico-tags"></i>
         <span v-text="` ${dtl.modeName}標籤：`"></span>
         <router-link
-          :to="`/${mode}/${city}/1/${dtl.Class}/`"
+          :to="`/${mode}/${city}/${dtl.Class}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class"
           v-if="dtl.Class"
           replace
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/1/${dtl.Class1}/`"
+          :to="`/${mode}/${city}/${dtl.Class1}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class1"
           v-if="dtl.Class1"
           replace
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/1/${dtl.Class2}/`"
+          :to="`/${mode}/${city}/${dtl.Class2}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class2"
           v-if="dtl.Class2"
           replace
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/1/${dtl.Class3}/`"
+          :to="`/${mode}/${city}/${dtl.Class3}/`"
           class="detail-tag bdrs-sm"
           v-text="dtl.Class3"
           v-if="dtl.Class3"
