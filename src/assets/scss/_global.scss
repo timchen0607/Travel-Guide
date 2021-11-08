@@ -28,8 +28,7 @@ a {
     flex-wrap: wrap;
   }
 }
-.card-ScenicSpot {
-}
+.card-ScenicSpot,
 .card-Restaurant {
   display: flex;
   justify-content: space-around;
@@ -48,9 +47,12 @@ a {
       height: 250px;
     }
     &-tag {
-      background-color: $c_Restaurant;
+      background-color: $c_ScenicSpot;
     }
   }
+}
+.card-Restaurant .card-tag {
+  background-color: $c_Restaurant;
 }
 .card-Hotel {
   display: flex;
@@ -171,6 +173,7 @@ a {
   &-text {
     margin-left: 1.2em;
     font-size: 1rem;
+    text-align: justify;
     text-indent: -1.2em;
     @include mobile {
       font-size: 0.8rem;

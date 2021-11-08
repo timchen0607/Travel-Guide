@@ -45,10 +45,10 @@
         活動
       </router-link>
     </div>
-    <div class="df-around">
+    <div :class="'card-' + mode">
       <router-link
         :to="`/D/${item.ID}/`"
-        class="card df-center bdrs-sm"
+        class="card bdrs-sm"
         v-for="item in result"
         :key="item.ID"
       >
@@ -61,7 +61,7 @@
           />
         </div>
         <div class="card-content">
-          <h2 class="fz-md" v-text="item.Name"></h2>
+          <h2 class="card-title" v-text="item.Name"></h2>
           <p class="card-text" v-if="item.Date">
             <i class="ico-calendar"></i>
             <span v-text="' ' + item.Date"></span>
@@ -84,10 +84,32 @@
             <span v-text="' ' + item.Location" v-if="item.Location"></span>
             <span v-text="' ' + item.Address"></span>
           </p>
-          <!-- {{ Class }}
-          {{ Class1 }}
-          {{ Class2 }}
-          {{ Class3 }} -->
+          <p
+            class="card-text"
+            v-if="item.Class || item.Class1 || item.Class2 || item.Class3"
+          >
+            <i class="ico-tags"></i>
+            <span
+              class="card-tag bdrs-sm"
+              v-text="item.Class"
+              v-if="item.Class"
+            ></span>
+            <span
+              class="card-tag bdrs-sm"
+              v-text="item.Class1"
+              v-if="item.Class1"
+            ></span>
+            <span
+              class="card-tag bdrs-sm"
+              v-text="item.Class2"
+              v-if="item.Class2"
+            ></span>
+            <span
+              class="card-tag bdrs-sm"
+              v-text="item.Class3"
+              v-if="item.Class3"
+            ></span>
+          </p>
         </div>
       </router-link>
     </div>
@@ -192,56 +214,5 @@ export default {
       background-color: $c_main;
     }
   }
-}
-.card {
-  flex-direction: column;
-  align-items: stretch;
-  width: 30%;
-  margin-bottom: 1rem;
-  text-decoration: none;
-  transition: box-shadow 0.5s;
-  @include pad {
-    width: 32%;
-  }
-  @include mobile {
-    width: 100%;
-  }
-  &:hover {
-    box-shadow: 0px 0px 1.5rem #00000019;
-    .card-img {
-      transform: scale(1.2);
-    }
-  }
-  &-box {
-    width: 100%;
-    height: 200px;
-    background: url(../assets/images/logo.png) no-repeat center center / 50%,
-      $c_light;
-    overflow: hidden;
-  }
-  &-img {
-    width: 100%;
-    height: 100%;
-    object-position: center center;
-    object-fit: cover;
-    transition: transform 0.5s;
-  }
-  &-content {
-    flex: 1;
-    padding: min(1rem, 3vw);
-    background-color: $c_light;
-  }
-  &-text {
-    margin-left: 1.2em;
-    text-indent: -1.2em;
-  }
-}
-
-.df-around {
-  align-items: stretch;
-}
-.fz-md {
-  margin: 0;
-  margin-bottom: 0.5rem;
 }
 </style>
