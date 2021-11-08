@@ -62,11 +62,7 @@ export default {
     const goSearch = (mode, city) =>
       router.replace({
         name: "Search",
-        params: {
-          mode: mode,
-          city: city,
-          page: Math.floor(Math.random() * 5) + 1,
-        },
+        params: { mode: mode, city: city, page: 1 },
       });
 
     onMounted(() => {
@@ -111,14 +107,27 @@ export default {
   flex-wrap: wrap;
   height: min(300px, 40vw);
   overflow: hidden;
+  @include mobile {
+    height: auto;
+    flex-direction: row;
+  }
   &-city {
     position: relative;
     width: calc(20% - 0.6rem);
     height: calc(50% - 0.6rem);
     margin: 0.3rem;
     overflow: hidden;
+    cursor: pointer;
+    @include mobile {
+      width: calc(50% - 0.6rem);
+      height: 150px;
+    }
     &:nth-child(3n + 1) {
       height: 100%;
+      @include mobile {
+        width: 100%;
+        height: 130px;
+      }
     }
     &:hover {
       .hot-city-img {

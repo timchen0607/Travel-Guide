@@ -68,6 +68,7 @@ const getDetail = (ID) => {
   return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
 };
 
+// 偵測顯示模式;
 const getMode = (ID, en) => {
   const tag = ID.split("_")[0];
   if (tag === "C1") return en ? "ScenicSpot" : "景點";

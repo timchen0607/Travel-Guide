@@ -17,28 +17,32 @@
     </div>
     <div class="mode">
       <router-link
-        :to="`/ScenicSpot/${params.city}/${params.page}/${params.keyword}`"
+        :to="`/ScenicSpot/${params.city}/${params.page}/${
+          params.keyword || ''
+        }`"
         :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
         replace
       >
         景點
       </router-link>
       <router-link
-        :to="`/Restaurant/${params.city}/${params.page}/${params.keyword}`"
+        :to="`/Restaurant/${params.city}/${params.page}/${
+          params.keyword || ''
+        }`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
         replace
       >
         餐飲
       </router-link>
       <router-link
-        :to="`/Hotel/${params.city}/${params.page}/${params.keyword}`"
+        :to="`/Hotel/${params.city}/${params.page}/${params.keyword || ''}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
         replace
       >
         旅宿
       </router-link>
       <router-link
-        :to="`/Activity/${params.city}/${params.page}/${params.keyword}`"
+        :to="`/Activity/${params.city}/${params.page}/${params.keyword || ''}`"
         :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
         replace
       >
@@ -118,6 +122,7 @@ export default {
         const { mode, city, page, keyword } = params.value;
         props.setMode(mode);
         getTravelInfo(mode, city, page, keyword).then((res) => {
+          console.log(res);
           res.forEach((item) => {
             if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
             if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
