@@ -212,7 +212,7 @@
 
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
-import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { getDetail, getMode } from "../modules.js";
 import Banner from "../components/Banner.vue";
 import Recommend from "../components/Recommend.vue";
@@ -237,12 +237,12 @@ export default {
           props.setMode(getMode(result.value.ID, true));
           document.title = result.value.Name + " - Travel Guide";
           loading.value = 1;
+          window.scrollTo({ top: 0, behavior: "smooth" });
         })
         .catch(() => (loading.value = -1));
     };
 
     onMounted(() => loadData());
-    onBeforeRouteUpdate(() => window.scrollTo({ top: 0, behavior: "smooth" }));
 
     return { loading, hasHistory, result };
   },

@@ -4,6 +4,12 @@
       <Header :closeHeader="closeHeader" :city="city" :setCity="setCity" />
     </header>
     <div class="box">
+      <div
+        class="goTop df-center fz-xl bdrs-xl shadow"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      >
+        <i class="ico-rounded-left"></i>
+      </div>
       <nav class="nav shadow">
         <button class="nav-btn show" @click="headerShow = true">
           <i class="ico-settings"></i>
@@ -117,6 +123,18 @@ export default {
 .box {
   flex: 1;
   box-sizing: border-box;
+  .goTop {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: none;
+    width: 40px;
+    height: 40px;
+    color: $c_light;
+    background-color: $c_main;
+    cursor: pointer;
+    transform: rotate(90deg);
+  }
   .nav {
     position: sticky;
     top: 0;
