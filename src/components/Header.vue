@@ -117,36 +117,36 @@
     <ul class="theme df-around">
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('ScenicSpot', '文化,古蹟')"
+        @click="goSearch('ScenicSpot', '觀光,遊憩')"
       >
         <img
           src="../assets/images/theme_1.png"
-          alt="文化古蹟"
+          alt="觀光遊憩"
           class="theme-img"
         />
-        <h4 class="theme-text df-center fz-sm">文化古蹟</h4>
+        <h4 class="theme-text df-center fz-sm">觀光遊憩</h4>
       </div>
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('ScenicSpot', '自然,生態')"
+        @click="goSearch('ScenicSpot', '自然,風景')"
       >
         <img
           src="../assets/images/theme_2.png"
-          alt="自然生態"
+          alt="自然風景"
           class="theme-img"
         />
-        <h4 class="theme-text df-center fz-sm">自然生態</h4>
+        <h4 class="theme-text df-center fz-sm">自然風景</h4>
       </div>
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('Restaurant', '夜市小吃')"
+        @click="goSearch('Restaurant', '地方特產')"
       >
         <img
           src="../assets/images/theme_3.png"
-          alt="夜市小吃"
+          alt="地方特產"
           class="theme-img"
         />
-        <h4 class="theme-text df-center fz-sm">夜市小吃</h4>
+        <h4 class="theme-text df-center fz-sm">地方特產</h4>
       </div>
       <div
         class="theme-item bdrs-sm"
@@ -185,14 +185,14 @@
       </div>
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('Activity', '藝文,遊憩')"
+        @click="goSearch('Activity', '藝文,體驗')"
       >
         <img
           src="../assets/images/theme_8.png"
-          alt="藝文遊憩"
+          alt="藝文體驗"
           class="theme-img"
         />
-        <h4 class="theme-text df-center fz-sm">藝文遊憩</h4>
+        <h4 class="theme-text df-center fz-sm">藝文體驗</h4>
       </div>
     </ul>
   </div>
