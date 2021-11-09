@@ -195,7 +195,6 @@
       amount="4"
     />
   </div>
-
   <div class="detail" v-if="loading <= 0">
     <Error v-if="loading === -1" />
     <div class="loading-title bdrs-sm"></div>
@@ -213,7 +212,7 @@
 
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
-import { useRoute, useRouter } from "vue-router";
+import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
 import { getDetail, getMode } from "../modules.js";
 import Banner from "../components/Banner.vue";
 import Recommend from "../components/Recommend.vue";
@@ -243,6 +242,7 @@ export default {
     };
 
     onMounted(() => loadData());
+    onBeforeRouteUpdate(() => window.scrollTo({ top: 0, behavior: "smooth" }));
 
     return { loading, hasHistory, result };
   },
@@ -282,6 +282,7 @@ export default {
       margin-left: 6.2em;
       padding-bottom: 0.5rem;
       text-indent: -6.2em;
+      white-space: break-spaces;
     }
   }
   &-pre {
