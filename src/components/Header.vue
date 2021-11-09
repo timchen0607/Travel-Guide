@@ -7,7 +7,7 @@
       </button>
     </div>
     <div class="select df-center" @click="openCity = !openCity">
-      <span class="select-input" v-text="cityName"></span>
+      <span class="select-input" v-text="cityName(city)"></span>
       <button :class="['select-btn', { down: !openCity }]">
         <i class="ico-circled-up"></i>
       </button>
@@ -28,43 +28,43 @@
       </span>
       <h3 class="fz-md drowdown-title">北部地區</h3>
       <span
-        :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityGroup.cityN"
-        :key="key"
-        v-text="item"
-        @click="setCity(key)"
+        :class="['drowdown-item bdrs-sm', { active: item === city }]"
+        v-for="item in cityFilter('North')"
+        :key="item"
+        v-text="cityName(item)"
+        @click="setCity(item)"
       ></span>
       <h3 class="fz-md drowdown-title">中部地區</h3>
       <span
-        :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityGroup.cityC"
-        :key="key"
-        v-text="item"
-        @click="setCity(key)"
+        :class="['drowdown-item bdrs-sm', { active: item === city }]"
+        v-for="item in cityFilter('Central')"
+        :key="item"
+        v-text="cityName(item)"
+        @click="setCity(item)"
       ></span>
       <h3 class="fz-md drowdown-title">南部地區</h3>
       <span
-        :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityGroup.cityS"
-        :key="key"
-        v-text="item"
-        @click="setCity(key)"
+        :class="['drowdown-item bdrs-sm', { active: item === city }]"
+        v-for="item in cityFilter('South')"
+        :key="item"
+        v-text="cityName(item)"
+        @click="setCity(item)"
       ></span>
       <h3 class="fz-md drowdown-title">東部地區</h3>
       <span
-        :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityGroup.cityE"
-        :key="key"
-        v-text="item"
-        @click="setCity(key)"
+        :class="['drowdown-item bdrs-sm', { active: item === city }]"
+        v-for="item in cityFilter('East')"
+        :key="item"
+        v-text="cityName(item)"
+        @click="setCity(item)"
       ></span>
       <h3 class="fz-md drowdown-title">離島地區</h3>
       <span
-        :class="['drowdown-item bdrs-sm', { active: key === city }]"
-        v-for="(item, key) in cityGroup.cityO"
-        :key="key"
-        v-text="item"
-        @click="setCity(key)"
+        :class="['drowdown-item bdrs-sm', { active: item === city }]"
+        v-for="item in cityFilter('Outer')"
+        :key="item"
+        v-text="cityName(item)"
+        @click="setCity(item)"
       ></span>
     </div>
     <div class="textbox df-center">
@@ -73,12 +73,9 @@
         class="textbox-input"
         placeholder="多筆資料用空格格開(選填)"
         v-model="keyword"
-        @keypress.enter="goSearch('', keyword.split(' ').join())"
+        @keypress.enter="goSearch()"
       />
-      <button
-        class="textbox-btn"
-        @click="goSearch('', keyword.split(' ').join())"
-      >
+      <button class="textbox-btn" @click="goSearch()">
         <i class="ico-search-1"></i>
       </button>
     </div>
@@ -202,80 +199,34 @@
 </template>
 
 <script>
-import { computed, ref } from "@vue/reactivity";
+import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
+import { cityLib } from "../lib.js";
 
 export default {
-  name: "App",
-  props: {
-    closeHeader: Function,
-    city: String,
-    setCity: Function,
-  },
+  name: "Header",
+  props: { closeHeader: Function, city: String, setCity: Function },
   setup(props) {
-    const cityN = {
-      Taipei: "台北",
-      NewTaipei: "新北",
-      Keelung: "基隆",
-      Taoyuan: "桃園",
-      Hsinchu: "竹市",
-      HsinchuCounty: "竹縣",
-      YilanCounty: "宜蘭",
-    };
-    const cityC = {
-      MiaoliCounty: "苗栗",
-      Taichung: "台中",
-      ChanghuaCounty: "彰化",
-      NantouCounty: "南投",
-      YunlinCounty: "雲林",
-    };
-    const cityS = {
-      Chiayi: "嘉市",
-      ChiayiCounty: "嘉縣",
-      Tainan: "台南",
-      Kaohsiung: "高雄",
-      PingtungCounty: "屏東",
-      PenghuCounty: "澎湖",
-    };
-    const cityE = {
-      HualienCounty: "花蓮",
-      TaitungCounty: "臺東",
-    };
-    const cityO = {
-      KinmenCounty: "金門",
-      LienchiangCounty: "連江",
-    };
-    const cityGroup = {
-      cityN,
-      cityC,
-      cityS,
-      cityE,
-      cityO,
-    };
-    const cityMap = {
-      Taiwan: "臺灣",
-      ...cityN,
-      ...cityC,
-      ...cityS,
-      ...cityE,
-      ...cityO,
-    };
-    const cityName = computed(() => cityMap[props.city]);
+    const cityFilter = (region) =>
+      Object.keys(cityLib).filter((item) => cityLib[item].region === region);
+    const cityName = (city) => cityLib[city].name;
     const openCity = ref(false);
     const keyword = ref("");
     const searchMode = ref("ScenicSpot");
     const router = useRouter();
-    const goSearch = (mode, key) => {
-      mode = mode || searchMode.value;
+    const goSearch = (
+      mode = searchMode.value,
+      key = keyword.value.split(" ").join()
+    ) => {
       router.replace({
         name: "Search",
-        params: { mode: mode, city: props.city, page: 1, keyword: key },
+        params: { mode: mode, city: props.city, keyword: key },
       });
       props.closeHeader();
     };
 
     return {
-      cityGroup,
+      cityFilter,
       cityName,
       openCity,
       keyword,

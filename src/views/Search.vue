@@ -121,7 +121,7 @@
       />
     </div>
     <div class="mode"></div>
-    <Loading :loadMode="mode" amount="6" />
+    <Loading :loadMode="mode" :amount="parseInt(6)" />
   </div>
   <div class="search" v-if="loading === -1">
     <div class="banner shadow">
@@ -162,7 +162,6 @@
         活動
       </router-link>
     </div>
-
     <Error />
   </div>
 </template>
@@ -177,7 +176,7 @@ import Error from "../components/Error.vue";
 
 export default {
   name: "Search",
-  props: { mode: String, setMode: Function },
+  props: { mode: String, setMode: Function, city: String },
   components: { Loading, Error },
   setup(props) {
     const loading = ref(0);
