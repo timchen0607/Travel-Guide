@@ -105,10 +105,7 @@
         活動
       </span>
     </div>
-    <button
-      class="searchBtn fz-md bdrs-sm"
-      @click="goSearch('', keyword.split(' ').join())"
-    >
+    <button class="searchBtn fz-md bdrs-sm" @click="goSearch()">
       <i class="ico-search-1"></i>
       <span> 開始搜尋</span>
     </button>
