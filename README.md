@@ -13,6 +13,12 @@
 - 設計稿提供：jhen
 - 設計稿網址：[Figma](https://www.figma.com/file/fnHynjl6HHHCcqay2C4KVn)
 
+### 待處理
+
+- Google Map 列印
+- 建立 縣市索引 模式索引
+- 資料 loading 顯示
+
 ### 心得
 
 - 趁畢業前夕參與此次活動，累積作品與練習。

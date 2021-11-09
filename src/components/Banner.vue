@@ -41,10 +41,7 @@ import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
 
 export default {
   name: "Banner",
-  props: {
-    pic: Object,
-    name: String,
-  },
+  props: { pic: Object, name: String },
   setup(props) {
     const count = computed(() => {
       if (props.pic.PictureUrl3) return 3;
@@ -56,10 +53,7 @@ export default {
     let seconds = 0;
     let frame;
     const animation = () => {
-      if (move.value) {
-        move.value = false;
-        seconds = 0;
-      }
+      if (move.value) seconds = 0;
       if (seconds > 300) {
         idx.value++;
         idx.value %= count.value;
@@ -68,10 +62,11 @@ export default {
         seconds = 0;
       }
       seconds++;
+      move.value = false;
       frame = requestAnimationFrame(animation);
     };
+
     onMounted(() => {
-      seconds = 0;
       document.querySelectorAll(".banner-radio")[0].checked = true;
       frame = requestAnimationFrame(animation);
     });

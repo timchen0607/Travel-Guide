@@ -1,77 +1,38 @@
 <template>
-  <div class="search">
+  <div class="search" v-if="loading === 1">
     <div class="banner shadow">
       <img
         class="banner-img"
-        :src="getImgUrl(mode)"
+        :src="getUrl()"
         alt="Travel Guide"
         title="Travel Guide"
       />
-      <h1 class="banner-text">
-        <span
-          v-if="params.keyword"
-          v-text="params.keyword.split(',').join(' ')"
-        ></span>
-        <span
-          v-if="params.city && !params.keyword"
-          v-text="params.city.replace(/[A-Z]/g, '\ $&')"
-        ></span>
-      </h1>
+      <h1 class="banner-text" v-text="getTitle()"></h1>
     </div>
-    <div class="mode" v-if="type === 'Search'">
+    <div class="mode">
       <router-link
-        :to="`/ScenicSpot/${params.city}/${params.keyword || ''}`"
+        :to="getLink('ScenicSpot')"
         :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
         replace
       >
         景點
       </router-link>
       <router-link
-        :to="`/Restaurant/${params.city}/${params.keyword || ''}`"
+        :to="getLink('Restaurant')"
         :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
         replace
       >
         餐飲
       </router-link>
       <router-link
-        :to="`/Hotel/${params.city}/${params.keyword || ''}`"
+        :to="getLink('Hotel')"
         :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
         replace
       >
         旅宿
       </router-link>
       <router-link
-        :to="`/Activity/${params.city}/${params.keyword || ''}`"
-        :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
-        replace
-      >
-        活動
-      </router-link>
-    </div>
-    <div class="mode" v-else>
-      <router-link
-        :to="`/ScenicSpot/${params.lat}/${params.lon}`"
-        :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
-        replace
-      >
-        景點
-      </router-link>
-      <router-link
-        :to="`/Restaurant/${params.lat}/${params.lon}`"
-        :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
-        replace
-      >
-        餐飲
-      </router-link>
-      <router-link
-        :to="`/Hotel/${params.lat}/${params.lon}`"
-        :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
-        replace
-      >
-        旅宿
-      </router-link>
-      <router-link
-        :to="`/Activity/${params.lat}/${params.lon}`"
+        :to="getLink('Activity')"
         :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
         replace
       >
@@ -150,62 +111,131 @@
       載入更多
     </button>
   </div>
+  <div class="search" v-if="loading === 0">
+    <div class="banner shadow">
+      <img
+        class="banner-loading"
+        src="../assets/images/banner_Home.png"
+        alt="Travel Guide"
+        title="Travel Guide"
+      />
+    </div>
+    <div class="mode"></div>
+    <Loading :loadMode="mode" amount="6" />
+  </div>
+  <div class="search" v-if="loading === -1">
+    <div class="banner shadow">
+      <img
+        class="banner-img"
+        :src="getUrl()"
+        alt="Travel Guide"
+        title="Travel Guide"
+      />
+    </div>
+    <div class="mode">
+      <router-link
+        :to="getLink('ScenicSpot')"
+        :class="['mode-btn bdrs-sm', { active: mode === 'ScenicSpot' }]"
+        replace
+      >
+        景點
+      </router-link>
+      <router-link
+        :to="getLink('Restaurant')"
+        :class="['mode-btn bdrs-sm', { active: mode === 'Restaurant' }]"
+        replace
+      >
+        餐飲
+      </router-link>
+      <router-link
+        :to="getLink('Hotel')"
+        :class="['mode-btn bdrs-sm', { active: mode === 'Hotel' }]"
+        replace
+      >
+        旅宿
+      </router-link>
+      <router-link
+        :to="getLink('Activity')"
+        :class="['mode-btn bdrs-sm', { active: mode === 'Activity' }]"
+        replace
+      >
+        活動
+      </router-link>
+    </div>
+
+    <Error />
+  </div>
 </template>
 
 <script>
-import { computed, onMounted, ref } from "@vue/runtime-core";
-import { useRoute } from "vue-router";
-import { getTravelInfo, getNearbyInfo } from "../modules.js";
+import { onMounted, ref } from "@vue/runtime-core";
+import { useRoute, useRouter } from "vue-router";
+import { getTravelInfo, getNearbyInfo, dataRegular } from "../modules.js";
+import { cityLib } from "../lib.js";
+import Loading from "../components/Loading.vue";
+import Error from "../components/Error.vue";
 
 export default {
   name: "Search",
-  props: {
-    mode: String,
-    setMode: Function,
-  },
+  props: { mode: String, setMode: Function },
+  components: { Loading, Error },
   setup(props) {
-    const getImgUrl = (pic) =>
-      require("../assets/images/banner_" + pic + ".png");
+    const loading = ref(0);
     const route = useRoute();
-    const params = computed(() => route.params);
-    const type = computed(() => (params.value.city ? "Search" : "Nearby"));
+    const router = useRouter();
+    const parm = route.params;
+    let pageIdx = 1;
     const result = ref([]);
-    const pageIdx = ref(1);
-    const loadData = () => {
-      if (!params.value.mode) return;
-      if (type.value === "Search") {
-        const { mode, city, keyword } = params.value;
-        props.setMode(mode);
-        getTravelInfo(mode, city, pageIdx.value, keyword).then((res) => {
-          if (res.length < 18) loadBtn.value = false;
-          res.forEach((item) => {
-            if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
-            if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
-            if (item.StartTime === item.EndTime) item.Date = item.EndTime;
-          });
-          result.value.push(...res);
-        });
-      }
-      if (type.value === "Nearby") {
-        const { mode, lat, lon } = params.value;
-        props.setMode(mode);
-        getNearbyInfo(mode, lat, lon, pageIdx.value).then((res) => {
-          if (res.length < 18) loadBtn.value = false;
-          res.forEach((item) => {
-            if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
-            if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
-            if (item.StartTime === item.EndTime) item.Date = item.EndTime;
-          });
-          result.value.push(...res);
-        });
-      }
-      pageIdx.value += 1;
+    const loadBtn = ref(false);
+    const verify = () => {
+      const modeLib = ["ScenicSpot", "Restaurant", "Hotel", "Activity"];
+      if (!parm.mode) return true;
+      if (modeLib.indexOf(parm.mode) < 0) return true;
+      if (parm.city && !cityLib[parm.city]) return true;
+      return false;
     };
-    const loadBtn = ref(true);
+    const loadData = () => {
+      if (verify()) router.replace({ name: "Home" });
+      loadBtn.value = false;
+      props.setMode(parm.mode);
+      const load = parm.city
+        ? getTravelInfo(parm.mode, parm.city, pageIdx, parm.keyword)
+        : getNearbyInfo(parm.mode, parm.lat, parm.lon, pageIdx);
+      load
+        .then((res) => {
+          if (res.length === 0) throw new Error();
+          if (res.length === 18) loadBtn.value = true;
+          return dataRegular(res);
+        })
+        .then((data) => {
+          result.value.push(...data);
+          loading.value = 1;
+          pageIdx += 1;
+        })
+        .catch(() => (loading.value = -1));
+    };
+    const getTitle = () => {
+      if (parm.keyword) return parm.keyword.split(",").join(" ");
+      else if (parm.city) return parm.city.replace(/[A-Z]/g, " $&");
+      else return parm.mode;
+    };
+    const getUrl = () => require(`../assets/images/banner_${props.mode}.png`);
+    const getLink = (mode) =>
+      parm.city
+        ? `/${mode}/${parm.city}/${parm.keyword || ""}`
+        : `/${mode}/${parm.lat}/${parm.lon}`;
 
     onMounted(() => loadData());
 
-    return { getImgUrl, params, type, result, loadData, loadBtn };
+    return {
+      loading,
+      result,
+      loadData,
+      loadBtn,
+      getTitle,
+      getUrl,
+      getLink,
+    };
   },
 };
 </script>
@@ -228,6 +258,12 @@ export default {
     height: 100%;
     object-position: center left;
     object-fit: cover;
+  }
+  &-loading {
+    width: 100%;
+    height: 100%;
+    object-position: center right;
+    object-fit: contain;
   }
   &-text {
     position: absolute;
