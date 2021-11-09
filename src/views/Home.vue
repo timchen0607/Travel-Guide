@@ -2,24 +2,24 @@
   <div class="home">
     <div class="banner shadow">
       <h1 class="banner-text">
-        <span v-text="slogan[0]"></span><br />
-        <span v-text="slogan[1]"></span>
+        <span v-text="ranSlogan[0]"></span><br />
+        <span v-text="ranSlogan[1]"></span>
       </h1>
     </div>
     <h2 class="fz-md c-sce"><i class="ico-beach"></i> 熱門景點</h2>
     <div class="hot">
-      <div
+      <router-link
         class="hot-city bdrs-sm"
         v-for="(item, idx) in ranCity"
-        :key="item.key"
-        @click="goSearch('ScenicSpot', item.key)"
+        :key="item[0]"
+        :to="`/ScenicSpot/${item[0]}/`"
       >
-        <img class="hot-city-img" :src="getImgUrl(idx + 1)" :alt="item.key" />
+        <img class="hot-city-img" :src="getImgUrl(idx + 1)" :alt="item[0]" />
         <div class="hot-city-content fz-xl">
-          <i :class="`hot-city-icon icoTW-${item.icon}`"></i>
-          <span v-text="item.name"></span>
+          <i :class="`hot-city-icon icoTW-${item[1].icon}`"></i>
+          <span v-text="item[1].name"></span>
         </div>
-      </div>
+      </router-link>
     </div>
     <h2 class="fz-md c-res"><i class="ico-restaurant"></i> 打卡美食</h2>
     <Recommend recMode="Restaurant" :page="ranPage" amount="3" />
@@ -31,65 +31,29 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from "@vue/runtime-core";
+import { onMounted, ref } from "@vue/runtime-core";
 import { dataFilter } from "../modules.js";
-import { useRouter } from "vue-router";
+import { cityLib, sloganLib } from "../lib.js";
 import Recommend from "../components/Recommend.vue";
 
 export default {
   name: "Home",
   components: { Recommend },
   setup() {
-    const sloganLib = [
-      ["探索。", "福爾摩沙"],
-      ["尋找。", "山林秘境"],
-      ["體驗。", "節慶活動"],
-      ["發現。", "異國美食"],
-      ["徜徉。", "蔚藍大海"],
-      ["尋覓。", "文化古蹟"],
-    ];
-    const slogan = ref([]);
-    const cityLib = [
-      { key: "Taipei", name: "台北", icon: "postbox2" },
-      { key: "NewTaipei", name: "新北", icon: "queens-head" },
-      { key: "Keelung", name: "基隆", icon: "ershawan" },
-      { key: "Taoyuan", name: "桃園", icon: "slipper" },
-      { key: "Hsinchu", name: "竹市", icon: "green-man" },
-      { key: "HsinchuCounty", name: "竹縣", icon: "red-man" },
-      { key: "YilanCounty", name: "宜蘭", icon: "ly-mus" },
-      { key: "MiaoliCounty", name: "苗栗", icon: "longteng-brg" },
-      { key: "Taichung", name: "台中", icon: "taichung-park" },
-      { key: "ChanghuaCounty", name: "彰化", icon: "bagua" },
-      { key: "NantouCounty", name: "南投", icon: "black-bear" },
-      { key: "YunlinCounty", name: "雲林", icon: "fortune" },
-      { key: "Chiayi", name: "嘉市", icon: "taiwanese-bag" },
-      { key: "ChiayiCounty", name: "嘉縣", icon: "alishan-rw" },
-      { key: "Tainan", name: "台南", icon: "provintia" },
-      { key: "Kaohsiung", name: "高雄", icon: "dt-pagoda" },
-      { key: "PingtungCounty", name: "屏東", icon: "vase-rock" },
-      { key: "PenghuCounty", name: "澎湖", icon: "penghu-islands" },
-      { key: "HualienCounty", name: "花蓮", icon: "balloon" },
-      { key: "TaitungCounty", name: "臺東", icon: "flying-fish" },
-      { key: "KinmenCounty", name: "金門", icon: "kinmen-island" },
-      { key: "LienchiangCounty", name: "連江", icon: "jug" },
-    ];
+    const ranSlogan = ref([]);
     const ranCity = ref([]);
-    const ranPage = computed(() => Math.floor(Math.random() * 10) + 1);
+    const ranPage = Math.floor(Math.random() * 30) + 1;
     const getImgUrl = (pic) => require("../assets/images/city_" + pic + ".jpg");
-    const router = useRouter();
-    const goSearch = (mode, city) =>
-      router.replace({
-        name: "Search",
-        params: { mode: mode, city: city, page: 1 },
-      });
 
     onMounted(() => {
       document.title = "Travel Guide";
-      dataFilter(sloganLib, 1).then((res) => (slogan.value = res[0]));
-      dataFilter(cityLib, 7).then((res) => (ranCity.value = res));
+      dataFilter(sloganLib, 1).then((res) => (ranSlogan.value = res[0]));
+      dataFilter(Object.entries(cityLib), 7).then(
+        (res) => (ranCity.value = res)
+      );
     });
 
-    return { slogan, ranCity, ranPage, getImgUrl, goSearch };
+    return { ranSlogan, ranCity, ranPage, getImgUrl };
   },
 };
 </script>

@@ -24,4 +24,13 @@ const cityLib = {
   LienchiangCounty: { name: "連江", icon: "jug", region: "Outer" },
 };
 
-export { cityLib };
+const sloganLib = [
+  ["探索。", "福爾摩沙"],
+  ["尋找。", "山林秘境"],
+  ["體驗。", "節慶活動"],
+  ["發現。", "異國美食"],
+  ["徜徉。", "蔚藍大海"],
+  ["尋覓。", "文化古蹟"],
+];
+
+export { cityLib, sloganLib };
