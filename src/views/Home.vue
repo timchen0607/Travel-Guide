@@ -26,7 +26,7 @@
     <h2 class="fz-md c-htl"><i class="ico-hotel"></i> 住宿推薦</h2>
     <Recommend recMode="Hotel" :page="ranPage" amount="4" />
     <h2 class="fz-md c-act"><i class="ico-flag-alt-2"></i> 觀光活動</h2>
-    <Recommend recMode="Activity" :page="ranPage" amount="8" />
+    <Recommend recMode="Activity" :page="ranPage2" amount="8" />
   </div>
 </template>
 
@@ -42,7 +42,8 @@ export default {
   setup() {
     const ranSlogan = ref([]);
     const ranCity = ref([]);
-    const ranPage = Math.floor(Math.random() * 30) + 1;
+    const ranPage = Math.floor(Math.random() * 100) + 1;
+    const ranPage2 = Math.floor(Math.random() * 10) + 1;
     const getImgUrl = (pic) => require("../assets/images/city_" + pic + ".jpg");
 
     onMounted(() => {
@@ -53,7 +54,7 @@ export default {
       );
     });
 
-    return { ranSlogan, ranCity, ranPage, getImgUrl };
+    return { ranSlogan, ranCity, ranPage, ranPage2, getImgUrl };
   },
 };
 </script>

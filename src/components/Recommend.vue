@@ -1,5 +1,5 @@
 <template>
-  <div :class="'card-' + recMode">
+  <div :class="'card-' + recMode" v-if="loading === 1">
     <router-link
       :to="`/D/${item.ID}/`"
       class="card bdrs-sm"
@@ -67,11 +67,24 @@
       </div>
     </router-link>
   </div>
+  <div v-if="loading === 0">
+    <Loading :loadMode="recMode" :amount="parseInt(amount)" />
+  </div>
+  <div v-if="loading === -1">
+    <Error />
+  </div>
 </template>
 
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
-import { getTravelInfo, getNearbyInfo, dataFilter } from "../modules.js";
+import {
+  getTravelInfo,
+  getNearbyInfo,
+  dataFilter,
+  dataRegular,
+} from "../modules.js";
+import Loading from "../components/Loading.vue";
+import Error from "../components/Error.vue";
 
 export default {
   name: "Recommend",
@@ -82,36 +95,30 @@ export default {
     page: Number,
     amount: String,
   },
+  components: { Loading, Error },
   setup(props) {
+    const loading = ref(0);
     const result = ref(null);
     const loadData = () => {
-      if (props.lat) {
-        getNearbyInfo(props.recMode, props.lat, props.lon, props.page)
-          .then((res) => dataFilter(res, props.amount))
-          .then((data) => {
-            data.forEach((item) => {
-              if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
-              if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
-              if (item.StartTime === item.EndTime) item.Date = item.EndTime;
-            });
-            result.value = data;
-          });
-      } else {
-        getTravelInfo(props.recMode, "Taiwan", props.page)
-          .then((res) => dataFilter(res, props.amount))
-          .then((data) => {
-            data.forEach((item) => {
-              if (item.StartTime) item.StartTime = item.StartTime.split("T")[0];
-              if (item.EndTime) item.EndTime = item.EndTime.split("T")[0];
-              if (item.StartTime === item.EndTime) item.Date = item.EndTime;
-            });
-            result.value = data;
-          });
-      }
+      const load = props.lat
+        ? getNearbyInfo(props.recMode, props.lat, props.lon, props.page)
+        : getTravelInfo(props.recMode, "Taiwan", props.page);
+      load
+        .then((res) => {
+          if (res.length === 0) throw new Error();
+          return dataFilter(res, props.amount);
+        })
+        .then((res) => dataRegular(res))
+        .then((data) => {
+          result.value = data;
+          loading.value = 1;
+        })
+        .catch(() => (loading.value = -1));
     };
+
     onMounted(() => loadData());
 
-    return { result };
+    return { loading, result };
   },
 };
 </script>
