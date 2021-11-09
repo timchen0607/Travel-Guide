@@ -107,7 +107,10 @@
         </div>
       </router-link>
     </div>
-    <button class="loadBtn fz-md bdrs-sm" @click="loadData" v-if="loadBtn">
+    <button
+      :class="['loadBtn fz-md bdrs-sm', { hide: loadBtn }]"
+      @click="loadData"
+    >
       載入更多
     </button>
   </div>
@@ -185,7 +188,7 @@ export default {
     const parm = route.params;
     let pageIdx = 1;
     const result = ref([]);
-    const loadBtn = ref(false);
+    const loadBtn = ref(true);
     const verify = () => {
       const modeLib = ["ScenicSpot", "Restaurant", "Hotel", "Activity"];
       if (!parm.mode) return true;
@@ -195,7 +198,7 @@ export default {
     };
     const loadData = () => {
       if (verify()) router.replace({ name: "Home" });
-      loadBtn.value = false;
+      loadBtn.value = true;
       props.setMode(parm.mode);
       const load = parm.city
         ? getTravelInfo(parm.mode, parm.city, pageIdx, parm.keyword)
@@ -203,7 +206,7 @@ export default {
       load
         .then((res) => {
           if (res.length === 0) throw new Error();
-          if (res.length === 18) loadBtn.value = true;
+          if (res.length === 18) loadBtn.value = false;
           return dataRegular(res);
         })
         .then((data) => {
@@ -304,6 +307,9 @@ export default {
   outline: none;
   transition: color 0.5s, background-color 0.5s;
   cursor: pointer;
+  &.hide {
+    opacity: 0;
+  }
   &:hover {
     color: $c_light;
     background-color: $c_main;
