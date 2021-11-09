@@ -134,6 +134,7 @@ export default {
     background-color: $c_main;
     cursor: pointer;
     transform: rotate(90deg);
+    z-index: 1;
   }
   .nav {
     position: sticky;
