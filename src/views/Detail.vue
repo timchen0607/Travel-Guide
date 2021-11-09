@@ -1,5 +1,5 @@
 <template>
-  <div class="detail" v-if="dtl">
+  <div class="detail" v-if="loading === 1">
     <div class="detail-title df-between">
       <div
         class="df-between"
@@ -8,7 +8,7 @@
         <button class="detail-btn">
           <i class="ico-rounded-left"></i>
         </button>
-        <h1 class="fz-xxl" v-text="dtl.Name"></h1>
+        <h1 class="fz-xxl" v-text="result.Name"></h1>
       </div>
       <div>
         <button class="detail-btn" onclick="window.print()">
@@ -16,106 +16,106 @@
         </button>
       </div>
     </div>
-    <Banner :pic="dtl.Picture" :name="dtl.Name" />
+    <Banner :pic="result.Picture" :name="result.Name" />
     <h2 class="fz-md c-main">
       <i class="ico-info-square"></i>
-      <span v-text="' ' + dtl.modeName + '資訊'"></span>
+      <span v-text="' ' + result.modeName + '資訊'"></span>
     </h2>
     <div class="detail-info bdrs-sm">
-      <p v-if="dtl.Date">
+      <p v-if="result.Date">
         <i class="ico-calendar"></i>
         <span> 活動日期：</span>
-        <span v-text="dtl.Date"></span>
+        <span v-text="result.Date"></span>
       </p>
-      <p v-if="!dtl.Date && dtl.StartTime">
+      <p v-if="!result.Date && result.StartTime">
         <i class="ico-calendar"></i>
         <span> 活動期間：</span>
-        <span v-text="dtl.StartTime + ' ~ '"></span>
-        <span v-text="dtl.EndTime"></span>
+        <span v-text="result.StartTime + ' ~ '"></span>
+        <span v-text="result.EndTime"></span>
       </p>
-      <p v-if="dtl.OpenTime">
+      <p v-if="result.OpenTime">
         <i class="ico-clock-time"></i>
         <span> 開放時段：</span>
-        <span v-text="dtl.OpenTime"></span>
+        <span v-text="result.OpenTime"></span>
       </p>
-      <p v-if="dtl.TicketInfo">
+      <p v-if="result.TicketInfo">
         <i class="ico-ticket"></i>
         <span> 門票費用：</span>
-        <span v-text="dtl.TicketInfo"></span>
+        <span v-text="result.TicketInfo"></span>
       </p>
-      <p v-if="dtl.Address">
+      <p v-if="result.Address">
         <i class="ico-location-pin"></i>
-        <span v-text="` ${dtl.modeName}地點：`"></span>
-        <span v-text="`${dtl.Location} `" v-if="dtl.Location"></span>
-        <span v-text="dtl.Address"></span>
+        <span v-text="` ${result.modeName}地點：`"></span>
+        <span v-text="`${result.Location} `" v-if="result.Location"></span>
+        <span v-text="result.Address"></span>
       </p>
-      <p v-if="dtl.Phone">
+      <p v-if="result.Phone">
         <i class="ico-ui-touch-phone"></i>
         <span> 聯絡電話：</span>
-        <a :href="`tel:${dtl.Phone}`" v-text="dtl.Phone"></a>
+        <a :href="`tel:${result.Phone}`" v-text="result.Phone"></a>
       </p>
-      <p v-if="dtl.WebsiteUrl">
+      <p v-if="result.WebsiteUrl">
         <i class="ico-earth"></i>
         <span> 官方網站：</span>
-        <a :href="dtl.WebsiteUrl" target="_blank">點我前往</a>
+        <a :href="result.WebsiteUrl" target="_blank">點我前往</a>
       </p>
-      <p v-if="dtl.Organizer">
+      <p v-if="result.Organizer">
         <i class="ico-people"></i>
         <span> 主辦單位：</span>
-        <span v-text="dtl.Organizer"></span>
+        <span v-text="result.Organizer"></span>
       </p>
-      <p v-if="dtl.Cycle">
+      <p v-if="result.Cycle">
         <i class="ico-ui-text-chat"></i>
         <span> 備註說明：</span>
-        <span v-text="dtl.Cycle"></span>
+        <span v-text="result.Cycle"></span>
       </p>
-      <p v-if="dtl.Class || dtl.Class1 || dtl.Class2 || dtl.Class3">
+      <p v-if="result.Class || result.Class1 || result.Class2 || result.Class3">
         <i class="ico-tags"></i>
-        <span v-text="` ${dtl.modeName}標籤：`"></span>
+        <span v-text="` ${result.modeName}標籤：`"></span>
         <router-link
-          :to="`/${mode}/${city}/${dtl.Class}/`"
+          :to="`/${mode}/${city}/${result.Class}/`"
           class="detail-tag bdrs-sm"
-          v-text="dtl.Class"
-          v-if="dtl.Class"
+          v-text="result.Class"
+          v-if="result.Class"
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/${dtl.Class1}/`"
+          :to="`/${mode}/${city}/${result.Class1}/`"
           class="detail-tag bdrs-sm"
-          v-text="dtl.Class1"
-          v-if="dtl.Class1"
+          v-text="result.Class1"
+          v-if="result.Class1"
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/${dtl.Class2}/`"
+          :to="`/${mode}/${city}/${result.Class2}/`"
           class="detail-tag bdrs-sm"
-          v-text="dtl.Class2"
-          v-if="dtl.Class2"
+          v-text="result.Class2"
+          v-if="result.Class2"
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/${dtl.Class3}/`"
+          :to="`/${mode}/${city}/${result.Class3}/`"
           class="detail-tag bdrs-sm"
-          v-text="dtl.Class3"
-          v-if="dtl.Class3"
+          v-text="result.Class3"
+          v-if="result.Class3"
         ></router-link>
       </p>
     </div>
     <h2 class="fz-md c-main">
       <i class="ico-google-talk"></i>
-      <span v-text="' ' + dtl.modeName + '介紹'"></span>
+      <span v-text="' ' + result.modeName + '介紹'"></span>
     </h2>
     <pre
       class="detail-pre"
-      v-text="dtl.DescriptionDetail || dtl.Description"
+      v-text="result.DescriptionDetail || result.Description"
     ></pre>
     <h2 class="fz-md c-main"><i class="ico-bus"></i> 交通方式</h2>
-    <pre class="detail-pre" v-text="dtl.TravelInfo"></pre>
-    <pre class="detail-pre" v-text="dtl.ParkingInfo"></pre>
+    <pre class="detail-pre" v-text="result.TravelInfo"></pre>
+    <pre class="detail-pre" v-text="result.ParkingInfo"></pre>
     <div class="bdrs-sm">
       <iframe
         width="100%"
         height="250"
         loading="lazy"
         v-if="mode === 'Activity'"
-        :src="`https://maps.google.com/maps?q=${dtl.Position.PositionLat},${dtl.Position.PositionLon}&hl=zh-TW&z=16&amp;output=embed`"
+        :src="`https://maps.google.com/maps?q=${result.Position.PositionLat},${result.Position.PositionLon}&hl=zh-TW&z=16&amp;output=embed`"
       >
       </iframe>
       <iframe
@@ -123,7 +123,7 @@
         height="250"
         loading="lazy"
         v-else
-        :src="`https://maps.google.com/maps?q=${dtl.Name.split('').join(
+        :src="`https://maps.google.com/maps?q=${result.Name.split('').join(
           '+'
         )}&hl=zh-TW&z=16&amp;output=embed`"
       >
@@ -133,7 +133,7 @@
     <div class="df-between c-sce">
       <h2 class="fz-md"><i class="ico-beach"></i> 查看鄰近的景點</h2>
       <router-link
-        :to="`/ScenicSpot/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        :to="`/ScenicSpot/${result.Position.PositionLat}/${result.Position.PositionLon}/`"
         class="detail-more"
       >
         More
@@ -141,15 +141,15 @@
     </div>
     <Recommend
       recMode="ScenicSpot"
-      :lat="dtl.Position.PositionLat"
-      :lon="dtl.Position.PositionLon"
+      :lat="result.Position.PositionLat"
+      :lon="result.Position.PositionLon"
       :page="parseInt(1)"
       amount="3"
     />
     <div class="df-between c-res">
       <h2 class="fz-md"><i class="ico-restaurant"></i> 查看鄰近的餐飲</h2>
       <router-link
-        :to="`/Restaurant/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        :to="`/Restaurant/${result.Position.PositionLat}/${result.Position.PositionLon}/`"
         class="detail-more"
       >
         More
@@ -157,15 +157,15 @@
     </div>
     <Recommend
       recMode="Restaurant"
-      :lat="dtl.Position.PositionLat"
-      :lon="dtl.Position.PositionLon"
+      :lat="result.Position.PositionLat"
+      :lon="result.Position.PositionLon"
       :page="parseInt(1)"
       amount="3"
     />
     <div class="df-between c-htl">
       <h2 class="fz-md"><i class="ico-hotel"></i> 查看鄰近的旅宿</h2>
       <router-link
-        :to="`/Hotel/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        :to="`/Hotel/${result.Position.PositionLat}/${result.Position.PositionLon}/`"
         class="detail-more"
       >
         More
@@ -173,15 +173,15 @@
     </div>
     <Recommend
       recMode="Hotel"
-      :lat="dtl.Position.PositionLat"
-      :lon="dtl.Position.PositionLon"
+      :lat="result.Position.PositionLat"
+      :lon="result.Position.PositionLon"
       :page="parseInt(1)"
       amount="2"
     />
     <div class="df-between c-act">
       <h2 class="fz-md"><i class="ico-flag-alt-2"></i> 查看鄰近的活動</h2>
       <router-link
-        :to="`/Activity/${dtl.Position.PositionLat}/${dtl.Position.PositionLon}/`"
+        :to="`/Activity/${result.Position.PositionLat}/${result.Position.PositionLon}/`"
         class="detail-more"
       >
         More
@@ -189,55 +189,62 @@
     </div>
     <Recommend
       recMode="Activity"
-      :lat="dtl.Position.PositionLat"
-      :lon="dtl.Position.PositionLon"
+      :lat="result.Position.PositionLat"
+      :lon="result.Position.PositionLon"
       :page="parseInt(1)"
       amount="4"
     />
   </div>
+
+  <div class="detail" v-if="loading <= 0">
+    <Error v-if="loading === -1" />
+    <div class="loading-title bdrs-sm"></div>
+    <div class="loading-box bdrs-xl"></div>
+    <div class="loading-title bdrs-sm"></div>
+    <div class="loading-text bdrs-sm"></div>
+    <div class="loading-text bdrs-sm"></div>
+    <div class="loading-text bdrs-sm"></div>
+    <div class="loading-title bdrs-sm"></div>
+    <div class="loading-text bdrs-sm"></div>
+    <div class="loading-text bdrs-sm"></div>
+    <div class="loading-text bdrs-sm"></div>
+  </div>
 </template>
 
 <script>
-import { computed, onMounted, ref } from "@vue/runtime-core";
-import { useRoute } from "vue-router";
+import { onMounted, ref } from "@vue/runtime-core";
+import { useRoute, useRouter } from "vue-router";
 import { getDetail, getMode } from "../modules.js";
 import Banner from "../components/Banner.vue";
 import Recommend from "../components/Recommend.vue";
+import Error from "../components/Error.vue";
 
 export default {
   name: "Detail",
   props: { mode: String, setMode: Function, city: String },
-  components: { Banner, Recommend },
+  components: { Banner, Recommend, Error },
   setup(props) {
+    const loading = ref(0);
     const hasHistory = () => window.history.length > 2;
     const route = useRoute();
-    const ID = computed(() => route.params.ID);
-    const dtl = ref(null);
+    const router = useRouter();
+    const result = ref(null);
     const loadData = () => {
-      if (!ID.value) return;
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      getDetail(ID.value).then((res) => {
-        res[0].modeName = ref(getMode(res[0].ID));
-        if (res[0].Description)
-          res[0].Description = res[0].Description.split("。").join("。\n\n");
-        if (res[0].DescriptionDetail)
-          res[0].DescriptionDetail =
-            res[0].DescriptionDetail.split("。").join("。\n\n");
-        if (res[0].TravelInfo)
-          res[0].TravelInfo = res[0].TravelInfo.split("。").join("。\n\n");
-        if (res[0].ParkingInfo)
-          res[0].ParkingInfo = res[0].ParkingInfo + "\n\n";
-        if (res[0].StartTime) res[0].StartTime = res[0].StartTime.split("T")[0];
-        if (res[0].EndTime) res[0].EndTime = res[0].EndTime.split("T")[0];
-        if (res[0].StartTime === res[0].EndTime) res[0].Date = res[0].EndTime;
-        dtl.value = res[0];
-        props.setMode(getMode(dtl.value.ID, true));
-        document.title = dtl.value.Name + " - Travel Guide";
-      });
+      if (!route.params.ID) router.replace({ name: "Home" });
+      getDetail(route.params.ID)
+        .then((data) => {
+          if (!data.ID) throw new Error();
+          result.value = data;
+          props.setMode(getMode(result.value.ID, true));
+          document.title = result.value.Name + " - Travel Guide";
+          loading.value = 1;
+        })
+        .catch(() => (loading.value = -1));
     };
+
     onMounted(() => loadData());
 
-    return { hasHistory, dtl, getMode };
+    return { loading, hasHistory, result };
   },
 };
 </script>
@@ -321,6 +328,26 @@ export default {
   }
   &::after {
     transform: translate(50px, -50px);
+  }
+}
+.loading {
+  &-box {
+    @include background;
+    padding-top: 300px;
+  }
+  &-title {
+    @include background;
+    width: 40%;
+    max-width: 500px;
+    height: 3rem;
+    margin: 1rem 0;
+    animation-delay: 0.08s;
+  }
+  &-text {
+    @include background;
+    min-height: 1.5rem;
+    margin-bottom: 0.5rem;
+    animation-delay: 0.1s;
   }
 }
 </style>

@@ -63,7 +63,24 @@ const getNearbyInfo = (mode, lat, lon, page = 1) => {
 const getDetail = (ID) => {
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
   url += `${getMode(ID, true)}/?$filter=ID eq '${ID}'&$format=JSON`;
-  return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
+  return fetch(url, { headers: getAuthHeader() })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.length === 0) throw new Error();
+      res[0].modeName = getMode(res[0].ID);
+      if (res[0].Description)
+        res[0].Description = res[0].Description.split("。").join("。\n\n");
+      if (res[0].DescriptionDetail)
+        res[0].DescriptionDetail =
+          res[0].DescriptionDetail.split("。").join("。\n\n");
+      if (res[0].TravelInfo)
+        res[0].TravelInfo = res[0].TravelInfo.split("。").join("。\n\n");
+      if (res[0].ParkingInfo) res[0].ParkingInfo = res[0].ParkingInfo + "\n\n";
+      if (res[0].StartTime) res[0].StartTime = res[0].StartTime.split("T")[0];
+      if (res[0].EndTime) res[0].EndTime = res[0].EndTime.split("T")[0];
+      if (res[0].StartTime === res[0].EndTime) res[0].Date = res[0].EndTime;
+      return res[0];
+    });
 };
 
 // 偵測顯示模式;
