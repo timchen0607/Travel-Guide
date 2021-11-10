@@ -12,7 +12,7 @@
         class="hot-city bdrs-sm"
         v-for="(item, idx) in ranCity"
         :key="item[0]"
-        :to="`/ScenicSpot/${item[0]}/`"
+        :to="`/ScenicSpot/F/${item[0]}/`"
       >
         <img class="hot-city-img" :src="getImgUrl(idx + 1)" :alt="item[0]" />
         <div class="hot-city-content fz-xl">

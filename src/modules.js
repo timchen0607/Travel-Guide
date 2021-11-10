@@ -17,7 +17,13 @@ const perPage = 18; // 每頁顯示筆數
 // $count=true 查看 API 剩餘次數
 
 // 抓取 景點/餐飲/旅宿/活動 相關資料
-const getTravelInfo = (mode, city, page = 1, keyword = null) => {
+const getTravelInfo = (
+  mode,
+  city,
+  page = 1,
+  keyword = null,
+  strict = false
+) => {
   city = city === "Taiwan" ? "" : city;
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
@@ -31,8 +37,8 @@ const getTravelInfo = (mode, city, page = 1, keyword = null) => {
     let filter = "";
     keyword.split(",").forEach((k) => {
       filter += ` or contains(Name,'${k}')`;
-      filter += ` or contains(Description,'${k}')`;
-      filter += ` or contains(Address,'${k}')`;
+      if (!strict) filter += ` or contains(Description,'${k}')`;
+      if (!strict) filter += ` or contains(Address,'${k}')`;
       if (mode === "Restaurant" || mode === "Hotel")
         filter += ` or contains(Class,'${k}')`;
       if (mode === "ScenicSpot" || mode === "Activity")

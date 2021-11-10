@@ -173,7 +173,7 @@
 import { onMounted, ref } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
 import { getTravelInfo, getNearbyInfo, dataRegular } from "../modules.js";
-import { cityLib } from "../lib.js";
+import { cityLib, modeLib } from "../lib.js";
 import Loading from "../components/Loading.vue";
 import Error from "../components/Error.vue";
 
@@ -190,9 +190,9 @@ export default {
     const result = ref([]);
     const loadBtn = ref(true);
     const verify = () => {
-      const modeLib = ["ScenicSpot", "Restaurant", "Hotel", "Activity"];
-      if (!parm.mode) return true;
-      if (modeLib.indexOf(parm.mode) < 0) return true;
+      if (parm.strict && parm.strict !== "T" && parm.strict !== "F")
+        return true;
+      if (Object.keys(modeLib).indexOf(parm.mode) < 0) return true;
       if (parm.city && !cityLib[parm.city]) return true;
       return false;
     };
@@ -200,8 +200,9 @@ export default {
       if (verify()) router.replace({ name: "Home" });
       loadBtn.value = true;
       props.setMode(parm.mode);
+      const strict = parm.strict === "T";
       const load = parm.city
-        ? getTravelInfo(parm.mode, parm.city, pageIdx, parm.keyword)
+        ? getTravelInfo(parm.mode, parm.city, pageIdx, parm.keyword, strict)
         : getNearbyInfo(parm.mode, parm.lat, parm.lon, pageIdx);
       load
         .then((res) => {
@@ -225,7 +226,7 @@ export default {
     const getUrl = () => require(`../assets/images/banner_${props.mode}.png`);
     const getLink = (mode) =>
       parm.city
-        ? `/${mode}/${parm.city}/${parm.keyword || ""}`
+        ? `/${mode}/${parm.strict}/${parm.city}/${parm.keyword || ""}`
         : `/${mode}/${parm.lat}/${parm.lon}`;
 
     onMounted(() => loadData());

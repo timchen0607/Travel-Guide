@@ -6,7 +6,7 @@ import Detail from "./views/Detail.vue";
 const routes = [
   { path: "/", name: "Home", component: Home },
   {
-    path: "/:mode/:city/:keyword?",
+    path: "/:mode/:strict/:city/:keyword?",
     name: "Search",
     component: Search,
   },

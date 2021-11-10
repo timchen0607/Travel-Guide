@@ -9,7 +9,7 @@
     <div class="select df-center" @click="openCity = !openCity">
       <span
         class="select-input"
-        v-text="`${cityName(city)}｜${searchMode}`"
+        v-text="`${cityName(city)}｜${modeName}｜${strictName}`"
       ></span>
       <button :class="['select-btn', { down: !openCity }]">
         <i class="ico-circled-up"></i>
@@ -123,6 +123,21 @@
           活動
         </span>
       </div>
+      <hr class="drowdown-hr" />
+      <h3 class="fz-md drowdown-title">搜尋模式</h3>
+      <div class="drowdown-mode df-around">
+        <span>模糊</span>
+        <div>
+          <input
+            type="checkbox"
+            id="switch"
+            class="drowdown-swtich"
+            v-model="searchStrict"
+          />
+          <label for="switch" class="drowdown-swtich-btn"></label>
+        </div>
+        <span>精準</span>
+      </div>
       <button class="drowdown-btn fz-sm bdrs-sm" @click="openCity = !openCity">
         OK!
       </button>
@@ -147,7 +162,7 @@
     <ul class="theme df-around">
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('ScenicSpot', '觀光,遊憩')"
+        @click="goSearch('ScenicSpot', false, '觀光,遊憩')"
       >
         <img
           src="../assets/images/theme_1.png"
@@ -158,7 +173,7 @@
       </div>
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('ScenicSpot', '自然,風景')"
+        @click="goSearch('ScenicSpot', false, '自然,風景')"
       >
         <img
           src="../assets/images/theme_2.png"
@@ -169,7 +184,7 @@
       </div>
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('Restaurant', '地方特產')"
+        @click="goSearch('Restaurant', false, '地方特產')"
       >
         <img
           src="../assets/images/theme_3.png"
@@ -180,7 +195,7 @@
       </div>
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('Restaurant', '異國料理')"
+        @click="goSearch('Restaurant', false, '異國料理')"
       >
         <img
           src="../assets/images/theme_4.png"
@@ -189,7 +204,10 @@
         />
         <h4 class="theme-text df-center fz-sm">異國料理</h4>
       </div>
-      <div class="theme-item bdrs-sm" @click="goSearch('Hotel', '度假,民宿')">
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('Hotel', false, '度假,民宿')"
+      >
         <img
           src="../assets/images/theme_5.png"
           alt="度假民宿"
@@ -197,7 +215,10 @@
         />
         <h4 class="theme-text df-center fz-sm">度假民宿</h4>
       </div>
-      <div class="theme-item bdrs-sm" @click="goSearch('Hotel', '國際,旅館')">
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('Hotel', false, '國際,旅館')"
+      >
         <img
           src="../assets/images/theme_6.png"
           alt="國際旅館"
@@ -205,7 +226,10 @@
         />
         <h4 class="theme-text df-center fz-sm">國際旅館</h4>
       </div>
-      <div class="theme-item bdrs-sm" @click="goSearch('Activity', '節慶活動')">
+      <div
+        class="theme-item bdrs-sm"
+        @click="goSearch('Activity', false, '節慶活動')"
+      >
         <img
           src="../assets/images/theme_7.png"
           alt="節慶活動"
@@ -215,7 +239,7 @@
       </div>
       <div
         class="theme-item bdrs-sm"
-        @click="goSearch('Activity', '藝文,體驗')"
+        @click="goSearch('Activity', false, '藝文,體驗')"
       >
         <img
           src="../assets/images/theme_8.png"
@@ -229,9 +253,9 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
-import { cityLib } from "../lib.js";
+import { cityLib, modeLib } from "../lib.js";
 
 export default {
   name: "Header",
@@ -240,17 +264,24 @@ export default {
     const cityFilter = (region) =>
       Object.keys(cityLib).filter((item) => cityLib[item].region === region);
     const cityName = (city) => cityLib[city].name;
+    const modeName = computed(() => modeLib[searchMode.value]);
+    const strictName = computed(() =>
+      searchStrict.value ? "精準搜尋" : "模糊搜尋"
+    );
     const openCity = ref(false);
     const keyword = ref("");
     const searchMode = ref("ScenicSpot");
+    const searchStrict = ref(true);
     const router = useRouter();
     const goSearch = (
       mode = searchMode.value,
+      strict = searchStrict.value,
       key = keyword.value.split(" ").join()
     ) => {
+      const s = strict ? "T" : "F";
       router.replace({
         name: "Search",
-        params: { mode: mode, city: props.city, keyword: key },
+        params: { mode: mode, strict: s, city: props.city, keyword: key },
       });
       props.closeHeader();
     };
@@ -258,9 +289,12 @@ export default {
     return {
       cityFilter,
       cityName,
+      modeName,
+      strictName,
       openCity,
       keyword,
       searchMode,
+      searchStrict,
       goSearch,
     };
   },
@@ -307,7 +341,7 @@ export default {
 .select,
 .textbox {
   flex-wrap: nowrap;
-  margin-top: 1.5rem;
+  margin: 1rem 0;
   padding: 0.5rem 0.75rem;
   background-color: $c_secondary-light;
   border: 1px solid $c_secondary;
@@ -338,6 +372,7 @@ export default {
 }
 .select {
   position: relative;
+  margin-top: 1.5rem;
   z-index: 2;
   cursor: pointer;
   &-btn.down {
@@ -353,9 +388,10 @@ export default {
   padding: 0.5rem;
   background-color: $c_light;
   z-index: 1;
-  transition: top 0.5s, box-shadow 0.5s 0.5s;
+  transition: top 0.5s;
   &.show {
     top: 168px;
+    transition: top 0.5s, box-shadow 0.5s 0.5s;
   }
   &-title {
     position: relative;
@@ -388,8 +424,38 @@ export default {
   &-mode {
     width: 100%;
     > span {
-      margin: 0.3rem 0;
+      margin: 0.3rem 0 0.8rem;
       padding: 0.2rem 0.8rem;
+    }
+  }
+  &-swtich {
+    display: none;
+    &:checked + label {
+      background: $c_main;
+      &:after {
+        left: calc(100% - 3px);
+        transform: translateX(-100%);
+      }
+    }
+  }
+  &-swtich-btn {
+    position: relative;
+    display: block;
+    width: 4rem;
+    height: 2rem;
+    background: $c_secondary-dark;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: calc(2rem - 6px);
+      height: calc(2rem - 6px);
+      background: $c_light;
+      border-radius: 0.5rem;
+      transition: 0.3s;
     }
   }
   &-btn {
@@ -456,7 +522,7 @@ export default {
   }
 }
 .searchBtn {
-  display: none;
+  display: block;
   width: 100%;
   margin: 0;
   margin-bottom: 1rem;
@@ -465,9 +531,7 @@ export default {
   background-color: $c_main;
   border: none;
   outline: none;
-  @include pad {
-    display: block;
-  }
+  cursor: pointer;
 }
 .theme {
   &-item {
