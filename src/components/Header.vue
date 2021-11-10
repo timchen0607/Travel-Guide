@@ -18,54 +18,72 @@
         { shadow: openCity },
         { show: openCity },
       ]"
-      @click="openCity = !openCity"
     >
+      <h3 class="fz-md drowdown-title">選擇區域</h3>
       <span
         :class="['drowdown-item bdrs-sm', { active: city === 'Taiwan' }]"
         @click="setCity('Taiwan')"
       >
         臺灣
       </span>
-      <h3 class="fz-md drowdown-title">北部地區</h3>
-      <span
-        :class="['drowdown-item bdrs-sm', { active: item === city }]"
-        v-for="item in cityFilter('North')"
-        :key="item"
-        v-text="cityName(item)"
-        @click="setCity(item)"
-      ></span>
-      <h3 class="fz-md drowdown-title">中部地區</h3>
-      <span
-        :class="['drowdown-item bdrs-sm', { active: item === city }]"
-        v-for="item in cityFilter('Central')"
-        :key="item"
-        v-text="cityName(item)"
-        @click="setCity(item)"
-      ></span>
-      <h3 class="fz-md drowdown-title">南部地區</h3>
-      <span
-        :class="['drowdown-item bdrs-sm', { active: item === city }]"
-        v-for="item in cityFilter('South')"
-        :key="item"
-        v-text="cityName(item)"
-        @click="setCity(item)"
-      ></span>
-      <h3 class="fz-md drowdown-title">東部地區</h3>
-      <span
-        :class="['drowdown-item bdrs-sm', { active: item === city }]"
-        v-for="item in cityFilter('East')"
-        :key="item"
-        v-text="cityName(item)"
-        @click="setCity(item)"
-      ></span>
-      <h3 class="fz-md drowdown-title">離島地區</h3>
-      <span
-        :class="['drowdown-item bdrs-sm', { active: item === city }]"
-        v-for="item in cityFilter('Outer')"
-        :key="item"
-        v-text="cityName(item)"
-        @click="setCity(item)"
-      ></span>
+      <div class="tabs">
+        <input type="radio" id="tabs1" class="tabs-radio" name="tabs" checked />
+        <input type="radio" id="tabs2" class="tabs-radio" name="tabs" />
+        <input type="radio" id="tabs3" class="tabs-radio" name="tabs" />
+        <input type="radio" id="tabs4" class="tabs-radio" name="tabs" />
+        <ul class="tabs-cnt">
+          <li class="tabs-cnt-item df-around">
+            <span
+              :class="['drowdown-item bdrs-sm', { active: item === city }]"
+              v-for="item in cityFilter('North')"
+              :key="item"
+              v-text="cityName(item)"
+              @click="setCity(item)"
+            ></span>
+          </li>
+          <li class="tabs-cnt-item df-around">
+            <span
+              :class="['drowdown-item bdrs-sm', { active: item === city }]"
+              v-for="item in cityFilter('Central')"
+              :key="item"
+              v-text="cityName(item)"
+              @click="setCity(item)"
+            ></span>
+          </li>
+          <li class="tabs-cnt-item df-around">
+            <span
+              :class="['drowdown-item bdrs-sm', { active: item === city }]"
+              v-for="item in cityFilter('South')"
+              :key="item"
+              v-text="cityName(item)"
+              @click="setCity(item)"
+            ></span>
+          </li>
+          <li class="tabs-cnt-item df-around">
+            <span
+              :class="['drowdown-item bdrs-sm', { active: item === city }]"
+              v-for="item in cityFilter('East')"
+              :key="item"
+              v-text="cityName(item)"
+              @click="setCity(item)"
+            ></span>
+            <span
+              :class="['drowdown-item bdrs-sm', { active: item === city }]"
+              v-for="item in cityFilter('Outer')"
+              :key="item"
+              v-text="cityName(item)"
+              @click="setCity(item)"
+            ></span>
+          </li>
+        </ul>
+        <div class="tabs-ctl df-around">
+          <label for="tabs1" class="tabs-ctl-item">北部</label>
+          <label for="tabs2" class="tabs-ctl-item">中部</label>
+          <label for="tabs3" class="tabs-ctl-item">南部</label>
+          <label for="tabs4" class="tabs-ctl-item">東部&離島</label>
+        </div>
+      </div>
+      <hr class="hr" />
     </div>
     <div class="textbox df-center">
       <input
@@ -353,6 +371,53 @@ export default {
     }
   }
 }
+.tabs {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  &-radio {
+    @for $i from 1 through 4 {
+      &:nth-child(#{$i}):checked ~ .tabs-cnt {
+        transform: translateX(($i - 1) * -100%);
+      }
+      &:nth-child(#{$i}):checked ~ .tabs-ctl > .tabs-ctl-item:nth-child(#{$i}) {
+        border-bottom-color: $c_main;
+        &::after {
+          content: "地區";
+        }
+      }
+    }
+  }
+  &-cnt {
+    position: absolute;
+    top: 0;
+    width: inherit;
+    transition: transform 0.5s;
+  }
+  &-cnt-item {
+    position: absolute;
+    justify-content: start;
+    width: inherit;
+    padding-top: 3rem;
+    background-color: $c_light;
+    @for $i from 1 through 5 {
+      &:nth-of-type(#{$i}) {
+        left: ($i - 1) * 100%;
+      }
+    }
+  }
+  &-ctl {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    right: 0;
+    &-item {
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+    }
+  }
+}
 .searchMode {
   margin: 1rem 0;
   padding: 0.1rem 0.5rem;
@@ -380,6 +445,7 @@ export default {
   }
 }
 .hr {
+  width: 100%;
   margin: 0;
   border: 1px solid $c_secondary;
 }
