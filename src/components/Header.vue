@@ -7,7 +7,10 @@
       </button>
     </div>
     <div class="select df-center" @click="openCity = !openCity">
-      <span class="select-input" v-text="cityName(city)"></span>
+      <span
+        class="select-input"
+        v-text="`${cityName(city)}｜${searchMode}`"
+      ></span>
       <button :class="['select-btn', { down: !openCity }]">
         <i class="ico-circled-up"></i>
       </button>
@@ -83,7 +86,46 @@
           <label for="tabs4" class="tabs-ctl-item">東部&離島</label>
         </div>
       </div>
-      <hr class="hr" />
+      <hr class="drowdown-hr" />
+      <h3 class="fz-md drowdown-title">選擇類型</h3>
+      <div class="drowdown-mode df-around">
+        <span
+          :class="[
+            'drowdown-item bdrs-sm',
+            { active: searchMode === 'ScenicSpot' },
+          ]"
+          @click="searchMode = 'ScenicSpot'"
+        >
+          景點
+        </span>
+        <span
+          :class="[
+            'drowdown-item bdrs-sm',
+            { active: searchMode === 'Restaurant' },
+          ]"
+          @click="searchMode = 'Restaurant'"
+        >
+          餐飲
+        </span>
+        <span
+          :class="['drowdown-item bdrs-sm', { active: searchMode === 'Hotel' }]"
+          @click="searchMode = 'Hotel'"
+        >
+          旅宿
+        </span>
+        <span
+          :class="[
+            'drowdown-item bdrs-sm',
+            { active: searchMode === 'Activity' },
+          ]"
+          @click="searchMode = 'Activity'"
+        >
+          活動
+        </span>
+      </div>
+      <button class="drowdown-btn fz-sm bdrs-sm" @click="openCity = !openCity">
+        OK!
+      </button>
     </div>
     <div class="textbox df-center">
       <input
@@ -97,37 +139,10 @@
         <i class="ico-search-1"></i>
       </button>
     </div>
-    <div class="df-around">
-      <span
-        :class="['searchMode bdrs-sm', { active: searchMode === 'ScenicSpot' }]"
-        @click="searchMode = 'ScenicSpot'"
-      >
-        景點
-      </span>
-      <span
-        :class="['searchMode bdrs-sm', { active: searchMode === 'Restaurant' }]"
-        @click="searchMode = 'Restaurant'"
-      >
-        餐飲
-      </span>
-      <span
-        :class="['searchMode bdrs-sm', { active: searchMode === 'Hotel' }]"
-        @click="searchMode = 'Hotel'"
-      >
-        旅宿
-      </span>
-      <span
-        :class="['searchMode bdrs-sm', { active: searchMode === 'Activity' }]"
-        @click="searchMode = 'Activity'"
-      >
-        活動
-      </span>
-    </div>
     <button class="searchBtn fz-md bdrs-sm" @click="goSearch()">
       <i class="ico-search-1"></i>
       <span> 開始搜尋</span>
     </button>
-    <hr class="hr" />
     <h3 class="fz-md">精選主題</h3>
     <ul class="theme df-around">
       <div
@@ -360,7 +375,7 @@ export default {
   &-item {
     display: block;
     margin: 0.2rem min(0.5rem, 1vw);
-    padding: 0.3rem 1em;
+    padding: 0.3rem 1.2rem;
     border: 1px solid $c_main;
     transition: color 0.5s, background-color 0.5s;
     cursor: pointer;
@@ -369,6 +384,28 @@ export default {
       color: $c_light;
       background-color: $c_main;
     }
+  }
+  &-mode {
+    width: 100%;
+    > span {
+      margin: 0.3rem 0;
+      padding: 0.2rem 0.8rem;
+    }
+  }
+  &-btn {
+    margin-top: 1rem;
+    margin-left: auto;
+    color: $c_light;
+    padding: 0.5rem 2rem 0.4rem;
+    background-color: $c_main;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  &-hr {
+    width: 100%;
+    margin: 0;
+    border: 1px solid $c_secondary;
   }
 }
 .tabs {
@@ -418,18 +455,6 @@ export default {
     }
   }
 }
-.searchMode {
-  margin: 1rem 0;
-  padding: 0.1rem 0.5rem;
-  color: $c_main;
-  border: 1px solid $c_main;
-  cursor: pointer;
-  &:hover,
-  &.active {
-    color: $c_light;
-    background-color: $c_main;
-  }
-}
 .searchBtn {
   display: none;
   width: 100%;
@@ -443,11 +468,6 @@ export default {
   @include pad {
     display: block;
   }
-}
-.hr {
-  width: 100%;
-  margin: 0;
-  border: 1px solid $c_secondary;
 }
 .theme {
   &-item {
