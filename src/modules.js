@@ -1,8 +1,8 @@
 // API 驗證
 import jsSHA from "jssha/dist/sha1";
 const getAuthHeader = () => {
-  const AppID = "2dfbcb68d0e04fb5bc9d1f59f2e3df35";
-  const AppKey = "HmEvi7uEhV77UNGt-MYo6ETs43E";
+  const AppID = process.env.VUE_APP_APP_ID
+  const AppKey = process.env.VUE_APP_APP_KEY
   const GMTString = new Date().toGMTString();
   const ShaObj = new jsSHA("SHA-1", "TEXT");
   ShaObj.setHMACKey(AppKey, "TEXT");
