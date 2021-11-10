@@ -18,7 +18,7 @@
 - 趁畢業前夕參與此次活動，累積作品與練習。
 - 除了 jhen，亦參考了 KT、G1224、Frank Peng...等大大的作品。
 - 感謝設計師大大們設計的精美頁面，太神啦。
-- 感謝 [connectshark](https://github.com/connectshark) 大大關於 API Key 設定的指導。
+- 感謝 [Chambers](https://github.com/connectshark) 大大關於 API Key 與 Github Action 設定的指導。
 
 ### 成果展示
 
