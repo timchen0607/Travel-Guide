@@ -12,8 +12,8 @@ jobs:
           npm install
           npm run build
         env:
-          VUE_APP_APP_ID: ${{ secrets.VUE_APP_PTX_ID }}
-          VUE_APP_APP_KEY: ${{ secrets.VUE_APP_PTX_KEY }}
+          VUE_APP_PTX_ID: ${{ secrets.VUE_APP_PTX_ID }}
+          VUE_APP_PTX_KEY: ${{ secrets.VUE_APP_PTX_KEY }}
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
