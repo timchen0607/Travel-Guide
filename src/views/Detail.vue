@@ -236,7 +236,7 @@ export default {
           result.value = data;
           props.setMode(getMode(result.value.ID, true));
           document.title = result.value.Name + " - Travel Guide";
-          loading.value = 1;
+          setTimeout(() => (loading.value = 1), 500);
           window.scrollTo({ top: 0, behavior: "smooth" });
         })
         .catch(() => (loading.value = -1));

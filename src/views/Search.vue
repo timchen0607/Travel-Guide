@@ -211,8 +211,8 @@ export default {
         })
         .then((data) => {
           result.value.push(...data);
-          loading.value = 1;
           pageIdx += 1;
+          setTimeout(() => (loading.value = 1), 500);
           if (pageIdx === 2) window.scrollTo({ top: 0, behavior: "smooth" });
         })
         .catch(() => (loading.value = -1));
