@@ -73,25 +73,25 @@
         <i class="ico-tags"></i>
         <span v-text="` ${result.modeName}標籤：`"></span>
         <router-link
-          :to="`/${mode}/${city}/${result.Class}/`"
+          :to="`/${mode}/T/${city}/${result.Class}/`"
           class="detail-tag bdrs-sm"
           v-text="result.Class"
           v-if="result.Class"
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/${result.Class1}/`"
+          :to="`/${mode}/T/${city}/${result.Class1}/`"
           class="detail-tag bdrs-sm"
           v-text="result.Class1"
           v-if="result.Class1"
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/${result.Class2}/`"
+          :to="`/${mode}/T/${city}/${result.Class2}/`"
           class="detail-tag bdrs-sm"
           v-text="result.Class2"
           v-if="result.Class2"
         ></router-link>
         <router-link
-          :to="`/${mode}/${city}/${result.Class3}/`"
+          :to="`/${mode}/T/${city}/${result.Class3}/`"
           class="detail-tag bdrs-sm"
           v-text="result.Class3"
           v-if="result.Class3"
