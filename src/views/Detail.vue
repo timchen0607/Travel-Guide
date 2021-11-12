@@ -123,9 +123,9 @@
         height="250"
         loading="lazy"
         v-else
-        :src="`https://maps.google.com/maps?q=${result.Name.split('').join(
-          '+'
-        )}&hl=zh-TW&z=16&amp;output=embed`"
+        :src="`https://maps.google.com/maps?q=${
+          result.Name
+        }+${result.Name.split('').join('+')}&hl=zh-TW&z=16&amp;output=embed`"
       >
       </iframe>
     </div>
