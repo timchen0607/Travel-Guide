@@ -41,7 +41,7 @@
     </div>
     <div :class="'card-' + mode">
       <router-link
-        :to="`/D/${item.ID}/`"
+        :to="`/D/${item[mode + 'ID']}/`"
         class="card bdrs-sm"
         v-for="item in result"
         :key="item.ID"
@@ -50,12 +50,12 @@
           <img
             class="card-img"
             :src="item.Picture.PictureUrl1"
-            :alt="item.Picture.PictureDescription1 || item.Name"
+            :alt="item.Picture.PictureDescription1 || item[mode + 'Name']"
             onerror="this.style.display='none'"
           />
         </div>
         <div class="card-content">
-          <h2 class="card-title" v-text="item.Name"></h2>
+          <h2 class="card-title" v-text="item[mode + 'Name']"></h2>
           <p class="card-text" v-if="item.Date">
             <i class="ico-calendar"></i>
             <span v-text="' ' + item.Date"></span>

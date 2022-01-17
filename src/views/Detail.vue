@@ -8,7 +8,7 @@
         <button class="detail-btn">
           <i class="ico-rounded-left"></i>
         </button>
-        <h1 class="fz-xxl" v-text="result.Name"></h1>
+        <h1 class="fz-xxl" v-text="result[mode + 'Name']"></h1>
       </div>
       <div>
         <button class="detail-btn" onclick="window.print()">
@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-    <Banner :pic="result.Picture" :name="result.Name" />
+    <Banner :pic="result.Picture" :name="result[mode + 'Name']" />
     <h2 class="fz-md c-main">
       <i class="ico-info-square"></i>
       <span v-text="' ' + result.modeName + '資訊'"></span>
@@ -123,9 +123,11 @@
         height="250"
         loading="lazy"
         v-else
-        :src="`https://maps.google.com/maps?q=${
-          result.Name
-        }+${result.Name.split('').join('+')}&hl=zh-TW&z=16&amp;output=embed`"
+        :src="`https://maps.google.com/maps?q=${result[mode + 'Name']}+${result[
+          mode + 'Name'
+        ]
+          .split('')
+          .join('+')}&hl=zh-TW&z=16&amp;output=embed`"
       >
       </iframe>
     </div>
@@ -213,7 +215,7 @@
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
-import { getDetail, getMode } from "../modules.js";
+import { getDetail } from "../modules.js";
 import Banner from "../components/Banner.vue";
 import Recommend from "../components/Recommend.vue";
 import Error from "../components/Error.vue";
@@ -232,10 +234,14 @@ export default {
       if (!route.params.ID) router.replace({ name: "Home" });
       getDetail(route.params.ID)
         .then((data) => {
-          if (!data.ID) throw new Error();
+          props.setMode(data.getMode);
+          return data;
+        })
+        .then((data) => {
+          if (!data[props.mode + "ID"]) throw new Error();
           result.value = data;
-          props.setMode(getMode(result.value.ID, true));
-          document.title = result.value.Name + " - Travel Guide";
+          document.title =
+            result.value[props.mode + "Name"] + " - Travel Guide";
           setTimeout(() => (loading.value = 1), 500);
           window.scrollTo({ top: 0, behavior: "smooth" });
         })

@@ -27,7 +27,7 @@ const getTravelInfo = (
   city = city === "Taiwan" ? "" : city;
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
-  url += `&$select=ID,Name,Address,Picture`;
+  url += `&$select=${mode}ID,${mode}Name,Address,Picture`;
   if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
   if (mode === "Restaurant") url += ",Class,OpenTime";
   if (mode === "Hotel") url += ",Class";
@@ -36,7 +36,7 @@ const getTravelInfo = (
   if (keyword) {
     let filter = "";
     keyword.split(",").forEach((k) => {
-      filter += ` or contains(Name,'${k}')`;
+      filter += ` or contains(${mode}Name,'${k}')`;
       if (!strict) filter += ` or contains(Description,'${k}')`;
       if (!strict) filter += ` or contains(Address,'${k}')`;
       if (mode === "Restaurant" || mode === "Hotel")
@@ -55,7 +55,7 @@ const getTravelInfo = (
 const getNearbyInfo = (mode, lat, lon, page = 1) => {
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
-  url += `&$select=ID,Name,Address,Picture`;
+  url += `&$select=${mode}ID,${mode}Name,Address,Picture`;
   if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
   if (mode === "Restaurant") url += ",Class,OpenTime";
   if (mode === "Hotel") url += ",Class";
@@ -68,12 +68,13 @@ const getNearbyInfo = (mode, lat, lon, page = 1) => {
 // 取得單筆資料
 const getDetail = (ID) => {
   let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
-  url += `${getMode(ID, true)}/?$filter=ID eq '${ID}'&$format=JSON`;
+  url += `${getMode(ID, true)}/?$format=JSON&`;
+  url += `$filter=${getMode(ID, true)}ID eq '${ID}'`;
   return fetch(url, { headers: getAuthHeader() })
     .then((res) => res.json())
     .then((res) => {
       if (res.length === 0) throw new Error();
-      res[0].modeName = getMode(res[0].ID);
+      res[0].modeName = getMode(res[0][getMode(ID, true) + "ID"]);
       if (res[0].Description)
         res[0].Description = res[0].Description.split("。").join("。\n\n");
       if (res[0].DescriptionDetail)
@@ -85,6 +86,7 @@ const getDetail = (ID) => {
       if (res[0].StartTime) res[0].StartTime = res[0].StartTime.split("T")[0];
       if (res[0].EndTime) res[0].EndTime = res[0].EndTime.split("T")[0];
       if (res[0].StartTime === res[0].EndTime) res[0].Date = res[0].EndTime;
+      res[0].getMode = getMode(ID, true);
       return res[0];
     });
 };
