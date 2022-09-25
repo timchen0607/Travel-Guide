@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header :class="['head', 'shadow', { show: headerShow }]">
-      <Header :closeHeader="closeHeader" :city="city" :setCity="setCity" />
+      <Header :city="city" @closeHeader="closeHeader" @setCity="setCity" />
     </header>
     <div class="box">
       <div
@@ -19,9 +19,9 @@
       </nav>
       <router-view
         :mode="mode"
-        :setMode="setMode"
         :city="city"
         :key="$route.fullPath"
+        @setMode="setMode"
       />
       <footer class="foot df-around">
         <p><i class="icoTW-main-island"></i>TAIWAN TRAVEL</p>
@@ -62,8 +62,10 @@ export default {
   name: "App",
   components: { Header },
   setup() {
+    // 控制側邊導覽列顯示狀態
     const headerShow = ref(false);
     const closeHeader = () => (headerShow.value = false);
+    //
     const mode = ref("ScenicSpot");
     const setMode = (m) => (mode.value = m);
     const city = ref("Taiwan");

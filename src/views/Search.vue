@@ -179,9 +179,10 @@ import Error from "../components/Error.vue";
 
 export default {
   name: "Search",
-  props: { mode: String, setMode: Function, city: String },
+  props: { mode: String, city: String },
   components: { Loading, Error },
-  setup(props) {
+  emits: ["setMode"],
+  setup(props, { emit }) {
     const loading = ref(0);
     const route = useRoute();
     const router = useRouter();
@@ -199,7 +200,7 @@ export default {
     const loadData = () => {
       if (verify()) router.replace({ name: "Home" });
       loadBtn.value = true;
-      props.setMode(parm.mode);
+      emit("setMode", parm.mode);
       const strict = parm.strict === "T";
       const load = parm.city
         ? getTravelInfo(parm.mode, parm.city, pageIdx, parm.keyword, strict)

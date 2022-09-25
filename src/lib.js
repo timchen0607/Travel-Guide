@@ -1,3 +1,6 @@
+// 台灣地區列表
+const regionLib = ["North", "Central", "South", "East&Outer"];
+// 台灣各縣市資料
 const cityLib = {
   Taiwan: { name: "臺灣", icon: "main-island", region: "All" },
   Taipei: { name: "台北", icon: "postbox2", region: "North" },
@@ -18,19 +21,30 @@ const cityLib = {
   Kaohsiung: { name: "高雄", icon: "dt-pagoda", region: "South" },
   PingtungCounty: { name: "屏東", icon: "vase-rock", region: "South" },
   PenghuCounty: { name: "澎湖", icon: "penghu-islands", region: "South" },
-  HualienCounty: { name: "花蓮", icon: "balloon", region: "East" },
-  TaitungCounty: { name: "臺東", icon: "flying-fish", region: "East" },
-  KinmenCounty: { name: "金門", icon: "kinmen-island", region: "Outer" },
-  LienchiangCounty: { name: "連江", icon: "jug", region: "Outer" },
+  HualienCounty: { name: "花蓮", icon: "balloon", region: "East&Outer" },
+  TaitungCounty: { name: "臺東", icon: "flying-fish", region: "East&Outer" },
+  KinmenCounty: { name: "金門", icon: "kinmen-island", region: "East&Outer" },
+  LienchiangCounty: { name: "連江", icon: "jug", region: "East&Outer" },
 };
-
+// 搜尋主題列表
+const themeLib = [
+  { id: 1, name: "觀光遊憩", keywords: "觀光,遊憩" },
+  { id: 2, name: "自然風景", keywords: "自然,風景" },
+  { id: 3, name: "地方特產", keywords: "地方特產" },
+  { id: 4, name: "異國料理", keywords: "異國料理" },
+  { id: 5, name: "度假民宿", keywords: "度假,民宿" },
+  { id: 6, name: "國際旅館", keywords: "國際,旅館" },
+  { id: 7, name: "節慶活動", keywords: "節慶活動" },
+  { id: 8, name: "藝文體驗", keywords: "藝文,體驗" },
+];
+// 模式列表
 const modeLib = {
   ScenicSpot: "景點",
   Restaurant: "餐飲",
   Hotel: "旅宿",
   Activity: "活動",
 };
-
+// 隨機標語列表
 const sloganLib = [
   ["探索。", "福爾摩沙"],
   ["尋找。", "山林秘境"],
@@ -40,4 +54,4 @@ const sloganLib = [
   ["尋覓。", "文化古蹟"],
 ];
 
-export { cityLib, modeLib, sloganLib };
+export { regionLib, cityLib, themeLib, modeLib, sloganLib };

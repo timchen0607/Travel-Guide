@@ -222,9 +222,10 @@ import Error from "../components/Error.vue";
 
 export default {
   name: "Detail",
-  props: { mode: String, setMode: Function, city: String },
   components: { Banner, Recommend, Error },
-  setup(props) {
+  props: { mode: String, city: String },
+  emits: ["setMode"],
+  setup(props, { emit }) {
     const loading = ref(0);
     const hasHistory = () => window.history.length > 2;
     const route = useRoute();
@@ -234,7 +235,7 @@ export default {
       if (!route.params.ID) router.replace({ name: "Home" });
       getDetail(route.params.ID)
         .then((data) => {
-          props.setMode(data.getMode);
+          emit("setMode", data.getMode);
           return data;
         })
         .then((data) => {

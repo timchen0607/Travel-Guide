@@ -30,49 +30,24 @@
         臺灣
       </span>
       <div class="tabs">
-        <input type="radio" id="tabs1" class="tabs-radio" name="tabs" checked />
-        <input type="radio" id="tabs2" class="tabs-radio" name="tabs" />
-        <input type="radio" id="tabs3" class="tabs-radio" name="tabs" />
-        <input type="radio" id="tabs4" class="tabs-radio" name="tabs" />
+        <input
+          type="radio"
+          :id="`tabs${i}`"
+          class="tabs-radio"
+          name="tabs"
+          v-for="i in 4"
+          :key="i"
+          :checked="i === 1"
+        />
         <ul class="tabs-cnt">
-          <li class="tabs-cnt-item df-around">
+          <li
+            class="tabs-cnt-item df-around"
+            v-for="region in regionLib"
+            :key="region"
+          >
             <span
               :class="['drowdown-item bdrs-sm', { active: item === city }]"
-              v-for="item in cityFilter('North')"
-              :key="item"
-              v-text="cityName(item)"
-              @click="setCity(item)"
-            ></span>
-          </li>
-          <li class="tabs-cnt-item df-around">
-            <span
-              :class="['drowdown-item bdrs-sm', { active: item === city }]"
-              v-for="item in cityFilter('Central')"
-              :key="item"
-              v-text="cityName(item)"
-              @click="setCity(item)"
-            ></span>
-          </li>
-          <li class="tabs-cnt-item df-around">
-            <span
-              :class="['drowdown-item bdrs-sm', { active: item === city }]"
-              v-for="item in cityFilter('South')"
-              :key="item"
-              v-text="cityName(item)"
-              @click="setCity(item)"
-            ></span>
-          </li>
-          <li class="tabs-cnt-item df-around">
-            <span
-              :class="['drowdown-item bdrs-sm', { active: item === city }]"
-              v-for="item in cityFilter('East')"
-              :key="item"
-              v-text="cityName(item)"
-              @click="setCity(item)"
-            ></span>
-            <span
-              :class="['drowdown-item bdrs-sm', { active: item === city }]"
-              v-for="item in cityFilter('Outer')"
+              v-for="item in cityFilter(region)"
               :key="item"
               v-text="cityName(item)"
               @click="setCity(item)"
@@ -160,94 +135,20 @@
     </button>
     <h3 class="fz-md">精選主題</h3>
     <ul class="theme df-around">
-      <div
+      <li
         class="theme-item bdrs-sm"
-        @click="goSearch('ScenicSpot', false, '觀光,遊憩')"
+        v-for="item in themeLib"
+        :key="item.id"
+        @click="goSearch('ScenicSpot', false, item.keywords)"
       >
         <img
-          src="../assets/images/theme_1.png"
-          alt="觀光遊憩"
+          :src="require(`../assets/images/theme_${item.id}.png`)"
+          :alt="item.name"
           class="theme-img"
+          v-if="themeLib.length > 0"
         />
-        <h4 class="theme-text df-center fz-sm">觀光遊憩</h4>
-      </div>
-      <div
-        class="theme-item bdrs-sm"
-        @click="goSearch('ScenicSpot', false, '自然,風景')"
-      >
-        <img
-          src="../assets/images/theme_2.png"
-          alt="自然風景"
-          class="theme-img"
-        />
-        <h4 class="theme-text df-center fz-sm">自然風景</h4>
-      </div>
-      <div
-        class="theme-item bdrs-sm"
-        @click="goSearch('Restaurant', false, '地方特產')"
-      >
-        <img
-          src="../assets/images/theme_3.png"
-          alt="地方特產"
-          class="theme-img"
-        />
-        <h4 class="theme-text df-center fz-sm">地方特產</h4>
-      </div>
-      <div
-        class="theme-item bdrs-sm"
-        @click="goSearch('Restaurant', false, '異國料理')"
-      >
-        <img
-          src="../assets/images/theme_4.png"
-          alt="異國料理"
-          class="theme-img"
-        />
-        <h4 class="theme-text df-center fz-sm">異國料理</h4>
-      </div>
-      <div
-        class="theme-item bdrs-sm"
-        @click="goSearch('Hotel', false, '度假,民宿')"
-      >
-        <img
-          src="../assets/images/theme_5.png"
-          alt="度假民宿"
-          class="theme-img"
-        />
-        <h4 class="theme-text df-center fz-sm">度假民宿</h4>
-      </div>
-      <div
-        class="theme-item bdrs-sm"
-        @click="goSearch('Hotel', false, '國際,旅館')"
-      >
-        <img
-          src="../assets/images/theme_6.png"
-          alt="國際旅館"
-          class="theme-img"
-        />
-        <h4 class="theme-text df-center fz-sm">國際旅館</h4>
-      </div>
-      <div
-        class="theme-item bdrs-sm"
-        @click="goSearch('Activity', false, '節慶活動')"
-      >
-        <img
-          src="../assets/images/theme_7.png"
-          alt="節慶活動"
-          class="theme-img"
-        />
-        <h4 class="theme-text df-center fz-sm">節慶活動</h4>
-      </div>
-      <div
-        class="theme-item bdrs-sm"
-        @click="goSearch('Activity', false, '藝文,體驗')"
-      >
-        <img
-          src="../assets/images/theme_8.png"
-          alt="藝文體驗"
-          class="theme-img"
-        />
-        <h4 class="theme-text df-center fz-sm">藝文體驗</h4>
-      </div>
+        <h4 class="theme-text df-center fz-sm" v-text="item.name"></h4>
+      </li>
     </ul>
   </div>
 </template>
@@ -255,12 +156,17 @@
 <script>
 import { computed, ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
-import { cityLib, modeLib } from "../lib.js";
+import { regionLib, cityLib, themeLib, modeLib } from "../lib.js";
 
 export default {
   name: "Header",
-  props: { closeHeader: Function, city: String, setCity: Function },
-  setup(props) {
+  props: { city: String },
+  emits: ["closeHeader", "setCity"],
+  setup(props, { emit }) {
+    // click 觸發父層 emit 事件
+    const closeHeader = () => emit("closeHeader");
+    const setCity = (item) => emit("setCity", item);
+    // 透過索引篩選符合的縣市
     const cityFilter = (region) =>
       Object.keys(cityLib).filter((item) => cityLib[item].region === region);
     const cityName = (city) => cityLib[city].name;
@@ -283,10 +189,14 @@ export default {
         name: "Search",
         params: { mode: mode, strict: s, city: props.city, keyword: key },
       });
-      props.closeHeader();
+      closeHeader();
     };
 
     return {
+      regionLib,
+      themeLib,
+      closeHeader,
+      setCity,
       cityFilter,
       cityName,
       modeName,
