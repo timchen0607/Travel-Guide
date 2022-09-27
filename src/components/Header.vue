@@ -2,7 +2,7 @@
   <div class="header">
     <div class="df-between header-main">
       <router-link to="/" class="header-logo"></router-link>
-      <button class="header-btn" @click="closeHeader">
+      <button class="header-btn" @click="setSideMenuClose">
         <i class="ico-rounded-left"></i>
       </button>
     </div>
@@ -18,7 +18,7 @@
     <div
       :class="[
         'drowdown df-around bdrs-xl',
-        { shadow: openCity },
+        { boxShadow: openCity },
         { show: openCity },
       ]"
     >
@@ -161,16 +161,16 @@ import { regionLib, cityLib, themeLib, modeLib } from "../lib.js";
 export default {
   name: "Header",
   props: { city: String },
-  emits: ["closeHeader", "setCity"],
+  emits: ["setSideMenuClose", "setCity"],
   setup(props, { emit }) {
     // click 觸發父層 emit 事件
-    const closeHeader = () => emit("closeHeader");
+    const setSideMenuClose = () => emit("setSideMenuClose");
     const setCity = (item) => emit("setCity", item);
     // 透過索引篩選符合的縣市
     const cityFilter = (region) =>
       Object.keys(cityLib).filter((item) => cityLib[item].region === region);
     const cityName = (city) => cityLib[city].name;
-    const modeName = computed(() => modeLib[searchMode.value]);
+    const modeName = computed(() => modeLib[searchMode.value].title);
     const strictName = computed(() =>
       searchStrict.value ? "精準搜尋" : "模糊搜尋"
     );
@@ -189,13 +189,13 @@ export default {
         name: "Search",
         params: { mode: mode, strict: s, city: props.city, keyword: key },
       });
-      closeHeader();
+      setSideMenuClose();
     };
 
     return {
       regionLib,
       themeLib,
-      closeHeader,
+      setSideMenuClose,
       setCity,
       cityFilter,
       cityName,

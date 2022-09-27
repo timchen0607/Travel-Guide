@@ -1,6 +1,6 @@
 <template>
   <div class="search" v-if="loading === 1">
-    <div class="banner shadow">
+    <div class="banner boxShadow">
       <img
         class="banner-img"
         :src="getUrl()"
@@ -115,7 +115,7 @@
     </button>
   </div>
   <div class="search" v-if="loading === 0">
-    <div class="banner shadow">
+    <div class="banner boxShadow">
       <img
         class="banner-loading"
         src="../assets/images/banner_Home.png"
@@ -127,7 +127,7 @@
     <Loading :loadMode="mode" :amount="parseInt(6)" />
   </div>
   <div class="search" v-if="loading === -1">
-    <div class="banner shadow">
+    <div class="banner boxShadow">
       <img
         class="banner-img"
         :src="getUrl()"

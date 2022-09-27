@@ -2,7 +2,11 @@
   * {
     -webkit-print-color-adjust: exact !important;
   }
-  .head {
+  .doNotPrint {
     display: none;
+  }
+  .detail {
+    margin: 0;
+    padding: 0;
   }
 }

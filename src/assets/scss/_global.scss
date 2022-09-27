@@ -17,17 +17,6 @@ body {
 a {
   color: inherit;
 }
-.container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: min(1440px, 100vw);
-  margin: auto;
-  box-sizing: border-box;
-  @include pad {
-    flex-wrap: wrap;
-  }
-}
 .card-ScenicSpot,
 .card-Restaurant {
   display: flex;
@@ -290,7 +279,7 @@ a {
     overflow: hidden;
   }
 }
-// shadow
-.shadow {
+// boxShadow
+.boxShadow {
   box-shadow: 0px 0px 1.5rem #00000019;
 }

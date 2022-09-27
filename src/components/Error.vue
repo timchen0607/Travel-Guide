@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="c_main fz-xxl center">ಥ⌣ಥ 很抱歉，找不到任何資料!</h2>
+    <h2 class="c-main fz-xxl center">ಥ⌣ಥ 很抱歉，找不到任何資料!</h2>
   </div>
 </template>
 

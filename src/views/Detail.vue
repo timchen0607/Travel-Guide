@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-    <Banner :pic="result.Picture" :name="result[mode + 'Name']" />
+    <SlideShow :pic="result.Picture" :name="result[mode + 'Name']" />
     <h2 class="fz-md c-main">
       <i class="ico-info-square"></i>
       <span v-text="' ' + result.modeName + '資訊'"></span>
@@ -109,7 +109,7 @@
     <h2 class="fz-md c-main"><i class="ico-bus"></i> 交通方式</h2>
     <pre class="detail-pre" v-text="result.TravelInfo"></pre>
     <pre class="detail-pre" v-text="result.ParkingInfo"></pre>
-    <div class="bdrs-sm">
+    <div class="bdrs-sm doNotPrint">
       <iframe
         width="100%"
         height="250"
@@ -216,13 +216,13 @@
 import { onMounted, ref } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
 import { getDetail } from "../modules.js";
-import Banner from "../components/Banner.vue";
+import SlideShow from "../components/SlideShow.vue";
 import Recommend from "../components/Recommend.vue";
 import Error from "../components/Error.vue";
 
 export default {
   name: "Detail",
-  components: { Banner, Recommend, Error },
+  components: { SlideShow, Recommend, Error },
   props: { mode: String, city: String },
   emits: ["setMode"],
   setup(props, { emit }) {

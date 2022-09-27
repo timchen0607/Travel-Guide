@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="banner shadow">
+    <div class="banner boxShadow">
       <h1 class="banner-text">
         <span v-text="ranSlogan[0]"></span><br />
         <span v-text="ranSlogan[1]"></span>
