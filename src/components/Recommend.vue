@@ -82,7 +82,7 @@ import {
   getNearbyInfo,
   dataFilter,
   dataRegular,
-} from "../modules.js";
+} from "../api.js";
 import Loading from "../components/Loading.vue";
 import Error from "../components/Error.vue";
 

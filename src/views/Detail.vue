@@ -215,7 +215,7 @@
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
-import { getDetail } from "../modules.js";
+import { getDetail } from "../api.js";
 import SlideShow from "../components/SlideShow.vue";
 import Recommend from "../components/Recommend.vue";
 import Error from "../components/Error.vue";

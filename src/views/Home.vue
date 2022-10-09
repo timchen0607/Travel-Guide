@@ -32,7 +32,7 @@
 
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
-import { dataFilter } from "../modules.js";
+import { dataFilter } from "../api.js";
 import { cityLib, sloganLib } from "../lib.js";
 import Recommend from "../components/Recommend.vue";
 

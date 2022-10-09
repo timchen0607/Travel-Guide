@@ -172,7 +172,7 @@
 <script>
 import { onMounted, ref } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
-import { getTravelInfo, getNearbyInfo, dataRegular } from "../modules.js";
+import { getTravelInfo, getNearbyInfo, dataRegular } from "../api.js";
 import { cityLib, modeLib } from "../lib.js";
 import Loading from "../components/Loading.vue";
 import Error from "../components/Error.vue";

@@ -1,15 +1,23 @@
 // API 驗證
-import jsSHA from "jssha/dist/sha1";
-const getAuthHeader = () => {
-  const AppID = process.env.VUE_APP_PTX_ID;
-  const AppKey = process.env.VUE_APP_PTX_KEY;
-  const GMTString = new Date().toGMTString();
-  const ShaObj = new jsSHA("SHA-1", "TEXT");
-  ShaObj.setHMACKey(AppKey, "TEXT");
-  ShaObj.update("x-date: " + GMTString);
-  const HMAC = ShaObj.getHMAC("B64");
-  const Authorization = `hmac username="${AppID}", algorithm="hmac-sha1", headers="x-date", signature="${HMAC}"`;
-  return { Authorization: Authorization, "X-Date": GMTString };
+// let auth = null;
+const getAuth = async () => {
+  // if (auth) return new Promise((res) => res(auth));
+  // else {
+  const AppID = process.env.VUE_APP_TDX_ID;
+  const AppSecret = process.env.VUE_APP_TDX_Secret;
+  const url =
+    "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token";
+  const obj = {
+    body: `grant_type=client_credentials&client_id=${AppID}&client_secret=${AppSecret}`,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    method: "POST",
+  };
+  const res = await fetch(url, obj);
+  const json = await res.json();
+  const token = await ("Bearer " + json.access_token);
+  let auth = await { Authorization: token };
+  return await auth;
+  // }
 };
 
 const perPage = 18; // 每頁顯示筆數
@@ -24,8 +32,8 @@ const getTravelInfo = (
   keyword = null,
   strict = false
 ) => {
-  city = city === "Taiwan" ? "" : city;
-  let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`;
+  city = city === "Taiwan" ? "" : "/" + city;
+  let url = `https://tdx.transportdata.tw/api/basic/v2/Tourism/${mode}${city}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
   url += `&$select=${mode}ID,${mode}Name,Address,Picture`;
   if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
@@ -48,12 +56,14 @@ const getTravelInfo = (
     filter = filter.replace(" or ", "");
     url += ` and (${filter})`;
   }
-  return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
+  return getAuth()
+    .then((token) => fetch(url, { headers: token }))
+    .then((res) => res.json());
 };
 
 // 抓取 景點/餐飲/旅宿/活動 鄰近相關資料
 const getNearbyInfo = (mode, lat, lon, page = 1) => {
-  let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}?`;
+  let url = `https://tdx.transportdata.tw/api/basic/v2/Tourism/${mode}?`;
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
   url += `&$select=${mode}ID,${mode}Name,Address,Picture`;
   if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
@@ -62,15 +72,18 @@ const getNearbyInfo = (mode, lat, lon, page = 1) => {
   if (mode === "Activity") url += ",Class1,Class2";
   url += `&$spatialFilter=nearby(${lat},${lon},50000)`;
   url += `&$filter=Picture/PictureUrl1 ne null`;
-  return fetch(url, { headers: getAuthHeader() }).then((res) => res.json());
+  return getAuth()
+    .then((token) => fetch(url, { headers: token }))
+    .then((res) => res.json());
 };
 
 // 取得單筆資料
 const getDetail = (ID) => {
-  let url = "https://ptx.transportdata.tw/MOTC/v2/Tourism/";
-  url += `${getMode(ID, true)}/?$format=JSON&`;
+  let url = "https://tdx.transportdata.tw/api/basic/v2/Tourism/";
+  url += `${getMode(ID, true)}?$format=JSON&`;
   url += `$filter=${getMode(ID, true)}ID eq '${ID}'`;
-  return fetch(url, { headers: getAuthHeader() })
+  return getAuth()
+    .then((token) => fetch(url, { headers: token }))
     .then((res) => res.json())
     .then((res) => {
       if (res.length === 0) throw new Error();
