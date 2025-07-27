@@ -34,7 +34,9 @@ const getTravelInfo = (
 ) => {
   city = city === "Taiwan" ? "" : "/" + city;
   let url = `https://tdx.transportdata.tw/api/basic/v2/Tourism/${mode}${city}?`;
-  url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`;
+  if (mode === "Activity") url += `$skip=${page}`;
+  else url += `$skip=${(page - 1) * perPage}`;
+  url += `&$top=${perPage}&$format=JSON`;
   url += `&$select=${mode}ID,${mode}Name,Address,Picture`;
   if (mode === "ScenicSpot") url += ",Class1,Class2,Class3,OpenTime,TicketInfo";
   if (mode === "Restaurant") url += ",Class,OpenTime";
